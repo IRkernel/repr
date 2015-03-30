@@ -1,0 +1,8 @@
+Package: repr
+Title: Serializable representations
+Version: 0.0.0.9000
+Authors@R: 'Philipp A. <flying-sheep@web.de> [aut, cre]'
+Description: String and binary representations of objects for several formats / mime types.
+Depends: R (>= 3.1.3)
+License: GPL-3
+LazyData: true
