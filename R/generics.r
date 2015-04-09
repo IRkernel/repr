@@ -7,9 +7,9 @@
 #' 
 #' @export
 repr <- function(obj, format = 'text', ...) {
-  delegate <- format2repr[[format]]
-  if (is.null(delegate)) stop(sprintf('Repr format %s not known', format))
-  delegate(obj, ...)
+	delegate <- format2repr[[format]]
+	if (is.null(delegate)) stop(sprintf('Repr format %s not known', format))
+	delegate(obj, ...)
 }
 
 #' Text representation
@@ -87,18 +87,18 @@ repr_svg.default <- function(obj, ...) NULL
 
 #' @export
 mime2repr <- list(
-  'text/plain' = repr_text,
-  'text/html' = repr_html,
-  'text/markdown' = repr_markdown,
-  'text/latex' = repr_latex,
-  'application/json' = repr_json,
-  'application/javascript' = repr_javascript,
-  'application/pdf' = repr_pdf,
-  'image/png' = repr_png,
-  'image/jpeg' = repr_jpg,
-  'image/svg+xml' = repr_svg)
+	'text/plain' = repr_text,
+	'text/html' = repr_html,
+	'text/markdown' = repr_markdown,
+	'text/latex' = repr_latex,
+	'application/json' = repr_json,
+	'application/javascript' = repr_javascript,
+	'application/pdf' = repr_pdf,
+	'image/png' = repr_png,
+	'image/jpeg' = repr_jpg,
+	'image/svg+xml' = repr_svg)
 
 #' @export
 format2repr <- lapply(
-  c('text', 'html', 'markdown', 'latex', 'json', 'javascript', 'pdf', 'png', 'jpg', 'svg'),
-  function(n) get(paste0('repr_', n)))
+	c('text', 'html', 'markdown', 'latex', 'json', 'javascript', 'pdf', 'png', 'jpg', 'svg'),
+	function(n) get(paste0('repr_', n)))
