@@ -2,13 +2,13 @@
 #' 
 #' @export
 repr_text.recordedplot <- function(p, ...) {
-  for (call in rev(p[[1]])) {
-    args <- call[[2]]
-    if(args[[1]]$name == 'C_title') {
-      return(sprintf('Plot with title “%s”', args[[2]]))
-    }
-  }
-  'plot without title'
+	for (call in rev(p[[1]])) {
+		args <- call[[2]]
+		if(args[[1]]$name == 'C_title') {
+			return(sprintf('Plot with title “%s”', args[[2]]))
+		}
+	}
+	'plot without title'
 }
 
 
