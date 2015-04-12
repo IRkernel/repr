@@ -1,8 +1,8 @@
 repr_sequence_generic <- function(
-	vec, fmt, enum.item, named.item, enum.wrap, named.wrap = enum.wrap,
+	vec, fmt, enum.item, named.item, only.named.item, enum.wrap, named.wrap = enum.wrap,
 	...,
-	item.uses.numbers = FALSE,
-	only.named.item = named.item) {
+	numeric.item = named.item,
+	item.uses.numbers = FALSE) {
 	
 	nms <- names(vec)
 	char.vec <- as.character(vec)
@@ -22,10 +22,7 @@ repr_sequence_generic <- function(
 			entries <- vapply(seq_along(char.vec), function(i) {
 				nm <- nms[[i]]
 				if (is.na(nm) || nchar(nm) == 0) {
-					if (item.uses.numbers)
-						sprintf(enum.item, i, char.vec[[i]])
-					else
-						sprintf(enum.item, char.vec[[i]])
+					sprintf(numeric.item, i, char.vec[[i]])
 				} else {
 					sprintf(named.item, nms[[i]], char.vec[[i]])
 				}
@@ -48,8 +45,10 @@ repr_html.list <- function(li, ...) repr_sequence_generic(
 	li, 'html',
 	'\t<li>%s</li>\n',
 	'\t<dt>$%s</dt>\n\t\t<dd>%s</dd>\n',
+	'<strong>$%s</strong> = %s',
 	'<ol>\n%s</ol>\n',
-	'<dl>\n%s</dl>\n')
+	'<dl>\n%s</dl>\n',
+	numeric.item = '\t<dt>[[%s]]</dt>\n\t\t<dd>%s</dd>\n')
 
 
 
@@ -59,8 +58,10 @@ repr_html.list <- function(li, ...) repr_sequence_generic(
 repr_markdown.list <- function(vec, ...) repr_sequence_generic(
 	vec, 'markdown',
 	'%s. %s\n',
-	'$%s\n:   %s',
+	'$%s\n:   %s\n',
+	'**$%s** = %s',
 	'%s\n\n',
+	numeric.item = '[[%s]]\n:   %s\n',
 	item.uses.numbers = TRUE)
 
 
@@ -72,6 +73,7 @@ repr_latex.list <- function(vec, ...) repr_sequence_generic(
 	vec, 'latex',
 	'\\item %s\n',
 	'\\item[\\$%s] %s\n',
+	'\\textbf{\\$%s} = %s',
 	'\\begin{enumerate}\n%s\\end{enumerate}\n',
 	'\\begin{description}\n%s\\end{description}\n',
-	only.named.item = '\\textbf{%s:} %s')
+	numeric.item = '\\item[{[[%s]]}] %s\n')

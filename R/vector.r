@@ -15,6 +15,7 @@ repr_html.logical <- function(vec, ...) repr_sequence_generic(
 	vec, 'html',
 	'\t<li>%s</li>\n',
 	'\t<dt>%s</dt>\n\t\t<dd>%s</dd>\n',
+	'<strong>%s:</strong> %s',
 	'<ol class=vector>\n%s</ol>\n',
 	'<dl class=vector>\n%s</dl>\n')
 
@@ -44,6 +45,7 @@ repr_markdown.logical <- function(vec, ...) repr_sequence_generic(
 	vec, 'markdown',
 	'%s. %s\n',
 	'%s\n:   %s',
+	'**%s:** %s',
 	'%s\n\n',
 	item.uses.numbers = TRUE)
 
@@ -73,6 +75,7 @@ repr_latex.logical <- function(vec, ...) repr_sequence_generic(
 	vec, 'latex',
 	'\\item %s\n',
 	'\\item[%s] %s\n',
+	'\\textbf{%s:} %s',
 	'\\begin{inparaenum}\n%s\\end{inparaenum}\n',
 	'\\begin{inparadesc}\n%s\\end{inparadesc}\n',
 	only.named.item = '\\textbf{%s:} %s')
