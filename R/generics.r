@@ -12,6 +12,11 @@ repr <- function(obj, format = 'text', ...) {
 	delegate(obj, ...)
 }
 
+#' Extract repr format attribute
+#' 
+#' @export
+repr.format <- function(r) attr(r, 'repr.format')
+
 #' Text representation
 #' 
 #' The only representation defined per default for everthing (via \link{print()})
@@ -19,7 +24,11 @@ repr <- function(obj, format = 'text', ...) {
 #' @export
 repr_text <- function (obj, ...) UseMethod('repr_text', obj)
 #' @export
-repr_text.default <- function(obj, ...) paste(capture.output(print(obj)), collapse = '\n')
+repr_text.default <- function(obj, ...) {
+	txt <- paste(capture.output(print(obj)), collapse = '\n')
+	structure(txt, class = 'repr', repr.format = 'text')
+}
+repr_text.repr <- function(r, ...) if (repr.format(r) != 'text') NULL else r
 
 #' HTML representation
 #' 
@@ -27,6 +36,7 @@ repr_text.default <- function(obj, ...) paste(capture.output(print(obj)), collap
 repr_html <- function (obj, ...) UseMethod('repr_html', obj)
 #' @export
 repr_html.default <- function(obj, ...) NULL
+repr_html.repr <- function(r, ...) if (repr.format(r) != 'html') NULL else r
 
 #' Markdown representation
 #' 
@@ -34,6 +44,7 @@ repr_html.default <- function(obj, ...) NULL
 repr_markdown <- function (obj, ...) UseMethod('repr_markdown', obj)
 #' @export
 repr_markdown.default <- function(obj, ...) NULL
+repr_markdown.repr <- function(r, ...) if (repr.format(r) != 'markdown') NULL else r
 
 #' LaTeX representation
 #' 
@@ -41,6 +52,7 @@ repr_markdown.default <- function(obj, ...) NULL
 repr_latex <- function (obj, ...) UseMethod('repr_latex', obj)
 #' @export
 repr_latex.default <- function(obj, ...) NULL
+repr_latex.repr <- function(r, ...) if (repr.format(r) != 'latex') NULL else r
 
 #' JSON representation
 #' 
@@ -48,6 +60,7 @@ repr_latex.default <- function(obj, ...) NULL
 repr_json <- function (obj, ...) UseMethod('repr_json', obj)
 #' @export
 repr_json.default <- function(obj, ...) NULL
+repr_json.repr <- function(r, ...) if (repr.format(r) != 'json') NULL else r
 
 #' Javascript representation
 #' 
@@ -55,6 +68,7 @@ repr_json.default <- function(obj, ...) NULL
 repr_javascript <- function (obj, ...) UseMethod('repr_javascript', obj)
 #' @export
 repr_javascript.default <- function(obj, ...) NULL
+repr_javascript.repr <- function(r, ...) if (repr.format(r) != 'javascript') NULL else r
 
 #' PDF representation
 #' 
@@ -62,6 +76,7 @@ repr_javascript.default <- function(obj, ...) NULL
 repr_pdf <- function (obj, ...) UseMethod('repr_pdf', obj)
 #' @export
 repr_pdf.default <- function(obj, ...) NULL
+repr_pdf.repr <- function(r, ...) if (repr.format(r) != 'pdf') NULL else r
 
 #' PNG representation
 #' 
@@ -69,6 +84,7 @@ repr_pdf.default <- function(obj, ...) NULL
 repr_png <- function (obj, ...) UseMethod('repr_png', obj)
 #' @export
 repr_png.default <- function(obj, ...) NULL
+repr_png.repr <- function(r, ...) if (repr.format(r) != 'png') NULL else r
 
 #' JPG representation
 #' 
@@ -76,6 +92,7 @@ repr_png.default <- function(obj, ...) NULL
 repr_jpg <- function (obj, ...) UseMethod('repr_jpg', obj)
 #' @export
 repr_jpg.default <- function(obj, ...) NULL
+repr_jpg.repr <- function(r, ...) if (repr.format(r) != 'jpg') NULL else r
 
 #' SVG representation
 #' 
@@ -83,6 +100,7 @@ repr_jpg.default <- function(obj, ...) NULL
 repr_svg <- function (obj, ...) UseMethod('repr_svg', obj)
 #' @export
 repr_svg.default <- function(obj, ...) NULL
+repr_svg.repr <- function(r, ...) if (repr.format(r) != 'svg') NULL else r
 
 
 #' @export
