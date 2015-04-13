@@ -99,6 +99,6 @@ mime2repr <- list(
 	'image/svg+xml' = repr_svg)
 
 #' @export
-format2repr <- lapply(
+format2repr <- sapply(
 	c('text', 'html', 'markdown', 'latex', 'json', 'javascript', 'pdf', 'png', 'jpg', 'svg'),
 	function(n) get(paste0('repr_', n)))
