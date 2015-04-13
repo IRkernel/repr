@@ -19,7 +19,7 @@ repr <- function(obj, format = 'text', ...) {
 #' @export
 repr_text <- function (obj, ...) UseMethod('repr_text', obj)
 #' @export
-repr_text.default <- function(obj, ...) capture.output(print(obj))
+repr_text.default <- function(obj, ...) paste(capture.output(print(obj)), collapse = '\n')
 
 #' HTML representation
 #' 
