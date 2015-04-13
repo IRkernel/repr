@@ -57,8 +57,8 @@ repr_html.logical <- function(vec, ...) repr_vector_generic(
 	'\t<li>%s</li>\n',
 	'\t<dt>%s</dt>\n\t\t<dd>%s</dd>\n',
 	'<strong>%s:</strong> %s',
-	'<ol class=vector>\n%s</ol>\n',
-	'<dl class=vector>\n%s</dl>\n')
+	'<ol class=list-inline>\n%s</ol>\n',
+	'<dl class=list-inline>\n%s</dl>\n')
 
 #' @export @name repr_html.logical
 repr_html.integer <- repr_html.logical
