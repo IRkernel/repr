@@ -28,4 +28,7 @@ condopt <- function(...) {
 		repr.plot.quality   = 90,
 		#vector font family
 		repr.plot.family    = 'sans')
+	
+	condopt(
+		repr.matrix.latex.colspec = list(row.head = 'r|', col = 'c', end = ''))
 }

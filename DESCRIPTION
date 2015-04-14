@@ -11,6 +11,7 @@ LazyData: true
 Collate:
     'generics.r'
     'list.r'
+    'matrix_df.r'
     'options.r'
     'package.r'
     'recordedplot.r'

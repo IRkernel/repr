@@ -74,7 +74,7 @@ repr_svg.recordedplot <- function(p,
 	svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	replayPlot(p)
 	dev.off()
-	structure(readChar(tf, file.info(tf)$size, TRUE), class = 'repr', repr.format = 'png')
+	structure(readChar(tf, file.info(tf)$size, TRUE), class = 'repr', repr.format = 'svg')
 }
 
 #' Get PDF plot
