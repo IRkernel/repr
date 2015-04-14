@@ -90,7 +90,7 @@ repr_pdf.recordedplot <- function(p,
 	family    = getOption('repr.plot.family'),
 ...) {
 	tf <- tempfile(fileext = '.pdf')
-	svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
+	cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	replayPlot(p)
 	dev.off()
 	structure(readBin(tf, raw(), file.info(tf)$size), class = 'repr', repr.format = 'pdf')
