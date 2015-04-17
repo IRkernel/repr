@@ -1,5 +1,5 @@
 repr_list_generic <- function(
-	vec, fmt, enum.item, named.item, only.named.item,
+	vec, enum.item, named.item, only.named.item,
 	enum.wrap, named.wrap = enum.wrap,
 	...,
 	numeric.item = named.item,
@@ -33,7 +33,7 @@ repr_list_generic <- function(
 		
 		ret <- sprintf(wrap, paste0(entries, collapse = ''))
 	}
-	structure(ret, class = 'repr', repr.format = fmt)
+	ret
 }
 
 
@@ -42,7 +42,7 @@ repr_list_generic <- function(
 #' 
 #' @export
 repr_html.list <- function(li, ...) repr_list_generic(
-	li, 'html',
+	li,
 	'\t<li>%s</li>\n',
 	'\t<dt>$%s</dt>\n\t\t<dd>%s</dd>\n',
 	'<strong>$%s</strong> = %s',
@@ -56,7 +56,7 @@ repr_html.list <- function(li, ...) repr_list_generic(
 #' 
 #' @export
 repr_markdown.list <- function(li, ...) repr_list_generic(
-	li, 'markdown',
+	li,
 	'%s. %s\n',
 	'$%s\n:   %s\n',
 	'**$%s** = %s',
@@ -70,7 +70,7 @@ repr_markdown.list <- function(li, ...) repr_list_generic(
 #' 
 #' @export
 repr_latex.list <- function(li, ...) repr_list_generic(
-	li, 'latex',
+	li,
 	'\\item %s\n',
 	'\\item[\\$%s] %s\n',
 	'\\textbf{\\$%s} = %s',

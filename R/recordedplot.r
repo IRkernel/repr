@@ -31,7 +31,7 @@ repr_png.recordedplot <- function(p,
 	png(tf, width, height, 'in', pointsize, bg, res, type = 'cairo', antialias = antialias)
 	replayPlot(p)
 	dev.off()
-	structure(readBin(tf, raw(), file.info(tf)$size), class = 'repr', repr.format = 'png')
+	readBin(tf, raw(), file.info(tf)$size)
 }
 
 #' Get JPEG plot
@@ -51,7 +51,7 @@ repr_jpg.recordedplot <- function(p,
 	jpeg(tf, width, height, 'in', pointsize, quality, bg, res, type = 'cairo', antialias = antialias)
 	replayPlot(p)
 	dev.off()
-	structure(readBin(tf, raw(), file.info(tf)$size), class = 'repr', repr.format = 'jpg')
+	readBin(tf, raw(), file.info(tf)$size)
 }
 
 
@@ -74,7 +74,7 @@ repr_svg.recordedplot <- function(p,
 	svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	replayPlot(p)
 	dev.off()
-	structure(readChar(tf, file.info(tf)$size, TRUE), class = 'repr', repr.format = 'svg')
+	readChar(tf, file.info(tf)$size, TRUE)
 }
 
 #' Get PDF plot
@@ -93,5 +93,5 @@ repr_pdf.recordedplot <- function(p,
 	cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	replayPlot(p)
 	dev.off()
-	structure(readBin(tf, raw(), file.info(tf)$size), class = 'repr', repr.format = 'pdf')
+	readBin(tf, raw(), file.info(tf)$size)
 }

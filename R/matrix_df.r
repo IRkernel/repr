@@ -1,7 +1,7 @@
 # HTML --------------------------------------------------------------------
 
 repr_matrix_generic <- function(
-	x, fmt,
+	x,
 	wrap,
 	header.wrap, corner, head,
 	body.wrap, row.wrap, row.head,
@@ -29,7 +29,7 @@ repr_matrix_generic <- function(
 	
 	body <- sprintf(body.wrap, paste(rows, collapse = ''))
 	
-	structure(sprintf(wrap, header, body), class = 'repr', repr.format = fmt)
+	sprintf(wrap, header, body)
 }
 
 
@@ -37,12 +37,12 @@ repr_matrix_generic <- function(
 #' 
 #' @export
 repr_html.matrix <- function(x, ...) repr_matrix_generic(
-		x, 'html',
-		'<table>\n%s%s</table>\n',
-		'<thead><tr>%s</tr></thead>\n', '<th></th>',
-		'<th scope=col>%s</th>',
-		'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
-		'<td>%s</td>')
+	x,
+	'<table>\n%s%s</table>\n',
+	'<thead><tr>%s</tr></thead>\n', '<th></th>',
+	'<th scope=col>%s</th>',
+	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
+	'<td>%s</td>')
 
 #' @name repr_html.matrix
 #' @export
@@ -65,7 +65,7 @@ repr_latex.matrix <- function(x, ...) {
 		cols <- paste0(colspec$row.head, cols)
 	
 	r <- repr_matrix_generic(
-		x, 'latex',
+		x,
 		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',

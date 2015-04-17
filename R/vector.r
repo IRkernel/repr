@@ -5,7 +5,7 @@ NULL
 
 
 repr_vector_generic <- function(
-	vec, fmt, enum.item, named.item, only.named.item,
+	vec, enum.item, named.item, only.named.item,
 	enum.wrap, named.wrap = enum.wrap,
 	...,
 	numeric.item = named.item,
@@ -44,7 +44,7 @@ repr_vector_generic <- function(
 		
 		ret <- sprintf(wrap, paste0(entries, collapse = ''))
 	}
-	structure(ret, class = 'repr', repr.format = fmt)
+	ret
 }
 
 
@@ -56,7 +56,7 @@ repr_vector_generic <- function(
 #' 
 #' @export
 repr_html.logical <- function(vec, ...) repr_vector_generic(
-	vec, 'html',
+	vec,
 	'\t<li>%s</li>\n',
 	'\t<dt>%s</dt>\n\t\t<dd>%s</dd>\n',
 	'<strong>%s:</strong> %s',
@@ -86,7 +86,7 @@ repr_html.character <- repr_html.logical
 #' 
 #' @export
 repr_markdown.logical <- function(vec, ...) repr_vector_generic(
-	vec, 'markdown',
+	vec,
 	'%s. %s\n',
 	'%s\n:   %s',
 	'**%s:** %s',
@@ -116,7 +116,7 @@ repr_markdown.character <- repr_markdown.logical
 #' 
 #' @export
 repr_latex.logical <- function(vec, ...) repr_vector_generic(
-	vec, 'latex',
+	vec,
 	'\\item %s\n',
 	'\\item[%s] %s\n',
 	'\\textbf{%s:} %s',
