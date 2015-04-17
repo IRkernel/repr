@@ -30,5 +30,6 @@ condopt <- function(...) {
 		repr.plot.family    = 'sans')
 	
 	condopt(
-		repr.matrix.latex.colspec = list(row.head = 'r|', col = 'c', end = ''))
+		repr.vector.quote = TRUE,
+		repr.matrix.latex.colspec = list(row.head = 'r|', col = 'l', end = ''))
 }

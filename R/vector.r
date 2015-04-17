@@ -12,7 +12,10 @@ repr_vector_generic <- function(
 	item.uses.numbers = FALSE) {
 	
 	nms <- names(vec)
-	char.vec <- as.character(vec)
+	if (is.character(vec) && getOption('repr.vector.quote'))
+		char.vec <- shQuote(vec)
+	else
+		char.vec <- as.character(vec)
 	
 	if (length(char.vec) == 1) {
 		if (is.null(nms)) {
