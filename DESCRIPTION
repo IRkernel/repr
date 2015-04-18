@@ -6,9 +6,13 @@ Description: String and binary representations of objects for several formats /
     mime types.
 Depends:
     R (>= 3.1.3)
+Suggests:
+    highr
 License: GPL-3
 LazyData: true
 Collate:
+    'utils.r'
+    'function.r'
     'generics.r'
     'list.r'
     'matrix_df.r'

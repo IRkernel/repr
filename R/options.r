@@ -31,5 +31,6 @@ condopt <- function(...) {
 	
 	condopt(
 		repr.vector.quote = TRUE,
-		repr.matrix.latex.colspec = list(row.head = 'r|', col = 'l', end = ''))
+		repr.matrix.latex.colspec = list(row.head = 'r|', col = 'l', end = ''),
+		repr.function.highlight = FALSE)
 }
