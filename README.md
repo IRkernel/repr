@@ -22,6 +22,15 @@ Exports
 
 `format2repr` does the same for simple format names. So `format2repr$markdown` is `repr_markdown`.
 
+Imports
+-------
+
+Per default, `repr` will not use any packages not part of the R distribution.
+
+Only if you want to use `repr_html.function` and `repr_latex.function`, and specify the parameter `highlight` or option `repr.function.highlight` to be `TRUE`, then be sure to have [highr][] installed.
+
+[highr]: https://github.com/yihui/highr
+
 Formats
 -------
 
