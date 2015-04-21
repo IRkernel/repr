@@ -4,7 +4,7 @@
 repr_text.recordedplot <- function(p, ...) {
 	for (call in rev(p[[1]])) {
 		args <- call[[2]]
-		if(args[[1]]$name == 'C_title') {
+		if(args[[1]]$name == 'C_title' && !is.null(args[[2]])) {
 			return(sprintf('Plot with title “%s”', args[[2]]))
 		}
 	}
