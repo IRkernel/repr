@@ -11,6 +11,11 @@ repr_help_files_with_topic_generic <- function(helps, Rd2_) {
     
     paths <- as.character(helps)
     
+    if(length(paths) == 0) {
+    	return(paste(gettextf('No documentation for %s in specified packages and libraries:', sQuote(topic)),
+    							 gettextf('you could try %s', sQuote(paste0('??', topic))), sep = '\n'))
+    }
+    
     #TODO: handle multiple
     file <- paths[[1]]
     
