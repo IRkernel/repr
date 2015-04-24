@@ -120,8 +120,8 @@ repr_latex.logical <- function(vec, ...) repr_vector_generic(
 	'\\item %s\n',
 	'\\item[%s] %s\n',
 	'\\textbf{%s:} %s',
-	enum.wrap  = '\\begin{inparaenum}\n%s\\end{inparaenum}\n',
-	named.wrap = '\\begin{inparadesc}\n%s\\end{inparadesc}\n',
+	enum.wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
+	named.wrap = '\\begin{description*}\n%s\\end{description*}\n',
 	only.named.item = '\\textbf{%s:} %s')
 
 #' @export @name repr_latex.logical
