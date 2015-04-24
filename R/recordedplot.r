@@ -27,6 +27,7 @@ repr_png.recordedplot <- function(p,
 	#special
 	res       = getOption('repr.plot.res'),
 ...) {
+	if (!capabilities('png')) { return NULL }
 	tf <- tempfile(fileext = '.png')
 	png(tf, width, height, 'in', pointsize, bg, res, type = 'cairo', antialias = antialias)
 	replayPlot(p)
@@ -47,6 +48,7 @@ repr_jpg.recordedplot <- function(p,
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
 ...) {
+	if (!capabilities('jpeg')) { return NULL }
 	tf <- tempfile(fileext = '.jpg')
 	jpeg(tf, width, height, 'in', pointsize, quality, bg, res, type = 'cairo', antialias = antialias)
 	replayPlot(p)
@@ -70,6 +72,7 @@ repr_svg.recordedplot <- function(p,
 	#special
 	family    = getOption('repr.plot.family'),
 ...) {
+	if (!capabilities('cairo')) { return NULL }
 	tf <- tempfile(fileext = '.svg')
 	svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	replayPlot(p)
@@ -89,6 +92,7 @@ repr_pdf.recordedplot <- function(p,
 	#special
 	family    = getOption('repr.plot.family'),
 ...) {
+	if (!capabilities('cairo')) { return NULL }
 	tf <- tempfile(fileext = '.pdf')
 	cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	replayPlot(p)
