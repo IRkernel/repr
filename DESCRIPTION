@@ -14,6 +14,7 @@ Collate:
     'utils.r'
     'function.r'
     'generics.r'
+    'help_files_with_topic.r'
     'list.r'
     'matrix_df.r'
     'options.r'
