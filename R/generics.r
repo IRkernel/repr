@@ -1,9 +1,9 @@
 #' Dynamic representation
 #' 
-#' Specify an object and a format to represent it in. Will \link{stop()} if no such format is known.
+#' Specify an object and a format to represent it in. Will \link{stop}\code{()} if no such format is known.
 #' 
 #' @return A character or raw vector of that format or NULL if none is defined.
-#' Only the \code{'text'} format is defined for everything (via \link{print()})
+#' Only the \code{'text'} format is defined for everything (via \link{print}\code{()})
 #' 
 #' @export
 repr <- function(obj, format = 'text', ...) {
@@ -14,7 +14,7 @@ repr <- function(obj, format = 'text', ...) {
 
 #' Text representation
 #' 
-#' The only representation defined per default for everthing (via \link{print()})
+#' The only representation defined per default for everthing (via \link{print}\code{()})
 #'
 #' @export
 repr_text <- function (obj, ...) UseMethod('repr_text', obj)
@@ -87,6 +87,8 @@ repr_svg <- function (obj, ...) UseMethod('repr_svg', obj)
 repr_svg.default <- function(obj, ...) NULL
 
 
+#' A list mapping mime types to \code{repr} functions
+#' 
 #' @export
 mime2repr <- list(
 	'text/plain' = repr_text,
@@ -100,6 +102,8 @@ mime2repr <- list(
 	'image/jpeg' = repr_jpg,
 	'image/svg+xml' = repr_svg)
 
+#' A list mapping format names to \code{repr} functions
+#' 
 #' @export
 format2repr <- sapply(
 	c('text', 'html', 'markdown', 'latex', 'json', 'javascript', 'pdf', 'png', 'jpg', 'svg'),

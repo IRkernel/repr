@@ -3,13 +3,13 @@
 #' Representation of help
 #' 
 #' @export
-repr_help_files_with_topic_generic <- function(helps, Rd2_) {
-    topic <- attr(helps, 'topic')
-    type <- attr(helps, 'type') #should we make this html by setting some option?
-    tried_all_packages <- attr(helps, 'tried_all_packages')
+repr_help_files_with_topic_generic <- function(obj, Rd2_) {
+    topic <- attr(obj, 'topic')
+    type <- attr(obj, 'type') #should we make this html by setting some option?
+    tried_all_packages <- attr(obj, 'tried_all_packages')
     #TODO: handle tried_all_packages
     
-    paths <- as.character(helps)
+    paths <- as.character(obj)
     
     if(length(paths) == 0) {
     	return(paste(gettextf('No documentation for %s in specified packages and libraries:', sQuote(topic)),
@@ -39,15 +39,15 @@ repr_help_files_with_topic_generic <- function(helps, Rd2_) {
 }
 
 #' @export
-repr_text.help_files_with_topic <- function(helps, ...)
-	repr_help_files_with_topic_generic(helps, tools::Rd2txt)
+repr_text.help_files_with_topic <- function(obj, ...)
+	repr_help_files_with_topic_generic(obj, tools::Rd2txt)
 
 #' @export
-repr_html.help_files_with_topic <- function(helps, ...)
-	repr_help_files_with_topic_generic(helps, tools::Rd2HTML)
+repr_html.help_files_with_topic <- function(obj, ...)
+	repr_help_files_with_topic_generic(obj, tools::Rd2HTML)
 
 #TODO: markdown
 
 #' @export
-repr_latex.help_files_with_topic <- function(helps, ...)
-	repr_help_files_with_topic_generic(helps, tools::Rd2latex)
+repr_latex.help_files_with_topic <- function(obj, ...)
+	repr_help_files_with_topic_generic(obj, tools::Rd2latex)

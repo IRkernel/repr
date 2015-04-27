@@ -2,14 +2,14 @@
 #' 
 #' Once this package is loaded, all options are set to defaults which weren’t set beforehand.
 #' 
-#' Setting all options set to \code{NULL} are reset to defaults when reloading the package (or calling \code{repr:::onload()}).
+#' Setting all options set to \code{NULL} are reset to defaults when reloading the package (or calling \code{repr:::.onload()}).
 #' 
 #' @section Options:
 #' 
 #' \describe{
 #' 
 #' \item{\code{repr.plot.*}}{
-#' 	Those are for representations of \link{recordedplot} instances:
+#' 	Those are for representations of \code{recordedplot} instances:
 #' 	\describe{
 #' 		\item{\code{repr.plot.width}}{Plotting area width in inches (default: 7)}
 #' 		\item{\code{repr.plot.height}}{Plotting area height in inches (default: 7)}
@@ -23,7 +23,7 @@
 #' }
 #' \item{\code{repr.vector.quote}}{Output quotation marks for character vectors? (default: TRUE)}
 #' \item{\code{repr.matrix.latex.colspec}}{How to layout LaTeX tables when representing matrices or data.frames. List of \code{row.head}, other \code{col}, and \code{end} strings. \code{end} mainly exists for when you want a vertical line there (default: 'r|', 'l', and '')}
-#' \item{\code{repr.function.highlight}}{Use the \link{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)}
+#' \item{\code{repr.function.highlight}}{Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)}
 #' 
 #' }
 #'

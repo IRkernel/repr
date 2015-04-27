@@ -16,24 +16,24 @@ repr_function_generic <- function(f, fmt, escape, high.wrap, norm.wrap, highligh
 #' HTML representation of a function
 #' 
 #' @export
-repr_html.function <- function(f, highlight = getOption('repr.function.highlight'), ...) {
+repr_html.function <- function(obj, highlight = getOption('repr.function.highlight'), ...) {
 	wrap <- '<pre class=language-r><code>%s</code></pre>'
-	repr_function_generic(f, 'html', html.escape, wrap, wrap, highlight, ...)
+	repr_function_generic(obj, 'html', html.escape, wrap, wrap, highlight, ...)
 }
 
 #' LaTeX representation of a function
 #' 
 #' @export
-repr_latex.function <- function(f, highlight = getOption('repr.function.highlight'), ...) {
+repr_latex.function <- function(obj, highlight = getOption('repr.function.highlight'), ...) {
 	minted.wrap <- '\\begin{minted}{r}\n%s\n\\end{minted}'
-	repr_function_generic(f, 'latex', latex.escape, '%s', minted.wrap, highlight, ...)
+	repr_function_generic(obj, 'latex', latex.escape, '%s', minted.wrap, highlight, ...)
 }
 
 #' Markdown representation of a function
 #' 
 #' @export
-repr_markdown.function <- function(f, fenced = TRUE, ...) {
-	code <- deparse(f)
+repr_markdown.function <- function(obj, fenced = TRUE, ...) {
+	code <- deparse(obj)
 	if (fenced) {
 		code <- c('```r', code, '```')
 	} else {

@@ -42,8 +42,8 @@ repr_list_generic <- function(
 #' HTML representation of a list
 #' 
 #' @export
-repr_html.list <- function(li, ...) repr_list_generic(
-	li, 'html',
+repr_html.list <- function(obj, ...) repr_list_generic(
+	obj, 'html',
 	'\t<li>%s</li>\n',
 	'\t<dt>$%s</dt>\n\t\t<dd>%s</dd>\n',
 	'<strong>$%s</strong> = %s',
@@ -56,8 +56,8 @@ repr_html.list <- function(li, ...) repr_list_generic(
 #' Markdown representation of a list
 #' 
 #' @export
-repr_markdown.list <- function(li, ...) repr_list_generic(
-	li, 'markdown',
+repr_markdown.list <- function(obj, ...) repr_list_generic(
+	obj, 'markdown',
 	'%s. %s\n',
 	'$%s\n:   %s\n',
 	'**$%s** = %s',
@@ -70,8 +70,8 @@ repr_markdown.list <- function(li, ...) repr_list_generic(
 #' LaTeX representation of a list
 #' 
 #' @export
-repr_latex.list <- function(li, ...) repr_list_generic(
-	li, 'latex',
+repr_latex.list <- function(obj, ...) repr_list_generic(
+	obj, 'latex',
 	'\\item %s\n',
 	'\\item[\\$%s] %s\n',
 	'\\textbf{\\$%s} = %s',

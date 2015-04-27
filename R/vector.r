@@ -55,8 +55,8 @@ repr_vector_generic <- function(
 #' HTML representation of a vector
 #' 
 #' @export
-repr_html.logical <- function(vec, ...) repr_vector_generic(
-	vec,
+repr_html.logical <- function(obj, ...) repr_vector_generic(
+	obj,
 	'\t<li>%s</li>\n',
 	'\t<dt>%s</dt>\n\t\t<dd>%s</dd>\n',
 	'<strong>%s:</strong> %s',
@@ -85,8 +85,8 @@ repr_html.character <- repr_html.logical
 #' Markdown representation of a vector
 #' 
 #' @export
-repr_markdown.logical <- function(vec, ...) repr_vector_generic(
-	vec,
+repr_markdown.logical <- function(obj, ...) repr_vector_generic(
+	obj,
 	'%s. %s\n',
 	'%s\n:   %s',
 	'**%s:** %s',
@@ -115,8 +115,8 @@ repr_markdown.character <- repr_markdown.logical
 #' LaTeX representation of a vector
 #' 
 #' @export
-repr_latex.logical <- function(vec, ...) repr_vector_generic(
-	vec,
+repr_latex.logical <- function(obj, ...) repr_vector_generic(
+	obj,
 	'\\item %s\n',
 	'\\item[%s] %s\n',
 	'\\textbf{%s:} %s',

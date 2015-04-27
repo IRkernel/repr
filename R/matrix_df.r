@@ -36,8 +36,8 @@ repr_matrix_generic <- function(
 #' HTML Representation of a Matrix-like object
 #' 
 #' @export
-repr_html.matrix <- function(x, ...) repr_matrix_generic(
-	x,
+repr_html.matrix <- function(obj, ...) repr_matrix_generic(
+	obj,
 	'<table>\n%s%s</table>\n',
 	'<thead><tr>%s</tr></thead>\n', '<th></th>',
 	'<th scope=col>%s</th>',
@@ -57,15 +57,15 @@ repr_html.data.frame <- repr_html.matrix
 #' LaTeX Representation of a Matrix-like object
 #' 
 #' @export
-repr_latex.matrix <- function(x, ...) {
+repr_latex.matrix <- function(obj, ...) {
 	colspec <- getOption('repr.matrix.latex.colspec')
 	
-	cols <- paste0(paste(rep(colspec$col, ncol(x)), collapse = ''), colspec$end)
-	if (!is.null(rownames(x)))
+	cols <- paste0(paste(rep(colspec$col, ncol(obj)), collapse = ''), colspec$end)
+	if (!is.null(rownames(obj)))
 		cols <- paste0(colspec$row.head, cols)
 	
 	r <- repr_matrix_generic(
-		x,
+		obj,
 		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
