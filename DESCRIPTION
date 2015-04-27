@@ -10,6 +10,7 @@ Suggests:
     highr
 License: GPL-3
 LazyData: true
+Encoding: UTF-8
 Collate:
     'utils.r'
     'function.r'

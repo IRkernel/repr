@@ -21,9 +21,17 @@
 #' 		\item{\code{repr.plot.family}}{Vector font family. 'sans', 'serif', 'mono' or a specific one (default: sans)}
 #' 	}
 #' }
-#' \item{\code{repr.vector.quote}}{Output quotation marks for character vectors? (default: TRUE)}
-#' \item{\code{repr.matrix.latex.colspec}}{How to layout LaTeX tables when representing matrices or data.frames. List of \code{row.head}, other \code{col}, and \code{end} strings. \code{end} mainly exists for when you want a vertical line there (default: 'r|', 'l', and '')}
-#' \item{\code{repr.function.highlight}}{Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)}
+#' \item{\code{repr.vector.quote}}{
+#' 	Output quotation marks for character vectors? (default: TRUE)
+#' }
+#' \item{\code{repr.matrix.latex.colspec}}{
+#' 	How to layout LaTeX tables when representing matrices or data.frames.
+#' 	List of \code{row.head}, other \code{col}, and \code{end} strings.
+#' 	\code{end} mainly exists for when you want a vertical line there (default: 'r|', 'l', and '')
+#' }
+#' \item{\code{repr.function.highlight}}{
+#'  Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)
+#' }
 #' 
 #' }
 #'
