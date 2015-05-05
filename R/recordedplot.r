@@ -12,6 +12,14 @@ repr_text.recordedplot <- function(obj, ...) {
 }
 
 
+get.best.type <- function(fmt = NULL) {
+	if      (capabilities('aqua' )) 'quartz'
+	else if (capabilities('cairo')) 'cairo'
+	else if (!is.null(fmt) && capabilities(fmt)) 'Xlib'
+	else NULL
+}
+
+
 ### BITMAPS ###
 
 
@@ -27,9 +35,10 @@ repr_png.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 ...) {
-	if (!capabilities('png')) return(NULL)
+	type <- get.best.type('png')
+	if (is.null(type)) return(NULL)
 	tf <- tempfile(fileext = '.png')
-	png(tf, width, height, 'in', pointsize, bg, res, type = 'cairo', antialias = antialias)
+	png(tf, width, height, 'in', pointsize, bg, res, type = type, antialias = antialias)
 	replayPlot(obj)
 	dev.off()
 	readBin(tf, raw(), file.info(tf)$size)
@@ -48,9 +57,10 @@ repr_jpg.recordedplot <- function(obj,
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
 ...) {
-	if (!capabilities('jpeg')) return(NULL)
+	type <- get.best.type('jpeg')
+	if (is.null(type)) return(NULL)
 	tf <- tempfile(fileext = '.jpg')
-	jpeg(tf, width, height, 'in', pointsize, quality, bg, res, type = 'cairo', antialias = antialias)
+	jpeg(tf, width, height, 'in', pointsize, quality, bg, res, type = type, antialias = antialias)
 	replayPlot(obj)
 	dev.off()
 	readBin(tf, raw(), file.info(tf)$size)
@@ -72,7 +82,7 @@ repr_svg.recordedplot <- function(obj,
 	#special
 	family    = getOption('repr.plot.family'),
 ...) {
-	if (!capabilities('cairo')) return(NULL)
+	if (!capabilities('cairo')) return(NULL) #only cairo can do SVG
 	tf <- tempfile(fileext = '.svg')
 	svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	replayPlot(obj)
@@ -92,9 +102,15 @@ repr_pdf.recordedplot <- function(obj,
 	#special
 	family    = getOption('repr.plot.family'),
 ...) {
-	if (!capabilities('cairo')) return(NULL)
+	type <- get.best.type()
+	#type may be NULL, PDF is always supported
 	tf <- tempfile(fileext = '.pdf')
-	cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
+	if (type == 'cairo')
+		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
+	else if (type == 'quartz')
+		quartz('Quartz %d', width, height, pointsize, family, antialias, 'pdf', tf, bg)
+	else
+		pdf(tf, width, height, FALSE, family, bg = bg, pointsize = pointsize)
 	replayPlot(obj)
 	dev.off()
 	readBin(tf, raw(), file.info(tf)$size)
