@@ -20,12 +20,15 @@ repr_text.recordedplot <- function(obj, ...) {
 	'plot without title'
 }
 
-
-get.best.type <- function(fmt = NULL) {
-	if      (capabilities('aqua' )) 'quartz'
-	else if (capabilities('cairo')) 'cairo'
-	else if (!is.null(fmt) && capabilities(fmt)) 'Xlib'
-	else NULL
+repr_recordedplot_generic <- function(obj, ext, binary, dev.cb) {
+	tf <- tempfile(fileext = ext)
+	dev.cb(tf)
+ 	replayPlot(obj)
+	dev.off()
+	if(binary)
+		readBin(tf, raw(), file.info(tf)$size)
+	else
+		readChar(tf, file.info(tf)$size, useBytes = TRUE)
 }
 
 
@@ -44,13 +47,10 @@ repr_png.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 ...) {
-	type <- get.best.type('png')
-	if (is.null(type)) return(NULL)
-	tf <- tempfile(fileext = '.png')
-	png(tf, width, height, 'in', pointsize, bg, res, type = type, antialias = antialias)
-	replayPlot(obj)
-	dev.off()
-	readBin(tf, raw(), file.info(tf)$size)
+	if (!any(capabilities(c('aqua', 'cairo', 'X11')))) return(NULL)
+	
+	repr_recordedplot_generic(obj, '.png', TRUE, function(tf)
+		png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias))
 }
 
 #' Get JPEG plot
@@ -66,13 +66,10 @@ repr_jpg.recordedplot <- function(obj,
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
 ...) {
-	type <- get.best.type('jpeg')
-	if (is.null(type)) return(NULL)
-	tf <- tempfile(fileext = '.jpg')
-	jpeg(tf, width, height, 'in', pointsize, quality, bg, res, type = type, antialias = antialias)
-	replayPlot(obj)
-	dev.off()
-	readBin(tf, raw(), file.info(tf)$size)
+	if (!any(capabilities(c('aqua', 'cairo', 'X11')))) return(NULL)
+	
+	repr_recordedplot_generic(obj, '.jpg', TRUE, function(tf)
+		jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias))
 }
 
 
@@ -92,11 +89,9 @@ repr_svg.recordedplot <- function(obj,
 	family    = getOption('repr.plot.family'),
 ...) {
 	if (!capabilities('cairo')) return(NULL) #only cairo can do SVG
-	tf <- tempfile(fileext = '.svg')
-	svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
-	replayPlot(obj)
-	dev.off()
-	readChar(tf, file.info(tf)$size, TRUE)
+	
+	repr_recordedplot_generic(obj, '.svg', FALSE, function(tf)
+		svg(tf, width, height, pointsize, FALSE, family, bg, antialias))
 }
 
 #' Get PDF plot
@@ -110,17 +105,11 @@ repr_pdf.recordedplot <- function(obj,
 	antialias = getOption('repr.plot.antialias'),
 	#special
 	family    = getOption('repr.plot.family'),
-...) {
-	type <- get.best.type()
-	#type may be NULL, PDF is always supported
-	tf <- tempfile(fileext = '.pdf')
-	if (type == 'cairo')
-		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
-	else if (type == 'quartz')
+...) repr_recordedplot_generic(obj, '.pdf', TRUE, function(tf) {
+	if (capabilities('aqua'))
 		quartz('Quartz %d', width, height, pointsize, family, antialias, 'pdf', tf, bg)
+	else if (capabilities('cairo'))
+		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	else
 		pdf(tf, width, height, FALSE, family, bg = bg, pointsize = pointsize)
-	replayPlot(obj)
-	dev.off()
-	readBin(tf, raw(), file.info(tf)$size)
-}
+})
