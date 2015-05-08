@@ -1,5 +1,14 @@
 #' Get plot title
 #' 
+#' @examples
+#' dev.new()
+#' dev.control(displaylist = 'enable')
+#' plot(sqrt, main = 'Square root')
+#' p <- recordPlot()
+#' dev.off()
+#' 
+#' repr_text(p)
+#' 
 #' @export
 repr_text.recordedplot <- function(obj, ...) {
 	for (call in rev(obj[[1]])) {
