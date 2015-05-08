@@ -15,81 +15,90 @@ repr <- function(obj, format = 'text', ...) {
 #' Text representation
 #' 
 #' The only representation defined per default for everthing (via \link{print}\code{()})
-#'
+#' 
+#' @seealso \link{repr-generics} for other generics
 #' @export
 repr_text <- function (obj, ...) UseMethod('repr_text', obj)
-#' @export
+#' @export @name repr_text
 repr_text.default <- function(obj, ...) {
 	paste(capture.output(print(obj)), collapse = '\n')
 }
 
-#' HTML representation
+#' Representations for specific formats
 #' 
-#' @export
+#' @seealso \link{repr_text} for the only repr that is always defined
+#' @aliases
+#' repr_html repr_html.default
+#' repr_markdown repr_markdown.default
+#' repr_latex repr_latex.default
+#' repr_json repr_json.default
+#' repr_javascript repr_javascript.default
+#' repr_pdf repr_pdf.default
+#' repr_png repr_png.default
+#' repr_jpg repr_jpg.default
+#' repr_svg repr_svg.default
+#' @name repr-generics
+NULL
+
+
+#' @export @name repr-generics
 repr_html <- function (obj, ...) UseMethod('repr_html', obj)
-#' @export
+#' @export @name repr-generics
 repr_html.default <- function(obj, ...) NULL
 
-#' Markdown representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_markdown <- function (obj, ...) UseMethod('repr_markdown', obj)
-#' @export
+#' @export @name repr-generics
 repr_markdown.default <- function(obj, ...) NULL
 
-#' LaTeX representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_latex <- function (obj, ...) UseMethod('repr_latex', obj)
-#' @export
+#' @export @name repr-generics
 repr_latex.default <- function(obj, ...) NULL
 
-#' JSON representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_json <- function (obj, ...) UseMethod('repr_json', obj)
-#' @export
+#' @export @name repr-generics
 repr_json.default <- function(obj, ...) NULL
 
-#' Javascript representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_javascript <- function (obj, ...) UseMethod('repr_javascript', obj)
-#' @export
+#' @export @name repr-generics
 repr_javascript.default <- function(obj, ...) NULL
 
-#' PDF representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_pdf <- function (obj, ...) UseMethod('repr_pdf', obj)
-#' @export
+#' @export @name repr-generics
 repr_pdf.default <- function(obj, ...) NULL
 
-#' PNG representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_png <- function (obj, ...) UseMethod('repr_png', obj)
-#' @export
+#' @export @name repr-generics
 repr_png.default <- function(obj, ...) NULL
 
-#' JPG representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_jpg <- function (obj, ...) UseMethod('repr_jpg', obj)
-#' @export
+#' @export @name repr-generics
 repr_jpg.default <- function(obj, ...) NULL
 
-#' SVG representation
-#' 
-#' @export
+
+#' @export @name repr-generics
 repr_svg <- function (obj, ...) UseMethod('repr_svg', obj)
-#' @export
+#' @export @name repr-generics
 repr_svg.default <- function(obj, ...) NULL
 
 
-#' A list mapping mime types to \code{repr} functions
+#' Lists mapping mime types (\code{mime2repr}) or format names (\code{format2repr}) to \code{repr} functions
 #' 
-#' @export
+#' @aliases mime2repr format2repr
+#' @export @name *2repr
 mime2repr <- list(
 	'text/plain' = repr_text,
 	'text/html' = repr_html,
@@ -102,9 +111,7 @@ mime2repr <- list(
 	'image/jpeg' = repr_jpg,
 	'image/svg+xml' = repr_svg)
 
-#' A list mapping format names to \code{repr} functions
-#' 
-#' @export
+#' @export @name *2repr
 format2repr <- sapply(
 	c('text', 'html', 'markdown', 'latex', 'json', 'javascript', 'pdf', 'png', 'jpg', 'svg'),
 	function(n) get(paste0('repr_', n)))

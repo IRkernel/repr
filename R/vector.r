@@ -1,3 +1,10 @@
+#' Representations of vectors
+#' 
+#' @aliases
+#' repr_markdown.logical repr_markdown.integer repr_markdown.numeric repr_markdown.factor repr_markdown.character
+#'    repr_latex.logical    repr_latex.integer    repr_latex.numeric    repr_latex.factor    repr_latex.character
+#'     repr_html.logical     repr_html.integer     repr_html.numeric     repr_html.factor     repr_html.character
+#' @name repr_*.vector
 #' @include list.r
 NULL
 
@@ -52,9 +59,7 @@ repr_vector_generic <- function(
 # HTML --------------------------------------------------------------------
 
 
-#' HTML representation of a vector
-#' 
-#' @export
+#' @export @name repr_*.vector
 repr_html.logical <- function(obj, ...) repr_vector_generic(
 	obj,
 	'\t<li>%s</li>\n',
@@ -63,16 +68,16 @@ repr_html.logical <- function(obj, ...) repr_vector_generic(
 	'<ol class=list-inline>\n%s</ol>\n',
 	'<dl class=dl-horizontal>\n%s</dl>\n')
 
-#' @export @name repr_html.logical
+#' @export @name repr_*.vector
 repr_html.integer <- repr_html.logical
 
-#' @export @name repr_html.logical
+#' @export @name repr_*.vector
 repr_html.numeric <- repr_html.logical
 
-#' @export @name repr_html.logical
+#' @export @name repr_*.vector
 repr_html.factor <- repr_html.logical
 
-#' @export @name repr_html.logical
+#' @export @name repr_*.vector
 repr_html.character <- repr_html.logical
 
 
@@ -82,9 +87,7 @@ repr_html.character <- repr_html.logical
 
 
 
-#' Markdown representation of a vector
-#' 
-#' @export
+#' @export @name repr_*.vector
 repr_markdown.logical <- function(obj, ...) repr_vector_generic(
 	obj,
 	'%s. %s\n',
@@ -93,16 +96,16 @@ repr_markdown.logical <- function(obj, ...) repr_vector_generic(
 	'%s\n\n',
 	item.uses.numbers = TRUE)
 
-#' @export @name repr_markdown.logical
+#' @export @name repr_*.vector
 repr_markdown.integer <- repr_markdown.logical
 
-#' @export @name repr_markdown.logical
+#' @export @name repr_*.vector
 repr_markdown.numeric <- repr_markdown.logical
 
-#' @export @name repr_markdown.logical
+#' @export @name repr_*.vector
 repr_markdown.factor <- repr_markdown.logical
 
-#' @export @name repr_markdown.logical
+#' @export @name repr_*.vector
 repr_markdown.character <- repr_markdown.logical
 
 
@@ -112,9 +115,7 @@ repr_markdown.character <- repr_markdown.logical
 
 
 
-#' LaTeX representation of a vector
-#' 
-#' @export
+#' @export @name repr_*.vector
 repr_latex.logical <- function(obj, ...) repr_vector_generic(
 	obj,
 	'\\item %s\n',
@@ -124,14 +125,14 @@ repr_latex.logical <- function(obj, ...) repr_vector_generic(
 	named.wrap = '\\begin{description*}\n%s\\end{description*}\n',
 	only.named.item = '\\textbf{%s:} %s')
 
-#' @export @name repr_latex.logical
+#' @export @name repr_*.vector
 repr_latex.integer <- repr_latex.logical
 
-#' @export @name repr_latex.logical
+#' @export @name repr_*.vector
 repr_latex.numeric <- repr_latex.logical
 
-#' @export @name repr_latex.logical
+#' @export @name repr_*.vector
 repr_latex.factor <- repr_latex.logical
 
-#' @export @name repr_latex.logical
+#' @export @name repr_*.vector
 repr_latex.character <- repr_latex.logical

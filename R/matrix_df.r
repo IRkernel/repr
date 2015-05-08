@@ -1,3 +1,13 @@
+#' Tabular data representations
+#' 
+#' HTML and LaTeX representations of Matrix-like objects
+#' 
+#' @seealso \link{repr-options} for \code{repr.matrix.latex.colspec}
+#' 
+#' @aliases repr_html.matrix repr_html.data.frame repr_latex.matrix repr_latex.data.frame
+#' @name repr_*.matrix/data.frame
+NULL
+
 # HTML --------------------------------------------------------------------
 
 repr_matrix_generic <- function(
@@ -33,8 +43,7 @@ repr_matrix_generic <- function(
 }
 
 
-#' HTML Representation of a Matrix-like object
-#' 
+#' @name repr_*.matrix/data.frame
 #' @export
 repr_html.matrix <- function(obj, ...) repr_matrix_generic(
 	obj,
@@ -44,7 +53,7 @@ repr_html.matrix <- function(obj, ...) repr_matrix_generic(
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
 	'<td>%s</td>')
 
-#' @name repr_html.matrix
+#' @name repr_*.matrix/data.frame
 #' @export
 repr_html.data.frame <- repr_html.matrix
 
@@ -54,8 +63,7 @@ repr_html.data.frame <- repr_html.matrix
 
 
 
-#' LaTeX Representation of a Matrix-like object
-#' 
+#' @name repr_*.matrix/data.frame
 #' @export
 repr_latex.matrix <- function(obj, ...) {
 	colspec <- getOption('repr.matrix.latex.colspec')
@@ -75,6 +83,6 @@ repr_latex.matrix <- function(obj, ...) {
 	gsub(' &\\\\', '\\\\', r)
 }
 
-#' @name repr_html.matrix
+#' @name repr_*.matrix/data.frame
 #' @export
 repr_latex.data.frame <- repr_latex.matrix

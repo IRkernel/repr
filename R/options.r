@@ -35,7 +35,7 @@
 #' 
 #' }
 #'
-#' @name options
+#' @name repr-options
 NULL
 
 condopt <- function(...) {

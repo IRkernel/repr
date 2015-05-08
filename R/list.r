@@ -1,3 +1,9 @@
+#' Representations of lists
+#' 
+#' @aliases repr_html.list repr_markdown.list repr_latex.list
+#' @name repr_*.list
+NULL
+
 repr_list_generic <- function(
 	vec, fmt,
 	enum.item, named.item, only.named.item,
@@ -39,8 +45,7 @@ repr_list_generic <- function(
 
 
 
-#' HTML representation of a list
-#' 
+#' @name repr_*.list
 #' @export
 repr_html.list <- function(obj, ...) repr_list_generic(
 	obj, 'html',
@@ -53,8 +58,7 @@ repr_html.list <- function(obj, ...) repr_list_generic(
 
 
 
-#' Markdown representation of a list
-#' 
+#' @name repr_*.list
 #' @export
 repr_markdown.list <- function(obj, ...) repr_list_generic(
 	obj, 'markdown',
@@ -67,8 +71,7 @@ repr_markdown.list <- function(obj, ...) repr_list_generic(
 
 
 
-#' LaTeX representation of a list
-#' 
+#' @name repr_*.list
 #' @export
 repr_latex.list <- function(obj, ...) repr_list_generic(
 	obj, 'latex',

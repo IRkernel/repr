@@ -1,4 +1,10 @@
+#' Representations of functions
+#' 
+#' @aliases repr_html.function repr_latex.function repr_markdown.function
+#' @name repr_*.function
 #' @include utils.r
+NULL
+
 repr_function_generic <- function(f, fmt, escape, high.wrap, norm.wrap, highlight) {
 	code <- deparse(f)
 	if (highlight) {
@@ -13,25 +19,19 @@ repr_function_generic <- function(f, fmt, escape, high.wrap, norm.wrap, highligh
 	sprintf(wrap, paste(code, collapse = '\n'))
 }
 
-#' HTML representation of a function
-#' 
-#' @export
+#' @export @name repr_*.function
 repr_html.function <- function(obj, highlight = getOption('repr.function.highlight'), ...) {
 	wrap <- '<pre class=language-r><code>%s</code></pre>'
 	repr_function_generic(obj, 'html', html.escape, wrap, wrap, highlight, ...)
 }
 
-#' LaTeX representation of a function
-#' 
-#' @export
+#' @export @name repr_*.function
 repr_latex.function <- function(obj, highlight = getOption('repr.function.highlight'), ...) {
 	minted.wrap <- '\\begin{minted}{r}\n%s\n\\end{minted}'
 	repr_function_generic(obj, 'latex', latex.escape, '%s', minted.wrap, highlight, ...)
 }
 
-#' Markdown representation of a function
-#' 
-#' @export
+#' @export @name repr_*.function
 repr_markdown.function <- function(obj, fenced = TRUE, ...) {
 	code <- deparse(obj)
 	if (fenced) {

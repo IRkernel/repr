@@ -1,8 +1,11 @@
 # override utils:::print.help_files_with_topic
 
-#' Representation of help
+#' Representations of help
 #' 
-#' @export
+#' @aliases repr_text.help_files_with_topic repr_html.help_files_with_topic repr_latex.help_files_with_topic
+#' @name repr_*.help_files_with_topic
+NULL
+
 repr_help_files_with_topic_generic <- function(obj, Rd2_) {
     topic <- attr(obj, 'topic')
     type <- attr(obj, 'type') #should we make this html by setting some option?
@@ -38,16 +41,16 @@ repr_help_files_with_topic_generic <- function(obj, Rd2_) {
     paste(output, collapse = '\n')
 }
 
-#' @export
+#' @export @name repr_*.help_files_with_topic
 repr_text.help_files_with_topic <- function(obj, ...)
 	repr_help_files_with_topic_generic(obj, tools::Rd2txt)
 
-#' @export
+#' @export @name repr_*.help_files_with_topic
 repr_html.help_files_with_topic <- function(obj, ...)
 	repr_help_files_with_topic_generic(obj, tools::Rd2HTML)
 
 #TODO: markdown
 
-#' @export
+#' @export @name repr_*.help_files_with_topic
 repr_latex.help_files_with_topic <- function(obj, ...)
 	repr_help_files_with_topic_generic(obj, tools::Rd2latex)

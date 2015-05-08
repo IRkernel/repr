@@ -1,4 +1,18 @@
-#' Get plot title
+#' Plot representations
+#' 
+#' \code{repr_text.recordedplot} only returns a small info string containing the title (if any)
+#' while the others return a character vector (SVG) a raw vector (the rest) containing the image data.
+#' 
+#' All parameters can also be specified using the eponymous \code{repr.plot.*} \link{repr-options}.
+#' 
+#' @param width  Plot area width in inches (default: 7)
+#' @param height  Plot area height in inches (default: 7)
+#' @param bg  Background color (default: white)
+#' @param pointsize  Text height in pt (default: 12)
+#' @param antialias  Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)
+#' @param res  For PNG and JPEG, specifies the PPI for rasterization (default: 120)
+#' @param quality  For JPEG, determines the compression quality in \% (default: 90)
+#' @param res  Font family for SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)
 #' 
 #' @examples
 #' dev.new()
@@ -9,6 +23,8 @@
 #' 
 #' repr_text(p)
 #' 
+#' @aliases repr_text.recordedplot repr_png.recordedplot repr_jpg.recordedplot repr_svg.recordedplot repr_pdf.recordedplot
+#' @name repr_*.recordedplot
 #' @export
 repr_text.recordedplot <- function(obj, ...) {
 	for (call in rev(obj[[1]])) {
@@ -35,8 +51,7 @@ repr_recordedplot_generic <- function(obj, ext, binary, dev.cb) {
 ### BITMAPS ###
 
 
-#' Get PNG plot
-#' 
+#' @name repr_*.recordedplot
 #' @export
 repr_png.recordedplot <- function(obj,
 	width     = getOption('repr.plot.width'),
@@ -53,8 +68,7 @@ repr_png.recordedplot <- function(obj,
 		png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias))
 }
 
-#' Get JPEG plot
-#' 
+#' @name repr_*.recordedplot
 #' @export
 repr_jpg.recordedplot <- function(obj,
 	width     = getOption('repr.plot.width'),
@@ -76,8 +90,7 @@ repr_jpg.recordedplot <- function(obj,
 ### VECTOR ###
 
 
-#' Get SVG plot
-#' 
+#' @name repr_*.recordedplot
 #' @export
 repr_svg.recordedplot <- function(obj,
 	width     = getOption('repr.plot.width'),
@@ -94,8 +107,7 @@ repr_svg.recordedplot <- function(obj,
 		svg(tf, width, height, pointsize, FALSE, family, bg, antialias))
 }
 
-#' Get PDF plot
-#' 
+#' @name repr_*.recordedplot
 #' @export
 repr_pdf.recordedplot <- function(obj,
 	width     = getOption('repr.plot.width'),
