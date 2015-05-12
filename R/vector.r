@@ -1,5 +1,8 @@
 #' Representations of vectors
 #' 
+#' @param obj  The vector to create a representation for
+#' @param ...  ignored
+#' 
 #' @aliases
 #' repr_markdown.logical repr_markdown.integer repr_markdown.numeric repr_markdown.factor repr_markdown.character
 #'    repr_latex.logical    repr_latex.integer    repr_latex.numeric    repr_latex.factor    repr_latex.character

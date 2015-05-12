@@ -1,5 +1,10 @@
 #' Representations of functions
 #' 
+#' @param obj  Function to create a representation for
+#' @param highlight  Should code highlighting be performed
+#' @param fenced  Should a fenced code block instead of an indented one be used?
+#' @param ...  ignored
+#' 
 #' @aliases repr_html.function repr_latex.function repr_markdown.function
 #' @name repr_*.function
 #' @include utils.r

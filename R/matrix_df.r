@@ -2,6 +2,10 @@
 #' 
 #' HTML and LaTeX representations of Matrix-like objects
 #' 
+#' @param obj  The matrix or data.frame to create a representation for
+#' @param ...  ignored
+#' @param colspec  The colspec for the LaTeX table. The default is given by the option \code{repr.matrix.latex.colspec}
+#' 
 #' @seealso \link{repr-options} for \code{repr.matrix.latex.colspec}
 #' 
 #' @aliases repr_html.matrix repr_html.data.frame repr_latex.matrix repr_latex.data.frame
@@ -65,9 +69,7 @@ repr_html.data.frame <- repr_html.matrix
 
 #' @name repr_*.matrix/data.frame
 #' @export
-repr_latex.matrix <- function(obj, ...) {
-	colspec <- getOption('repr.matrix.latex.colspec')
-	
+repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.colspec')) {
 	cols <- paste0(paste(rep(colspec$col, ncol(obj)), collapse = ''), colspec$end)
 	if (!is.null(rownames(obj)))
 		cols <- paste0(colspec$row.head, cols)

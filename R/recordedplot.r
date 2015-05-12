@@ -5,6 +5,7 @@
 #' 
 #' All parameters can also be specified using the eponymous \code{repr.plot.*} \link{repr-options}.
 #' 
+#' @param obj  The plot to create a representation for
 #' @param width  Plot area width in inches (default: 7)
 #' @param height  Plot area height in inches (default: 7)
 #' @param bg  Background color (default: white)
@@ -12,7 +13,8 @@
 #' @param antialias  Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)
 #' @param res  For PNG and JPEG, specifies the PPI for rasterization (default: 120)
 #' @param quality  For JPEG, determines the compression quality in \% (default: 90)
-#' @param res  Font family for SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)
+#' @param family  Font family for SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)
+#' @param ...  ignored
 #' 
 #' @examples
 #' dev.new()

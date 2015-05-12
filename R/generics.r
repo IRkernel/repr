@@ -2,9 +2,14 @@
 #' 
 #' Specify an object and a format to represent it in. Will \link{stop}\code{()} if no such format is known.
 #' 
+#' @param obj  The object to create a representation for
+#' @param format  The representation format. \code{repr_<format>} is then called. (default: Call \link{repr_text})
+#' @param ...  delegated to the specific \code{repr_<format>} function
+#' 
 #' @return A character or raw vector of that format or NULL if none is defined.
 #' Only the \code{'text'} format is defined for everything (via \link{print}\code{()})
 #' 
+#' @seealso \link{repr_text}, \link{repr-generics}
 #' @export
 repr <- function(obj, format = 'text', ...) {
 	delegate <- format2repr[[format]]
@@ -16,6 +21,9 @@ repr <- function(obj, format = 'text', ...) {
 #' 
 #' The only representation defined per default for everthing (via \link{print}\code{()})
 #' 
+#' @param obj  The object to \link{print} and then return the output
+#' @param ...  ignored
+#' 
 #' @seealso \link{repr-generics} for other generics
 #' @export
 repr_text <- function (obj, ...) UseMethod('repr_text', obj)
@@ -25,6 +33,9 @@ repr_text.default <- function(obj, ...) {
 }
 
 #' Representations for specific formats
+#' 
+#' @param obj  The object to create a repr for
+#' @param ...  parameters of the specific \code{repr_*} functions
 #' 
 #' @seealso \link{repr_text} for the only repr that is always defined
 #' @aliases
