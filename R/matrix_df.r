@@ -33,7 +33,7 @@ repr_matrix_generic <- function(
 	
 	rows <- lapply(seq_len(nrow(x)), function(r) {
 		row <- x[r, ]
-		cells <- sprintf(cell, lapply(row, format))
+		cells <- sprintf(cell, format(row))
 		if (has.rownames) {
 			row.head <- sprintf(row.head, rownames(x)[[r]])
 			cells <- c(row.head, cells)
