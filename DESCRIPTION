@@ -12,13 +12,14 @@ License: GPL-3
 LazyData: true
 Encoding: UTF-8
 Collate:
-    'utils.r'
-    'function.r'
     'generics.r'
-    'help_files_with_topic.r'
-    'list.r'
-    'matrix_df.r'
     'options.r'
     'package.r'
-    'recordedplot.r'
-    'vector.r'
+    'utils.r'
+    'repr_function.r'
+    'repr_help_files_with_topic.r'
+    'repr_list.r'
+    'repr_matrix_df.r'
+    'repr_recordedplot.r'
+    'list.r'
+    'repr_vector.r'

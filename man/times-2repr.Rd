@@ -9,34 +9,34 @@
 \format{\preformatted{List of 10
  $ text/plain            :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 29 14 29 60 14 60 29 29
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ text/html             :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 56 14 56 60 14 60 56 56
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ text/markdown         :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 62 18 62 68 18 68 62 62
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ text/latex            :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 68 15 68 62 15 62 68 68
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ application/json      :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 74 14 74 60 14 60 74 74
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ application/javascript:function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 80 20 80 72 20 72 80 80
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ application/pdf       :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 86 13 86 58 13 58 86 86
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ image/png             :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 92 13 92 58 13 58 92 92
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ image/jpeg            :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 98 13 98 58 13 58 98 98
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
  $ image/svg+xml         :function (obj, ...)  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 104 13 104 58 13 58 104 104
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fcf588> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x312c298> 
 }}
 \usage{
 mime2repr
