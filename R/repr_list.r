@@ -16,7 +16,6 @@ repr_list_generic <- function(
 	item.uses.numbers = FALSE) {
 	
 	nms <- names(vec)
-	char.vec <- as.character(vec)
 	
 	mapped <- lapply(vec, format2repr[[fmt]])
 	

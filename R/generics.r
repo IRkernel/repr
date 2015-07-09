@@ -26,7 +26,7 @@ repr <- function(obj, format = 'text', ...) {
 #' 
 #' @seealso \link{repr-generics} for other generics
 #' @export
-repr_text <- function (obj, ...) UseMethod('repr_text', obj)
+repr_text <- function(obj, ...) UseMethod('repr_text', obj)
 #' @export @name repr_text
 repr_text.default <- function(obj, ...) {
 	paste(capture.output(print(obj)), collapse = '\n')
@@ -53,55 +53,55 @@ NULL
 
 
 #' @export @name repr-generics
-repr_html <- function (obj, ...) UseMethod('repr_html', obj)
+repr_html <- function(obj, ...) UseMethod('repr_html', obj)
 #' @export @name repr-generics
 repr_html.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_markdown <- function (obj, ...) UseMethod('repr_markdown', obj)
+repr_markdown <- function(obj, ...) UseMethod('repr_markdown', obj)
 #' @export @name repr-generics
 repr_markdown.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_latex <- function (obj, ...) UseMethod('repr_latex', obj)
+repr_latex <- function(obj, ...) UseMethod('repr_latex', obj)
 #' @export @name repr-generics
 repr_latex.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_json <- function (obj, ...) UseMethod('repr_json', obj)
+repr_json <- function(obj, ...) UseMethod('repr_json', obj)
 #' @export @name repr-generics
 repr_json.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_javascript <- function (obj, ...) UseMethod('repr_javascript', obj)
+repr_javascript <- function(obj, ...) UseMethod('repr_javascript', obj)
 #' @export @name repr-generics
 repr_javascript.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_pdf <- function (obj, ...) UseMethod('repr_pdf', obj)
+repr_pdf <- function(obj, ...) UseMethod('repr_pdf', obj)
 #' @export @name repr-generics
 repr_pdf.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_png <- function (obj, ...) UseMethod('repr_png', obj)
+repr_png <- function(obj, ...) UseMethod('repr_png', obj)
 #' @export @name repr-generics
 repr_png.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_jpg <- function (obj, ...) UseMethod('repr_jpg', obj)
+repr_jpg <- function(obj, ...) UseMethod('repr_jpg', obj)
 #' @export @name repr-generics
 repr_jpg.default <- function(obj, ...) NULL
 
 
 #' @export @name repr-generics
-repr_svg <- function (obj, ...) UseMethod('repr_svg', obj)
+repr_svg <- function(obj, ...) UseMethod('repr_svg', obj)
 #' @export @name repr-generics
 repr_svg.default <- function(obj, ...) NULL
 

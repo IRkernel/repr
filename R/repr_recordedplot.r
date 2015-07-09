@@ -31,7 +31,7 @@
 repr_text.recordedplot <- function(obj, ...) {
 	for (call in rev(obj[[1]])) {
 		args <- call[[2]]
-		if(isTRUE(args[[1]]$name == 'C_title') && !is.null(args[[2]])) {
+		if (isTRUE(args[[1]]$name == 'C_title') && !is.null(args[[2]])) {
 			return(sprintf('Plot with title %s', dQuote(args[[2]])))
 		}
 	}
@@ -43,7 +43,7 @@ repr_recordedplot_generic <- function(obj, ext, binary, dev.cb) {
 	dev.cb(tf)
  	replayPlot(obj)
 	dev.off()
-	if(binary)
+	if (binary)
 		readBin(tf, raw(), file.info(tf)$size)
 	else
 		readChar(tf, file.info(tf)$size, useBytes = TRUE)
