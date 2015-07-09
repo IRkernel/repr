@@ -8,7 +8,7 @@
 #'    repr_latex.logical    repr_latex.integer    repr_latex.numeric    repr_latex.factor    repr_latex.character
 #'     repr_html.logical     repr_html.integer     repr_html.numeric     repr_html.factor     repr_html.character
 #' @name repr_*.vector
-#' @include list.r
+#' @include repr_list.r
 NULL
 
 # repr_text is defined via print

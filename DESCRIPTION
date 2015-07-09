@@ -21,5 +21,4 @@ Collate:
     'repr_list.r'
     'repr_matrix_df.r'
     'repr_recordedplot.r'
-    'list.r'
     'repr_vector.r'

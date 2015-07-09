@@ -108,6 +108,12 @@ repr_svg.default <- function(obj, ...) NULL
 
 #' Lists mapping mime types (\code{mime2repr}) or format names (\code{format2repr}) to \code{repr} functions
 #' 
+#' @format Lists of length 10 mapping mime/name to function
+#' 
+#' @examples
+#' names(mime2repr)
+#' names(format2repr)
+#' 
 #' @aliases mime2repr format2repr
 #' @export @name *2repr
 mime2repr <- list(
