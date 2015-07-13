@@ -64,7 +64,7 @@ repr_png.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 ...) {
-	if (!any(capabilities(c('aqua', 'cairo', 'X11')))) return(NULL)
+	if (!any(capabilities(c('aqua', 'cairo', 'X11', 'png')))) return(NULL)
 	
 	repr_recordedplot_generic(obj, '.png', TRUE, function(tf)
 		png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias))
@@ -82,7 +82,7 @@ repr_jpg.recordedplot <- function(obj,
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
 ...) {
-	if (!any(capabilities(c('aqua', 'cairo', 'X11')))) return(NULL)
+	if (!any(capabilities(c('aqua', 'cairo', 'X11', 'jpeg')))) return(NULL)
 	
 	repr_recordedplot_generic(obj, '.jpg', TRUE, function(tf)
 		jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias))
