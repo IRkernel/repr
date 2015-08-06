@@ -12,6 +12,42 @@
 #' @name repr_*.matrix/data.frame
 NULL
 
+ellip.h <- '⋯'
+ellip.v <- '⋮'
+ellip.d <- '⋱'
+
+ellip.limit.vec <- function(v, num, ellip) {
+	stopifnot(num >= 2L)
+	left  <- seq_len(ceiling(num / 2))
+	right <- seq.int(length(v) - floor(num / 2) + 1L, length(v))
+	c(v[left], ellip, v[right])
+}
+
+ellip.limit.arr <- function(
+	a,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols')
+) {
+	stopifnot(rows >= 2L, cols >= 2L)
+	left    <- seq_len(ceiling(cols / 2))
+	right   <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
+	top     <- seq_len(ceiling(rows / 2))
+	bottom  <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
+	if (rows >= nrow(a) && cols >= ncol(a)) {
+		a
+	} else if (rows < nrow(a) && cols < ncol(a)) {
+		rbind(
+			cbind(a[   top, left], ellip.h, a[   top, right], deparse.level = 0),
+			ellip.limit.vec(rep(ellip.v, ncol(a)), cols, ellip.d),
+			cbind(a[bottom, left], ellip.h, a[bottom, right], deparse.level = 0),
+			deparse.level = 0)
+	} else if (rows < nrow(a) && cols >= ncol(a)) {
+		rbind(a[top, ], ellip.v, a[bottom, ], deparse.level = 0)
+	} else if (rows >= nrow(a) && cols < ncol(a)) {
+		cbind(a[, left], ellip.h, a[, right], deparse.level = 0)
+	}
+}
+
 # HTML --------------------------------------------------------------------
 
 repr_matrix_generic <- function(
@@ -23,6 +59,8 @@ repr_matrix_generic <- function(
 ) {
 	has.rownames <- !is.null(rownames(x))
 	has.colnames <- !is.null(colnames(x))
+	
+	x <- ellip.limit.arr(x)
 	
 	header <- ''
 	if (has.colnames) {

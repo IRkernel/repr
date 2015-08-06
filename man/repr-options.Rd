@@ -30,6 +30,12 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 \item{\code{repr.vector.quote}}{
 	Output quotation marks for character vectors? (default: TRUE)
 }
+\item{\code{repr.matrix.max.rows}}{
+	How many rows to display at max. Will insert a row with vertical ellipses (⋮) to show elision. (default: 60)
+}
+\item{\code{repr.matrix.max.cols}}{
+	How many cols to display at max. Will insert a row with horizontal ellipses (⋯) to show elision. (default: 20)
+}
 \item{\code{repr.matrix.latex.colspec}}{
 	How to layout LaTeX tables when representing matrices or data.frames.
 	List of \code{row.head}, other \code{col}, and \code{end} strings.
