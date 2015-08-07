@@ -42,9 +42,9 @@ ellip.limit.arr <- function(
 			cbind(a[bottom, left], ellip.h, a[bottom, right], deparse.level = 0),
 			deparse.level = 0)
 	} else if (rows < nrow(a) && cols >= ncol(a)) {
-		rbind(a[top, ], ellip.v, a[bottom, ], deparse.level = 0)
+		rbind(a[top, , drop = FALSE], ellip.v, a[bottom, , drop = FALSE], deparse.level = 0)
 	} else if (rows >= nrow(a) && cols < ncol(a)) {
-		cbind(a[, left], ellip.h, a[, right], deparse.level = 0)
+		cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
 	}
 }
 
