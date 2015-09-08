@@ -1,6 +1,6 @@
 Package: repr
 Title: Serializable representations
-Version: 0.3
+Version: 0.4
 Authors@R: 'Philipp A. <flying-sheep@web.de> [aut, cre]'
 Description: String and binary representations of objects for several formats /
     mime types.
