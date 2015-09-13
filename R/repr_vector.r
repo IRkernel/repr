@@ -4,9 +4,9 @@
 #' @param ...  ignored
 #' 
 #' @aliases
-#' repr_markdown.logical repr_markdown.integer repr_markdown.numeric repr_markdown.factor repr_markdown.character
-#'    repr_latex.logical    repr_latex.integer    repr_latex.numeric    repr_latex.factor    repr_latex.character
-#'     repr_html.logical     repr_html.integer     repr_html.numeric     repr_html.factor     repr_html.character
+#' repr_markdown.logical repr_markdown.integer repr_markdown.complex repr_markdown.numeric repr_markdown.factor repr_markdown.character
+#'    repr_latex.logical    repr_latex.integer    repr_latex.complex    repr_latex.numeric    repr_latex.factor    repr_latex.character
+#'     repr_html.logical     repr_html.integer     repr_html.complex     repr_html.numeric     repr_html.factor     repr_html.character
 #' @name repr_*.vector
 #' @include repr_list.r
 NULL
@@ -75,6 +75,9 @@ repr_html.logical <- function(obj, ...) repr_vector_generic(
 repr_html.integer <- repr_html.logical
 
 #' @export @name repr_*.vector
+repr_html.complex <- repr_html.logical
+
+#' @export @name repr_*.vector
 repr_html.numeric <- repr_html.logical
 
 #' @export @name repr_*.vector
@@ -101,6 +104,9 @@ repr_markdown.logical <- function(obj, ...) repr_vector_generic(
 
 #' @export @name repr_*.vector
 repr_markdown.integer <- repr_markdown.logical
+
+#' @export @name repr_*.vector
+repr_markdown.complex <- repr_markdown.logical
 
 #' @export @name repr_*.vector
 repr_markdown.numeric <- repr_markdown.logical
@@ -130,6 +136,9 @@ repr_latex.logical <- function(obj, ...) repr_vector_generic(
 
 #' @export @name repr_*.vector
 repr_latex.integer <- repr_latex.logical
+
+#' @export @name repr_*.vector
+repr_latex.complex <- repr_latex.logical
 
 #' @export @name repr_*.vector
 repr_latex.numeric <- repr_latex.logical

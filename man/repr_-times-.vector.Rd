@@ -3,16 +3,19 @@
 \name{repr_*.vector}
 \alias{repr_*.vector}
 \alias{repr_html.character}
+\alias{repr_html.complex}
 \alias{repr_html.factor}
 \alias{repr_html.integer}
 \alias{repr_html.logical}
 \alias{repr_html.numeric}
 \alias{repr_latex.character}
+\alias{repr_latex.complex}
 \alias{repr_latex.factor}
 \alias{repr_latex.integer}
 \alias{repr_latex.logical}
 \alias{repr_latex.numeric}
 \alias{repr_markdown.character}
+\alias{repr_markdown.complex}
 \alias{repr_markdown.factor}
 \alias{repr_markdown.integer}
 \alias{repr_markdown.logical}
@@ -22,6 +25,8 @@
 \method{repr_html}{logical}(obj, ...)
 
 \method{repr_html}{integer}(obj, ...)
+
+\method{repr_html}{complex}(obj, ...)
 
 \method{repr_html}{numeric}(obj, ...)
 
@@ -33,6 +38,8 @@
 
 \method{repr_markdown}{integer}(obj, ...)
 
+\method{repr_markdown}{complex}(obj, ...)
+
 \method{repr_markdown}{numeric}(obj, ...)
 
 \method{repr_markdown}{factor}(obj, ...)
@@ -42,6 +49,8 @@
 \method{repr_latex}{logical}(obj, ...)
 
 \method{repr_latex}{integer}(obj, ...)
+
+\method{repr_latex}{complex}(obj, ...)
 
 \method{repr_latex}{numeric}(obj, ...)
 
