@@ -25,10 +25,10 @@
 #' 	Output quotation marks for character vectors? (default: TRUE)
 #' }
 #' \item{\code{repr.matrix.max.rows}}{
-#' 	How many rows to display at max. Will insert a row with vertical ellipses (⋮) to show elision. (default: 60)
+#' 	How many rows to display at max. Will insert a row with vertical ellipses to show elision. (default: 60)
 #' }
 #' \item{\code{repr.matrix.max.cols}}{
-#' 	How many cols to display at max. Will insert a column with horizontal ellipses (⋯) to show elision. (default: 20)
+#' 	How many cols to display at max. Will insert a column with horizontal ellipses to show elision. (default: 20)
 #' }
 #' \item{\code{repr.matrix.latex.colspec}}{
 #' 	How to layout LaTeX tables when representing matrices or data.frames.
