@@ -12,9 +12,9 @@
 #' @name repr_*.matrix/data.frame
 NULL
 
-ellip.h <- '⋯'
-ellip.v <- '⋮'
-ellip.d <- '⋱'
+ellip.h <- '\u22EF'
+ellip.v <- '\u22EE'
+ellip.d <- '\u22F1'
 
 ellip.limit.vec <- function(v, num, ellip) {
 	stopifnot(num >= 2L)
