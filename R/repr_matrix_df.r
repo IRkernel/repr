@@ -146,3 +146,18 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 #' @name repr_*.matrix/data.frame
 #' @export
 repr_latex.data.frame <- repr_latex.matrix
+
+
+
+# Text -------------------------------------------------------------------
+
+
+
+#' @name repr_*.matrix/data.frame
+#' @export
+repr_text.matrix <- function(obj, ...)
+	paste(capture.output(print(ellip.limit.arr(obj))), collapse = '\n')
+
+#' @name repr_*.matrix/data.frame
+#' @export
+repr_text.data.frame <- repr_text.matrix

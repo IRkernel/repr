@@ -6,6 +6,8 @@
 \alias{repr_html.matrix}
 \alias{repr_latex.data.frame}
 \alias{repr_latex.matrix}
+\alias{repr_text.data.frame}
+\alias{repr_text.matrix}
 \title{Tabular data representations}
 \usage{
 \method{repr_html}{matrix}(obj, ...)
@@ -17,6 +19,10 @@
 
 \method{repr_latex}{data.frame}(obj, ...,
   colspec = getOption("repr.matrix.latex.colspec"))
+
+\method{repr_text}{matrix}(obj, ...)
+
+\method{repr_text}{data.frame}(obj, ...)
 }
 \arguments{
 \item{obj}{The matrix or data.frame to create a representation for}
