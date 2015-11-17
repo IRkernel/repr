@@ -16,10 +16,19 @@ ellip.h <- '\u22EF'
 ellip.v <- '\u22EE'
 ellip.d <- '\u22F1'
 
+ellipses <- c(ellip.h, ellip.v, ellip.d)
+
 ellip.limit.vec <- function(v, num, ellip) {
 	stopifnot(num >= 2L)
+	
 	left  <- seq_len(ceiling(num / 2))
 	right <- seq.int(length(v) - floor(num / 2) + 1L, length(v))
+	
+	# fix factors not having the appropriate levels
+	if (is.factor(v)) {
+		levels(v) <- c(levels(v), ellipses)
+	}
+	
 	c(v[left], ellip, v[right])
 }
 
@@ -29,10 +38,21 @@ ellip.limit.arr <- function(
 	cols = getOption('repr.matrix.max.cols')
 ) {
 	stopifnot(rows >= 2L, cols >= 2L)
+	
 	left    <- seq_len(ceiling(cols / 2))
 	right   <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
 	top     <- seq_len(ceiling(rows / 2))
 	bottom  <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
+	
+	# fix factors not having the appropriate levels
+	if (is.data.frame(a)) {
+		for (name in names(a)) {
+			if (is.factor(a[, name])) {
+				levels(a[, name]) <- c(levels(a[, name]), ellipses)
+			}
+		}
+	}
+	
 	if (rows >= nrow(a) && cols >= ncol(a)) {
 		a
 	} else if (rows < nrow(a) && cols < ncol(a)) {
