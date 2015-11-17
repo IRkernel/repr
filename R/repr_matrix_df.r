@@ -46,9 +46,9 @@ ellip.limit.arr <- function(
 	
 	# fix factors not having the appropriate levels
 	if (is.data.frame(a)) {
-		for (name in names(a)) {
-			if (is.factor(a[, name])) {
-				levels(a[, name]) <- c(levels(a[, name]), ellipses)
+		for (c in seq_len(ncol(a))) {
+			if (is.factor(a[, c])) {
+				levels(a[, c]) <- c(levels(a[, c]), ellipses)
 			}
 		}
 	}
@@ -56,16 +56,26 @@ ellip.limit.arr <- function(
 	if (rows >= nrow(a) && cols >= ncol(a)) {
 		a
 	} else if (rows < nrow(a) && cols < ncol(a)) {
-		rbind(
-			cbind(a[   top, left], ellip.h, a[   top, right], deparse.level = 0),
+		ehf <- factor(ellip.h, levels = ellipses)
+		rv <- rbind(
+			cbind(a[   top, left], ehf, a[   top, right], deparse.level = 0),
 			ellip.limit.vec(rep(ellip.v, ncol(a)), cols, ellip.d),
-			cbind(a[bottom, left], ellip.h, a[bottom, right], deparse.level = 0),
+			cbind(a[bottom, left], ehf, a[bottom, right], deparse.level = 0),
 			deparse.level = 0)
+		colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
+		rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
+		rv
 	} else if (rows < nrow(a) && cols >= ncol(a)) {
-		rbind(a[top, , drop = FALSE], ellip.v, a[bottom, , drop = FALSE], deparse.level = 0)
+		rv <- rbind(a[top, , drop = FALSE], ellip.v, a[bottom, , drop = FALSE], deparse.level = 0)
+		rownames(rv)[[top[[length(top)]] + 1L]] <- ellip.v
+		rv
 	} else if (rows >= nrow(a) && cols < ncol(a)) {
-		cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
+		rv <- cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
+		colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
+		rv
 	}
+	
+	
 }
 
 # HTML --------------------------------------------------------------------
