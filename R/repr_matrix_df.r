@@ -54,7 +54,7 @@ ellip.limit.arr <- function(
 	}
 	
 	if (rows >= nrow(a) && cols >= ncol(a)) {
-		a
+		return(a)
 	} else if (rows < nrow(a) && cols < ncol(a)) {
 		ehf <- factor(ellip.h, levels = ellipses)
 		rv <- rbind(
@@ -62,20 +62,15 @@ ellip.limit.arr <- function(
 			ellip.limit.vec(rep(ellip.v, ncol(a)), cols, ellip.d),
 			cbind(a[bottom, left], ehf, a[bottom, right], deparse.level = 0),
 			deparse.level = 0)
-		colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
-		rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
-		rv
 	} else if (rows < nrow(a) && cols >= ncol(a)) {
 		rv <- rbind(a[top, , drop = FALSE], ellip.v, a[bottom, , drop = FALSE], deparse.level = 0)
-		rownames(rv)[[top[[length(top)]] + 1L]] <- ellip.v
-		rv
 	} else if (rows >= nrow(a) && cols < ncol(a)) {
 		rv <- cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
-		colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
-		rv
 	}
 	
-	
+	if (rows < nrow(a)) rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
+	if (cols < ncol(a)) colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
+	rv
 }
 
 # HTML --------------------------------------------------------------------
