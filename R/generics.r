@@ -27,7 +27,8 @@ repr <- function(obj, format = 'text', ...) {
 #' @seealso \link{repr-generics} for other generics
 #' @export
 repr_text <- function(obj, ...) UseMethod('repr_text', obj)
-#' @export @name repr_text
+#' @name repr_text
+#' @export
 repr_text.default <- function(obj, ...) {
 	paste(capture.output(print(obj)), collapse = '\n')
 }
@@ -52,57 +53,75 @@ repr_text.default <- function(obj, ...) {
 NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_html <- function(obj, ...) UseMethod('repr_html', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_html.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_markdown <- function(obj, ...) UseMethod('repr_markdown', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_markdown.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_latex <- function(obj, ...) UseMethod('repr_latex', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_latex.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_json <- function(obj, ...) UseMethod('repr_json', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_json.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_javascript <- function(obj, ...) UseMethod('repr_javascript', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_javascript.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_pdf <- function(obj, ...) UseMethod('repr_pdf', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_pdf.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_png <- function(obj, ...) UseMethod('repr_png', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_png.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_jpg <- function(obj, ...) UseMethod('repr_jpg', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_jpg.default <- function(obj, ...) NULL
 
 
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_svg <- function(obj, ...) UseMethod('repr_svg', obj)
-#' @export @name repr-generics
+#' @name repr-generics
+#' @export
 repr_svg.default <- function(obj, ...) NULL
 
 
@@ -115,7 +134,8 @@ repr_svg.default <- function(obj, ...) NULL
 #' names(format2repr)
 #' 
 #' @aliases mime2repr format2repr
-#' @export @name *2repr
+#' @name *2repr
+#' @export
 mime2repr <- list(
 	'text/plain' = repr_text,
 	'text/html' = repr_html,
@@ -128,7 +148,8 @@ mime2repr <- list(
 	'image/jpeg' = repr_jpg,
 	'image/svg+xml' = repr_svg)
 
-#' @export @name *2repr
+#' @name *2repr
+#' @export
 format2repr <- sapply(
 	c('text', 'html', 'markdown', 'latex', 'json', 'javascript', 'pdf', 'png', 'jpg', 'svg'),
 	function(n) get(paste0('repr_', n)))

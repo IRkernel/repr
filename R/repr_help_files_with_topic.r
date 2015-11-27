@@ -44,16 +44,19 @@ repr_help_files_with_topic_generic <- function(obj, Rd2_) {
 	paste(output, collapse = '\n')
 }
 
-#' @export @name repr_*.help_files_with_topic
+#' @name repr_*.help_files_with_topic
+#' @export
 repr_text.help_files_with_topic <- function(obj, ...)
 	repr_help_files_with_topic_generic(obj, tools::Rd2txt)
 
-#' @export @name repr_*.help_files_with_topic
+#' @name repr_*.help_files_with_topic
+#' @export
 repr_html.help_files_with_topic <- function(obj, ...)
 	repr_help_files_with_topic_generic(obj, tools::Rd2HTML)
 
 #TODO: markdown
 
-#' @export @name repr_*.help_files_with_topic
+#' @name repr_*.help_files_with_topic
+#' @export
 repr_latex.help_files_with_topic <- function(obj, ...)
 	repr_help_files_with_topic_generic(obj, tools::Rd2latex)

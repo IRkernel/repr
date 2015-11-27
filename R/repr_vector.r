@@ -62,7 +62,8 @@ repr_vector_generic <- function(
 # HTML --------------------------------------------------------------------
 
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_html.logical <- function(obj, ...) repr_vector_generic(
 	obj,
 	'\t<li>%s</li>\n',
@@ -71,19 +72,24 @@ repr_html.logical <- function(obj, ...) repr_vector_generic(
 	'<ol class=list-inline>\n%s</ol>\n',
 	'<dl class=dl-horizontal>\n%s</dl>\n')
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_html.integer <- repr_html.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_html.complex <- repr_html.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_html.numeric <- repr_html.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_html.factor <- repr_html.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_html.character <- repr_html.logical
 
 
@@ -93,7 +99,8 @@ repr_html.character <- repr_html.logical
 
 
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_markdown.logical <- function(obj, ...) repr_vector_generic(
 	obj,
 	'%s. %s\n',
@@ -102,19 +109,24 @@ repr_markdown.logical <- function(obj, ...) repr_vector_generic(
 	'%s\n\n',
 	item.uses.numbers = TRUE)
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_markdown.integer <- repr_markdown.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_markdown.complex <- repr_markdown.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_markdown.numeric <- repr_markdown.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_markdown.factor <- repr_markdown.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_markdown.character <- repr_markdown.logical
 
 
@@ -124,7 +136,8 @@ repr_markdown.character <- repr_markdown.logical
 
 
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_latex.logical <- function(obj, ...) repr_vector_generic(
 	obj,
 	'\\item %s\n',
@@ -134,17 +147,22 @@ repr_latex.logical <- function(obj, ...) repr_vector_generic(
 	named.wrap = '\\begin{description*}\n%s\\end{description*}\n',
 	only.named.item = '\\textbf{%s:} %s')
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_latex.integer <- repr_latex.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_latex.complex <- repr_latex.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_latex.numeric <- repr_latex.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_latex.factor <- repr_latex.logical
 
-#' @export @name repr_*.vector
+#' @name repr_*.vector
+#' @export
 repr_latex.character <- repr_latex.logical

@@ -22,3 +22,4 @@ Collate:
     'repr_matrix_df.r'
     'repr_recordedplot.r'
     'repr_vector.r'
+RoxygenNote: 5.0.1
