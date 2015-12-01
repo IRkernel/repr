@@ -39,20 +39,20 @@ ellip.limit.arr <- function(
 ) {
 	stopifnot(rows >= 2L, cols >= 2L)
 	
-	left    <- seq_len(ceiling(cols / 2))
-	right   <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
-	top     <- seq_len(ceiling(rows / 2))
-	bottom  <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
+	left   <- seq_len(ceiling(cols / 2))
+	right  <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
+	top    <- seq_len(ceiling(rows / 2))
+	bottom <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
 	
 	# fix columns that won't like ellipsis being inserted
 	if (is.data.frame(a)) {
 		for (c in seq_len(ncol(a))) {
 			if (is.factor(a[, c])) {
-			    # Factors: add ellipses to levels
+				# Factors: add ellipses to levels
 				levels(a[, c]) <- c(levels(a[, c]), ellipses)
 			} else if (inherits(a[, c], "Date")) {
-			    # Dates: convert to plain strings
-			    a[, c] <- as.character(a[, c])
+				# Dates: convert to plain strings
+				a[, c] <- as.character(a[, c])
 			}
 		}
 	}
