@@ -7,7 +7,7 @@ Description: String and binary representations of objects for several formats /
 Depends:
     R (>= 3.0.1)
 Suggests:
-    highr
+    highr, Cairo
 License: GPL-3
 LazyData: true
 Encoding: UTF-8

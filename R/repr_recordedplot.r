@@ -1,3 +1,15 @@
+CAIRO_INSTALLED <- requireNamespace('Cairo')
+
+plot_title <- function(p, default = NULL) {
+	for (call in rev(p[[1]])) {
+		args <- call[[2]]
+		if (isTRUE(args[[1]]$name == 'C_title') && !is.null(args[[2]])) {
+			return(args[[2]])
+		}
+	}
+	default
+}
+
 #' Plot representations
 #' 
 #' \code{repr_text.recordedplot} only returns a small info string containing the title (if any)
@@ -29,13 +41,12 @@
 #' @name repr_*.recordedplot
 #' @export
 repr_text.recordedplot <- function(obj, ...) {
-	for (call in rev(obj[[1]])) {
-		args <- call[[2]]
-		if (isTRUE(args[[1]]$name == 'C_title') && !is.null(args[[2]])) {
-			return(sprintf('Plot with title %s', dQuote(args[[2]])))
-		}
+	title <- plot_title(obj)
+	if (is.null(title)) {
+		'plot without title'
+	} else {
+		sprintf('Plot with title %s', dQuote(title))
 	}
-	'plot without title'
 }
 
 repr_recordedplot_generic <- function(obj, ext, binary, dev.cb) {
@@ -64,10 +75,15 @@ repr_png.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 ...) {
-	if (!any(capabilities(c('aqua', 'cairo', 'X11', 'png')))) return(NULL)
+	if (!CAIRO_INSTALLED && !any(capabilities(c('aqua', 'cairo', 'X11', 'png')))) return(NULL)
 	
-	repr_recordedplot_generic(obj, '.png', TRUE, function(tf)
-		png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias))
+	dev.cb <- function(tf)
+		if (CAIRO_INSTALLED)
+			Cairo::Cairo(width, height, tf, 'png', pointsize, 'transparent', bg, 'in', res)
+		else
+			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
+	
+	repr_recordedplot_generic(obj, '.png', TRUE, dev.cb)
 }
 
 #' @name repr_*.recordedplot
@@ -82,10 +98,15 @@ repr_jpg.recordedplot <- function(obj,
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
 ...) {
-	if (!any(capabilities(c('aqua', 'cairo', 'X11', 'jpeg')))) return(NULL)
+	if (!CAIRO_INSTALLED && !any(capabilities(c('aqua', 'cairo', 'X11', 'jpeg')))) return(NULL)
 	
-	repr_recordedplot_generic(obj, '.jpg', TRUE, function(tf)
-		jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias))
+	dev.cb <- function(tf)
+		if (CAIRO_INSTALLED)
+			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, 'transparent', bg, 'in', res, quality = quality)
+		else
+			jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
+	
+	repr_recordedplot_generic(obj, '.jpg', TRUE, dev.cb)
 }
 
 
@@ -103,10 +124,15 @@ repr_svg.recordedplot <- function(obj,
 	#special
 	family    = getOption('repr.plot.family'),
 ...) {
-	if (!capabilities('cairo')) return(NULL) #only cairo can do SVG
+	if (!CAIRO_INSTALLED && !capabilities('cairo')) return(NULL) #only cairo can do SVG
 	
-	repr_recordedplot_generic(obj, '.svg', FALSE, function(tf)
-		svg(tf, width, height, pointsize, FALSE, family, bg, antialias))
+	dev.cb <- function(tf)
+		if (CAIRO_INSTALLED)
+			Cairo::Cairo(width, height, tf, 'svg', pointsize, 'transparent', bg, 'in')
+		else
+			svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
+	
+	repr_recordedplot_generic(obj, '.svg', FALSE, dev.cb)
 }
 
 #' @name repr_*.recordedplot
@@ -120,10 +146,14 @@ repr_pdf.recordedplot <- function(obj,
 	#special
 	family    = getOption('repr.plot.family'),
 ...) repr_recordedplot_generic(obj, '.pdf', TRUE, function(tf) {
+	title <- plot_title(obj, 'Untitled plot')
+	
 	if (capabilities('aqua'))
-		quartz('Quartz %d', width, height, pointsize, family, antialias, 'pdf', tf, bg)
+		quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
+	else if (CAIRO_INSTALLED)
+		Cairo::Cairo(width, height, tf, 'pdf', pointsize, 'transparent', bg, 'in')
 	else if (capabilities('cairo'))
 		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	else
-		pdf(tf, width, height, FALSE, family, bg = bg, pointsize = pointsize)
+		pdf(tf, width, height, FALSE, family, title, bg = bg, pointsize = pointsize)
 })
