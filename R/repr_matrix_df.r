@@ -157,15 +157,27 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 	if (!is.null(rownames(obj)))
 		cols <- paste0(colspec$row.head, cols)
 	obj <- latex.escape.names(obj)
+
 	# Using apply here will convert a data.frame to matrix, as well as escaping
-	# any columns with LaTeX specials.
+	# any columns with LaTeX specials, but only go through the hassle if there are
+	# actually things to escape.
+	if (any(apply(obj, 2L, any.latex.specials))) {
+		obj_rownames <- rownames(obj)
+		obj <- apply(obj, 2L, latex.escape.vec)
+		# If obj only has one row, apply will collapse it to a vector.
+		# That's a pain, so we'll recast it as a matrix.
+		if (is.null(dim(obj)))
+			obj <- matrix(obj, nrow=1L)
+		rownames(obj) <- obj_rownames  # apply throws away row names.
+	}
+
 	r <- repr_matrix_generic(
-		apply(obj, 2, latex.escape.vec),
+		obj,
 		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &')
-	
+
 	#todo: remove this quick’n’dirty post processing
 	gsub(' &\\', '\\', r, fixed=TRUE)
 }

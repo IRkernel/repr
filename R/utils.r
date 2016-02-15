@@ -69,10 +69,11 @@ latex.escape.vec <- function(vec) {
 	# That seems useful, since functions like ellip.limit.arr check class.
 	stopifnot(is.vector(vec) || is.factor(vec))
 	if (any.latex.specials(vec)) {
-		if (is.factor(vec))
+		if (is.factor(vec)) {
 			levels(vec) <- latex.escape(levels(vec))
-		else
+		} else {
 			vec <- latex.escape(vec) # regular character vec
+		}
 	}
 	return(vec)
 }
