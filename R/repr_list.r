@@ -5,6 +5,7 @@
 #' 
 #' @aliases repr_html.list repr_markdown.list repr_latex.list
 #' @name repr_*.list
+#' @include utils.r
 NULL
 
 repr_list_generic <- function(
@@ -76,7 +77,7 @@ repr_markdown.list <- function(obj, ...) repr_list_generic(
 #' @name repr_*.list
 #' @export
 repr_latex.list <- function(obj, ...) repr_list_generic(
-	obj, 'latex',
+	latex.escape.names(obj), 'latex',
 	'\\item %s\n',
 	'\\item[\\$%s] %s\n',
 	'\\textbf{\\$%s} = %s',

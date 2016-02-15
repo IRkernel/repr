@@ -10,6 +10,7 @@
 #' 
 #' @aliases repr_html.matrix repr_html.data.frame repr_latex.matrix repr_latex.data.frame
 #' @name repr_*.matrix/data.frame
+#' @include utils.r
 NULL
 
 ellip.h <- '\u22EF'
@@ -140,9 +141,9 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 	cols <- paste0(paste(rep(colspec$col, ncol(obj)), collapse = ''), colspec$end)
 	if (!is.null(rownames(obj)))
 		cols <- paste0(colspec$row.head, cols)
-	
+	obj <- latex.escape.names(obj)
 	r <- repr_matrix_generic(
-		obj,
+		latex.escape(obj),
 		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
