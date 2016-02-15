@@ -46,8 +46,11 @@ ellip.limit.arr <- function(
 	bottom <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
 	
 	# fix columns that won't like ellipsis being inserted
-	# TODO(karldw): Make this column indexing work with data.table as well.
 	if (is.data.frame(a)) {
+		# data.tables can't be indexed by column number, unless you provide the
+		# with=FALSE parameter. To avoid the hassle, just convert to a normal table.
+		if inherits(a, 'data.table')
+			a <- as.data.frame(x)
 		for (c in seq_len(ncol(a))) {
 			if (is.factor(a[, c])) {
 				# Factors: add ellipses to levels
@@ -71,7 +74,6 @@ ellip.limit.arr <- function(
 	} else if (rows < nrow(a) && cols >= ncol(a)) {
 		rv <- rbind(a[top, , drop = FALSE], ellip.v, a[bottom, , drop = FALSE], deparse.level = 0)
 	} else if (rows >= nrow(a) && cols < ncol(a)) {
-		# TODO(karldw): Make this column indexing work with data.table as well.
 		rv <- cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
 	}
 
