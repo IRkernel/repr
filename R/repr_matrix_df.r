@@ -46,6 +46,7 @@ ellip.limit.arr <- function(
 	bottom <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
 	
 	# fix columns that won't like ellipsis being inserted
+	# TODO(karldw): Make this column indexing work with data.table as well.
 	if (is.data.frame(a)) {
 		for (c in seq_len(ncol(a))) {
 			if (is.factor(a[, c])) {
@@ -70,11 +71,25 @@ ellip.limit.arr <- function(
 	} else if (rows < nrow(a) && cols >= ncol(a)) {
 		rv <- rbind(a[top, , drop = FALSE], ellip.v, a[bottom, , drop = FALSE], deparse.level = 0)
 	} else if (rows >= nrow(a) && cols < ncol(a)) {
+		# TODO(karldw): Make this column indexing work with data.table as well.
 		rv <- cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
 	}
-	
-	if (rows < nrow(a)) rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
-	if (cols < ncol(a)) colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
+
+	if (rows < nrow(a)) {
+		# If there were no rownames before, as is often true for matrices, assign them.
+		if (is.null(rownames(rv)))
+			rownames(rv) <- c(top, ellip.v, bottom)
+		else
+			rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
+	}
+
+	if (cols < ncol(a)) {
+		if (is.null(colnames(rv)))
+			colnames(rv) <- c(left, ellip.h, right)
+		else
+			colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
+	}
+
 	rv
 }
 
@@ -142,23 +157,22 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 	if (!is.null(rownames(obj)))
 		cols <- paste0(colspec$row.head, cols)
 	obj <- latex.escape.names(obj)
+	# Using apply here will convert a data.frame to matrix, as well as escaping
+	# any columns with LaTeX specials.
 	r <- repr_matrix_generic(
-		latex.escape(obj),
+		apply(obj, 2, latex.escape.vec),
 		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &')
 	
 	#todo: remove this quick’n’dirty post processing
-	gsub(' &\\\\', '\\\\', r)
+	gsub(' &\\', '\\', r, fixed=TRUE)
 }
 
 #' @name repr_*.matrix/data.frame
 #' @export
 repr_latex.data.frame <- repr_latex.matrix
-
-
-
 # Text -------------------------------------------------------------------
 
 

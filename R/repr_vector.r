@@ -163,7 +163,7 @@ repr_latex.numeric <- repr_latex.logical
 #' @name repr_*.vector
 #' @export
 repr_latex.factor <- function(obj, ...) {
-	repr_latex.logical(latex.escape(obj), ...)
+	repr_latex.logical(latex.escape.vec(obj), ...)
 }
 
 #' @name repr_*.vector

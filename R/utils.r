@@ -52,6 +52,9 @@ any.latex.specials <- function(char_vec) {
 	# the object many times).
 	# This function could also be done in one regex with a bunch of groups and '|'
 	# The use of 'any' should make this function play nice with NULL names.
+	if (! inherits(char_vec, c('character', 'factor')))
+		return(FALSE)
+
 	grepl.one.special <- function(special, char_vec) {
 		return(any(grepl(special, char_vec, fixed=TRUE)))
 	}
@@ -59,4 +62,17 @@ any.latex.specials <- function(char_vec) {
 	specials_match <- vapply(names(latex.specials), grepl.one.special,
 		char_vec=char_vec, FUN.VALUE=FALSE)
 	return(any(specials_match))
+}
+
+latex.escape.vec <- function(vec) {
+	# latex.escape.vec should never change the class of its input.
+	# That seems useful, since functions like ellip.limit.arr check class.
+	stopifnot(is.vector(vec) || is.factor(vec))
+	if (any.latex.specials(vec)) {
+		if (is.factor(vec))
+			levels(vec) <- latex.escape(levels(vec))
+		else
+			vec <- latex.escape(vec) # regular character vec
+	}
+	return(vec)
 }
