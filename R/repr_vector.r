@@ -9,6 +9,7 @@
 #'     repr_html.logical     repr_html.integer     repr_html.complex     repr_html.numeric     repr_html.factor     repr_html.character
 #' @name repr_*.vector
 #' @include repr_list.r
+#' @include utils.r
 NULL
 
 # repr_text is defined via print
@@ -139,7 +140,7 @@ repr_markdown.character <- repr_markdown.logical
 #' @name repr_*.vector
 #' @export
 repr_latex.logical <- function(obj, ...) repr_vector_generic(
-	obj,
+	latex.escape.names(obj),  # escape vector names, regardless of class
 	'\\item %s\n',
 	'\\item[%s] %s\n',
 	'\\textbf{%s:} %s',
@@ -161,8 +162,10 @@ repr_latex.numeric <- repr_latex.logical
 
 #' @name repr_*.vector
 #' @export
-repr_latex.factor <- repr_latex.logical
+repr_latex.factor <- function(obj, ...) {
+	repr_latex.logical(latex.escape.vec(obj), ...)
+}
 
 #' @name repr_*.vector
 #' @export
-repr_latex.character <- repr_latex.logical
+repr_latex.character <- repr_latex.factor
