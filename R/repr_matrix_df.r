@@ -49,7 +49,7 @@ ellip.limit.arr <- function(
 	if (is.data.frame(a)) {
 		# data.tables can't be indexed by column number, unless you provide the
 		# with=FALSE parameter. To avoid the hassle, just convert to a normal table.
-		if inherits(a, 'data.table')
+		if (inherits(a, 'data.table'))
 			a <- as.data.frame(x)
 		for (c in seq_len(ncol(a))) {
 			if (is.factor(a[, c])) {
