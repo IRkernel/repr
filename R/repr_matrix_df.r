@@ -19,12 +19,21 @@ ellip.d <- '\u22F1'
 
 ellipses <- c(ellip.h, ellip.v, ellip.d)
 
+get.limit.index <- function(obj_dim, limit) {
+	stopifnot(obj_dim > limit)  # otherwise this function should not have been run
+	left_or_top <- seq_len(ceiling(limit / 2))
+	right_or_bottom <- seq.int(obj_dim - floor(limit / 2) + 1L, obj_dim)
+	return(list(begin=left_or_top, end=right_or_bottom)) 
+}
+
 ellip.limit.vec <- function(v, num, ellip) {
 	stopifnot(num >= 2L)
 	
-	left  <- seq_len(ceiling(num / 2))
-	right <- seq.int(length(v) - floor(num / 2) + 1L, length(v))
-	
+	lim_index <- get.limit.index(length(v), num)
+	left <- lim_index$begin
+	right <- lim_index$end
+	rm(lim_index)
+
 	# fix factors not having the appropriate levels
 	if (is.factor(v)) {
 		levels(v) <- c(levels(v), ellipses)
@@ -39,7 +48,12 @@ ellip.limit.arr <- function(
 	cols = getOption('repr.matrix.max.cols')
 ) {
 	stopifnot(rows >= 2L, cols >= 2L)
-	
+
+	# Don't worry about any of the code below if the array is already small.
+	if (rows >= nrow(a) && cols >= ncol(a)) {
+		return(a)
+	}
+
 	left   <- seq_len(ceiling(cols / 2))
 	right  <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
 	top    <- seq_len(ceiling(rows / 2))
@@ -50,7 +64,7 @@ ellip.limit.arr <- function(
 		# data.tables can't be indexed by column number, unless you provide the
 		# with=FALSE parameter. To avoid the hassle, just convert to a normal table.
 		if (inherits(a, 'data.table'))
-			a <- as.data.frame(x)
+			a <- as.data.frame(a)
 		for (c in seq_len(ncol(a))) {
 			if (is.factor(a[, c])) {
 				# Factors: add ellipses to levels
@@ -62,10 +76,14 @@ ellip.limit.arr <- function(
 		}
 	}
 	
-	if (rows >= nrow(a) && cols >= ncol(a)) {
-		return(a)
-	} else if (rows < nrow(a) && cols < ncol(a)) {
-		ehf <- factor(ellip.h, levels = ellipses)
+	if (rows < nrow(a) && cols < ncol(a)) {
+		if (is.matrix(a)) {
+			# If a is a matrix, R will coerce the factor to character and sub in 
+			# the factor *value*, not the level.  You end up with a bunch of 1s.
+			ehf <- ellip.h
+		} else {
+			ehf <- factor(ellip.h, levels = ellipses)
+		}
 		rv <- rbind(
 			cbind(a[   top, left], ehf, a[   top, right], deparse.level = 0),
 			ellip.limit.vec(rep(ellip.v, ncol(a)), cols, ellip.d),
@@ -77,19 +95,13 @@ ellip.limit.arr <- function(
 		rv <- cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
 	}
 
-	if (rows < nrow(a)) {
-		# If there were no rownames before, as is often true for matrices, assign them.
-		if (is.null(rownames(rv)))
-			rownames(rv) <- c(top, ellip.v, bottom)
-		else
-			rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
+	if (rows < nrow(a) && (! is.null(rownames(rv)))) {
+		# If there were no rownames before, as is often true for matrices, don't assign them.
+		rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
 	}
-
-	if (cols < ncol(a)) {
-		if (is.null(colnames(rv)))
-			colnames(rv) <- c(left, ellip.h, right)
-		else
-			colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
+	if (cols < ncol(a) && (! is.null(colnames(rv)))) {
+		# If there were no colnames before, as is often true for matrices, don't assign them.
+		colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
 	}
 
 	rv
