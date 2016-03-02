@@ -173,7 +173,10 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 	obj <- latex.escape.names(obj)
 	
 	# escape LaTeX special characters if necessary
-	if (any(apply(obj, 2L, any.latex.specials))) {
+	need_to_excape_col <- vapply(seq_len(ncol(obj)), function(col_index) {
+			any.latex.specials(obj[, col_index])
+		}, FUN.VALUE = TRUE)
+	if (any(need_to_excape_col)) {
 		# To avoid rowname removal and dimension elimination, we replace the contents only
 		obj[] <-
 			if (is.list(obj))
