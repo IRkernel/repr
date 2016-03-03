@@ -106,7 +106,7 @@ test_that("ellip.limit.arr doesn't change arrays that are small", {
   }
   
   # Run some tests.
-  test_mat <- matrix(1:10, ncol=2)
+  test_mat <- matrix(1:10, ncol = 2)
   test_df <- as.data.frame(test_mat)
   test_dt <- as.data.table(test_mat)
   limited_mat <- ellip.limit.arr(test_mat)
@@ -252,7 +252,7 @@ test_that("ellip.limit.arr limits arrays that are long and wide", {
   # both the normal cases and the weird case where a dimension is one less than
   # the limit (and therefore the 'smaller' output array is actually the same dim
   # as the original)
-  test_mat <- matrix(1:49, ncol=7)
+  test_mat <- matrix(1:49, ncol = 7)
   test_df <- as.data.frame(test_mat)
   test_dt <- as.data.table(test_mat)
   
@@ -306,7 +306,7 @@ test_that("ellip.limit.arr limits arrays that are long and wide", {
     '10', ellip.v, '12', '13', '14', '15', '16', '17', ellip.v, '19', '20',
     '21', ellip.h,  ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, ellip.h, '29', '30', '31', ellip.v, '33', '34', '35', '36', '37', '38', ellip.v, '40', 
     '41', '42', '43', '44', '45', ellip.v, '47', '48', '49'), nrow = 7L)
-  expected_df <- as.data.frame(expected_mat, stringsAsFactors=FALSE)
+  expected_df <- as.data.frame(expected_mat, stringsAsFactors = FALSE)
   expected_df[, 4] <- factor(expected_df[, 4], levels = ellipses)
   names(expected_df) <- c('V1', 'V2', 'V3', ellip.h, 'V5', 'V6', 'V7')
   rownames(expected_df) <- c('1', '2', '3', ellip.v, '5', '6', '7')

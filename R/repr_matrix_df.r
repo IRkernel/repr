@@ -23,23 +23,19 @@ get.limit.index <- function(obj_dim, limit) {
 	stopifnot(obj_dim > limit)  # otherwise this function should not have been run
 	left_or_top <- seq_len(ceiling(limit / 2))
 	right_or_bottom <- seq.int(obj_dim - floor(limit / 2) + 1L, obj_dim)
-	return(list(begin=left_or_top, end=right_or_bottom)) 
+	list(begin = left_or_top, end = right_or_bottom)
 }
 
 ellip.limit.vec <- function(v, num, ellip) {
 	stopifnot(num >= 2L)
-	
-	lim_index <- get.limit.index(length(v), num)
-	left <- lim_index$begin
-	right <- lim_index$end
-	rm(lim_index)
 
+	lims <- get.limit.index(length(v), num)
 	# fix factors not having the appropriate levels
 	if (is.factor(v)) {
 		levels(v) <- c(levels(v), ellipses)
 	}
 	
-	c(v[left], ellip, v[right])
+	c(v[lims$begin], ellip, v[lims$end])
 }
 
 ellip.limit.arr <- function(
@@ -173,10 +169,10 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 	obj <- latex.escape.names(obj)
 	
 	# escape LaTeX special characters if necessary
-	need_to_excape_col <- vapply(seq_len(ncol(obj)), function(col_index) {
+	need_to_escape_col <- vapply(seq_len(ncol(obj)), function(col_index) {
 			any.latex.specials(obj[, col_index])
 		}, FUN.VALUE = TRUE)
-	if (any(need_to_excape_col)) {
+	if (any(need_to_escape_col)) {
 		# To avoid rowname removal and dimension elimination, we replace the contents only
 		obj[] <-
 			if (is.list(obj))
@@ -193,7 +189,7 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 		' %s &')
 
 	#TODO: remove this quick’n’dirty post processing
-	gsub(' &\\', '\\', r, fixed=TRUE)
+	gsub(' &\\', '\\', r, fixed = TRUE)
 }
 
 #' @name repr_*.matrix/data.frame

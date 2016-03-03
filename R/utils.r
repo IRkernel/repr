@@ -56,11 +56,11 @@ any.latex.specials <- function(char_vec) {
 		return(FALSE)
 
 	grepl.one.special <- function(special, char_vec) {
-		return(any(grepl(special, char_vec, fixed=TRUE)))
+		return(any(grepl(special, char_vec, fixed = TRUE)))
 	}
 	# Search, using vapply, for each special.
 	specials_match <- vapply(names(latex.specials), grepl.one.special,
-		char_vec=char_vec, FUN.VALUE=FALSE)
+		char_vec = char_vec, FUN.VALUE = FALSE)
 	return(any(specials_match))
 }
 
