@@ -168,7 +168,10 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 		cols <- paste0(colspec$row.head, cols)
 	obj <- latex.escape.names(obj)
 	
-	# escape LaTeX special characters if necessary
+	# Escape LaTeX special characters if necessary.
+	# A more R way to do this would have been "apply(obj, 2L, any.latex.specials)"
+	# but that approach calls as.matrix.data.frame, which requires sane names in
+	# each column. That's not always true, so we'll do the more round-about vapply.
 	need_to_escape_col <- vapply(seq_len(ncol(obj)), function(col_index) {
 			any.latex.specials(obj[, col_index])
 		}, FUN.VALUE = TRUE)
