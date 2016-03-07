@@ -1,0 +1,25 @@
+language: r
+sudo: false  # allows for better build caching via containers
+cache: packages
+
+warnings_are_errors: true  # the default, but explicit is better than not
+r_check_revdep: false  # don't check against all CRAN packages that depend on this one
+
+repos:
+  CRAN: https://cloud.r-project.org
+  IRkernel: https://irkernel.github.io/
+
+git:  # don't bother cloning the github repo deeply; we don't care about history
+  depth: 1
+
+r_packages:
+  - highr
+  - Cairo
+  - data.table
+
+addons:
+  apt:
+    packages:
+      # Install the headers for the Cairo package.
+      - libcairo2-dev
+      - libjpeg-dev
