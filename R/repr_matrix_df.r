@@ -71,6 +71,14 @@ ellip.limit.arr <- function(
 			}
 		}
 	}
+
+	if (rows < nrow(a) && inherits(a, 'tbl')) {
+		# tbl objects from dplyr automatically reset their row names when sliced.
+		# we'd like to make it clear that the array has had rows cut out, so that
+		# behavior isn't ideal here. If we're row-slicing a tbl object, first 
+		# convert to an ordinary data.frame.
+		a <- as.data.frame(a)
+	}
 	
 	if (rows < nrow(a) && cols < ncol(a)) {
 		if (is.matrix(a)) {

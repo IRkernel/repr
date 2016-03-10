@@ -16,6 +16,7 @@ r_packages:
   - highr
   - Cairo
   - data.table
+  - dplyr
 
 addons:
   apt:
