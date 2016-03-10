@@ -62,7 +62,7 @@ ellip.limit.arr <- function(
 		# dplyr's tbl_* objects don't collapse to a vector when indexed by column,
 		# so functions like 'is.factor' always return false. Again, just drop to a
 		# basic data.table and avoid the hassle.
-		if (inherits(a, c('data.table', 'tbl')) {
+		if (inherits(a, c('data.table', 'tbl'))) {
 			a <- as.data.frame(a)
 		}
 		for (c in seq_len(ncol(a))) {
