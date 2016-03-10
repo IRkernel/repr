@@ -1,6 +1,10 @@
 
 context("Array and vector truncation")
 
+# Testing Travis build issues:
+print(.libPaths())
+print(system("find / -name 'data.table' -type d 2> /dev/null"))
+
 suppressPackageStartupMessages(library(data.table))
 suppressPackageStartupMessages(library(dplyr))
 options('stringsAsFactors' = FALSE)
