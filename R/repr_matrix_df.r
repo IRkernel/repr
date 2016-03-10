@@ -59,8 +59,12 @@ ellip.limit.arr <- function(
 	if (is.data.frame(a)) {
 		# data.tables can't be indexed by column number, unless you provide the
 		# with=FALSE parameter. To avoid the hassle, just convert to a normal table.
-		if (inherits(a, 'data.table'))
+		# dplyr's tbl_* objects don't collapse to a vector when indexed by column,
+		# so functions like 'is.factor' always return false. Again, just drop to a
+		# basic data.table and avoid the hassle.
+		if (inherits(a, c('data.table', 'tbl')) {
 			a <- as.data.frame(a)
+		}
 		for (c in seq_len(ncol(a))) {
 			if (is.factor(a[, c])) {
 				# Factors: add ellipses to levels
