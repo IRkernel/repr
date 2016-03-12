@@ -1,12 +1,8 @@
 
 context("Array and vector truncation")
 
-# Testing Travis build issues:
-print(.libPaths())
-print(system("find / -name 'data.table' -type d 2> /dev/null"))
-
-suppressPackageStartupMessages(library(data.table))
-suppressPackageStartupMessages(library(dplyr))
+library(data.table)
+library(dplyr)
 options('stringsAsFactors' = FALSE)
 
 test_that("max rows and cols are reasonable", {
