@@ -8,6 +8,8 @@ Depends:
     R (>= 3.0.1)
 Suggests:
     highr, Cairo, testthat, data.table, dplyr
+Enhances:
+    data.table, dplyr
 License: GPL-3
 LazyData: true
 Encoding: UTF-8
