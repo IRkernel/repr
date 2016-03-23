@@ -1,0 +1,15 @@
+language: r
+sudo: false
+cache: packages
+warnings_are_errors: false
+
+repos:
+  CRAN: https://cloud.r-project.org
+  IRkernel: https://irkernel.github.io/
+
+addons:
+  apt:
+    packages:
+      # Install the headers for the Cairo package.
+      - libcairo2-dev
+      - libjpeg-dev

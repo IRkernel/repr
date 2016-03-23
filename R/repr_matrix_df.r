@@ -59,8 +59,12 @@ ellip.limit.arr <- function(
 	if (is.data.frame(a)) {
 		# data.tables can't be indexed by column number, unless you provide the
 		# with=FALSE parameter. To avoid the hassle, just convert to a normal table.
-		if (inherits(a, 'data.table'))
+		# dplyr's tbl_* objects don't collapse to a vector when indexed by column,
+		# so functions like 'is.factor' always return false. Again, just drop to a
+		# basic data.table and avoid the hassle.
+		if (inherits(a, c('data.table', 'tbl'))) {
 			a <- as.data.frame(a)
+		}
 		for (c in seq_len(ncol(a))) {
 			if (is.factor(a[, c])) {
 				# Factors: add ellipses to levels
@@ -70,6 +74,14 @@ ellip.limit.arr <- function(
 				a[, c] <- as.character(a[, c])
 			}
 		}
+	}
+
+	if (rows < nrow(a) && inherits(a, 'tbl')) {
+		# tbl objects from dplyr automatically reset their row names when sliced.
+		# we'd like to make it clear that the array has had rows cut out, so that
+		# behavior isn't ideal here. If we're row-slicing a tbl object, first 
+		# convert to an ordinary data.frame.
+		a <- as.data.frame(a)
 	}
 	
 	if (rows < nrow(a) && cols < ncol(a)) {
