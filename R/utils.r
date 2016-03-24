@@ -68,7 +68,7 @@ latex.escape.vec <- function(vec) {
 	# latex.escape.vec should never change the class of its input.
 	# That seems useful, since functions like ellip.limit.arr check class.
 	if (!(is.vector(vec) || is.factor(vec))) {
-	    stop('expected `vec` to be a vector or factor but it is a', paste(class(vec), collapse = ', '))
+	    stop('expected `vec` to be a vector or factor but it is a ', paste(class(vec), collapse = ', '))
 	}
 	if (any.latex.specials(vec)) {
 		if (is.factor(vec)) {
