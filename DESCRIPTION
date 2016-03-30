@@ -7,9 +7,13 @@ Description: String and binary representations of objects for several formats /
 Depends:
     R (>= 3.0.1)
 Suggests:
-    highr, Cairo, testthat, data.table, dplyr
-Enhances:
-    data.table, dplyr
+    highr,
+    Cairo,
+    testthat,
+    data.table,
+    dplyr,
+    htmlwidgets
+Enhances: data.table, dplyr, htmlwidgets
 License: GPL-3
 LazyData: true
 Encoding: UTF-8
@@ -20,6 +24,7 @@ Collate:
     'utils.r'
     'repr_function.r'
     'repr_help_files_with_topic.r'
+    'repr_htmlwidget.r'
     'repr_list.r'
     'repr_matrix_df.r'
     'repr_recordedplot.r'
