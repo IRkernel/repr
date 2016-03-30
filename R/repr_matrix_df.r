@@ -122,7 +122,8 @@ repr_matrix_generic <- function(
 	wrap,
 	header.wrap, corner, head,
 	body.wrap, row.wrap, row.head,
-	cell, last.cell = cell
+	cell, last.cell = cell,
+	escape.FUN = identity
 ) {
 	has.rownames <- !is.null(rownames(x))
 	has.colnames <- !is.null(colnames(x))
@@ -131,16 +132,16 @@ repr_matrix_generic <- function(
 	
 	header <- ''
 	if (has.colnames) {
-		headers <- sprintf(head, colnames(x))
+		headers <- sprintf(head, escape.FUN(colnames(x)))
 		if (has.rownames) headers <- c(corner, headers)
 		header <- sprintf(header.wrap, paste(headers, collapse = ''))
 	}
 	
 	rows <- lapply(seq_len(nrow(x)), function(r) {
-		row <- x[r, ]
+		row <- escape.FUN(x[r, ])
 		cells <- sprintf(cell, format(row))
 		if (has.rownames) {
-			row.head <- sprintf(row.head, rownames(x)[[r]])
+			row.head <- sprintf(row.head, escape.FUN(rownames(x)[[r]]))
 			cells <- c(row.head, cells)
 		}
 		sprintf(row.wrap, paste(cells, collapse = ''))
@@ -160,7 +161,8 @@ repr_html.matrix <- function(obj, ...) repr_matrix_generic(
 	'<thead><tr>%s</tr></thead>\n', '<th></th>',
 	'<th scope=col>%s</th>',
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
-	'<td>%s</td>')
+	'<td>%s</td>',
+	escape.FUN = html.escape)
 
 #' @name repr_*.matrix/data.frame
 #' @export
@@ -178,30 +180,14 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 	cols <- paste0(paste(rep(colspec$col, ncol(obj)), collapse = ''), colspec$end)
 	if (!is.null(rownames(obj)))
 		cols <- paste0(colspec$row.head, cols)
-	obj <- latex.escape.names(obj)
 	
-	# Escape LaTeX special characters if necessary.
-	# A more R way to do this would have been "apply(obj, 2L, any.latex.specials)"
-	# but that approach calls as.matrix.data.frame, which requires sane names in
-	# each column. That's not always true, so we'll do the more round-about vapply.
-	need_to_escape_col <- vapply(seq_len(ncol(obj)), function(col_index) {
-			any.latex.specials(obj[, col_index])
-		}, FUN.VALUE = TRUE)
-	if (any(need_to_escape_col)) {
-		# To avoid rowname removal and dimension elimination, we replace the contents only
-		obj[] <-
-			if (is.list(obj))
-				lapply(obj, latex.escape.vec)
-			else
-				apply(obj, 2L, latex.escape.vec)
-	}
-
 	r <- repr_matrix_generic(
 		obj,
 		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
-		' %s &')
+		' %s &',
+		escape.FUN = latex.escape)
 
 	#TODO: remove this quick’n’dirty post processing
 	gsub(' &\\', '\\', r, fixed = TRUE)
