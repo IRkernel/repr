@@ -1,11 +1,11 @@
 
-context("Array and vector truncation")
+context('Array and vector truncation')
 
 library(data.table)
 library(dplyr)
 options('stringsAsFactors' = FALSE)
 
-test_that("max rows and cols are reasonable", {
+test_that('max rows and cols are reasonable', {
   rows <- getOption('repr.matrix.max.rows')
   cols <- getOption('repr.matrix.max.cols')
   
@@ -23,7 +23,7 @@ test_that("max rows and cols are reasonable", {
   expect_true(cols < .Machine$integer.max)
 })
 
-test_that("get.limit.index sets the right indexes", {
+test_that('get.limit.index sets the right indexes', {
   # Limit a hypothetical length-10 vector to 2.
   lim_index <- get.limit.index(10, 2)
   expect_equal(lim_index$begin, 1)
@@ -46,7 +46,7 @@ test_that("get.limit.index sets the right indexes", {
   expect_equal(lim_index$end, c(7, 8, 9, 10))  
 })
 
-test_that("ellip.limit.vec returns correctly for numerics", {
+test_that('ellip.limit.vec returns correctly for numerics', {
   ellip.h <- '\u22EF'
   
   test_vec <- 10:1
@@ -69,7 +69,7 @@ test_that("ellip.limit.vec returns correctly for numerics", {
 })
 
 
-test_that("ellip.limit.vec returns correctly for factors", {
+test_that('ellip.limit.vec returns correctly for factors', {
   ellip.h <- '\u22EF'
   
   test_vec <- factor(10:1)
@@ -95,7 +95,7 @@ test_that("ellip.limit.vec returns correctly for factors", {
 })
 
 
-test_that("ellip.limit.arr doesn't change arrays that are small", {
+test_that('ellip.limit.arr doesn't change arrays that are small', {
   # Make sure the limits are reasonable before we test.
   orig_rows_limit <- getOption('repr.matrix.max.rows')
 	orig_cols_limit <- getOption('repr.matrix.max.cols')
@@ -129,7 +129,7 @@ test_that("ellip.limit.arr doesn't change arrays that are small", {
   }
 })
 
-test_that("ellip.limit.arr limits arrays that are wide (but not long)", {
+test_that('ellip.limit.arr limits arrays that are wide (but not long)', {
   ellip.h <- '\u22EF'
   # Make sure the limits are reasonable before we test.
   orig_rows_limit <- getOption('repr.matrix.max.rows')
@@ -196,7 +196,7 @@ test_that("ellip.limit.arr limits arrays that are wide (but not long)", {
   }
 })
 
-test_that("ellip.limit.arr limits arrays that are long (but not wide)", {
+test_that('ellip.limit.arr limits arrays that are long (but not wide)', {
   ellip.v <- '\u22EE'
   # Make sure the limits are reasonable before we test.
   orig_rows_limit <- getOption('repr.matrix.max.rows')
@@ -258,7 +258,7 @@ test_that("ellip.limit.arr limits arrays that are long (but not wide)", {
 })
 
 
-test_that("ellip.limit.arr limits arrays that are long and wide", {
+test_that('ellip.limit.arr limits arrays that are long and wide', {
   ellip.h <- '\u22EF'
   ellip.v <- '\u22EE'
   ellip.d <- '\u22F1'

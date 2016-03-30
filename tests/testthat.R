@@ -1,4 +1,4 @@
 library(testthat)
 library(repr)
 
-test_check("repr")
+test_check('repr')

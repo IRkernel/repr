@@ -69,7 +69,7 @@ ellip.limit.arr <- function(
 			if (is.factor(a[, c])) {
 				# Factors: add ellipses to levels
 				levels(a[, c]) <- c(levels(a[, c]), ellipses)
-			} else if (inherits(a[, c], "Date")) {
+			} else if (inherits(a[, c], 'Date')) {
 				# Dates: convert to plain strings
 				a[, c] <- as.character(a[, c])
 			}
