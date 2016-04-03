@@ -95,7 +95,7 @@ test_that('ellip.limit.vec returns correctly for factors', {
 })
 
 
-test_that('ellip.limit.arr doesn't change arrays that are small', {
+test_that('ellip.limit.arr doesn\'t change arrays that are small', {
   # Make sure the limits are reasonable before we test.
   orig_rows_limit <- getOption('repr.matrix.max.rows')
 	orig_cols_limit <- getOption('repr.matrix.max.cols')
