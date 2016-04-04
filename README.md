@@ -1,4 +1,4 @@
-repr
+repr&emsp;[![Build Status](https://travis-ci.org/IRkernel/repr.svg?branch=master)](https://travis-ci.org/IRkernel/repr)
 ====
 
 String and byte representations for all kinds of R objects.
