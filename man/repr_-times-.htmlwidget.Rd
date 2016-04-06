@@ -10,6 +10,11 @@
 
 \method{repr_html}{htmlwidget}(obj, ...)
 }
+\arguments{
+\item{obj}{The htmlwidget to create a representation for}
+
+\item{...}{ignored}
+}
 \description{
 Standalone HTML representation and dummy text representation
 }

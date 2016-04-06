@@ -1,10 +1,13 @@
 #' HTML widget representations
-#' 
+#'
 #' Standalone HTML representation and dummy text representation
-#' 
+#'
+#' @param obj  The htmlwidget to create a representation for
+#' @param ...  ignored
+#'
 #' @name repr_*.htmlwidget
 #' @export
-repr_text.htmlwidget <- function(obj, ...) 'You need to use repr_html for HTML widgets'
+repr_text.htmlwidget <- function(obj, ...) 'HTML widgets cannot be represented in plain text (need html)'
 
 #' @name repr_*.htmlwidget
 #' @export

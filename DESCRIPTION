@@ -1,7 +1,16 @@
 Package: repr
-Title: Serializable representations
+Title: Serializable Representations
 Version: 0.4
-Authors@R: 'Philipp A. <flying-sheep@web.de> [aut, cre]'
+Authors@R: c(
+    person('Philipp', 'A.', email = 'flying-sheep@web.de', role = c('aut', 'cre')),
+    person('Thomas', 'Kluyver', email = 'thomas@kluyver.me.uk', role = 'aut'),
+    person('Jan', 'Schulz', email = 'jasc@gmx.net', role = 'aut'),
+    person('abielr', role = 'ctb'),
+    person('Denilson', 'Figueiredo de Sa', role = 'ctb'),
+    person('Jim', 'Hester', role = 'ctb'),
+    person('karldw', role = 'ctb')
+    )
+Maintainer: Philipp A. <flying-sheep@web.de>
 Description: String and binary representations of objects for several formats /
     mime types.
 Depends:

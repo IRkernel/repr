@@ -149,7 +149,7 @@ repr_pdf.recordedplot <- function(obj,
 	title <- plot_title(obj, 'Untitled plot')
 	
 	if (capabilities('aqua'))
-		quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
+		grDevices::quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
 	else if (CAIRO_INSTALLED)
 		Cairo::Cairo(width, height, tf, 'pdf', pointsize, 'transparent', bg, 'in')
 	else if (capabilities('cairo'))
