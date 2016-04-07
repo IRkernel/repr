@@ -9,6 +9,8 @@
 #' @name repr_*.help_files_with_topic
 NULL
 
+get_help_file <- getFromNamespace('fetchRdDB', 'tools')
+
 repr_help_files_with_topic_generic <- function(obj, Rd2_) {
 	topic <- attr(obj, 'topic')
 	#type <- attr(obj, 'type') #should we make this html by setting some option?
@@ -27,7 +29,7 @@ repr_help_files_with_topic_generic <- function(obj, Rd2_) {
 	
 	pkgname <- basename(dirname(dirname(file)))
 	
-	rd <- utils:::.getHelpFile(file)
+	rd <- get_help_file(file)
 	
 	output <- capture.output(Rd2_(rd, package = pkgname, outputEncoding = 'UTF-8'))
 	
