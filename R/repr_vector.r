@@ -20,13 +20,16 @@ repr_vector_generic <- function(
 	enum.wrap, named.wrap = enum.wrap,
 	...,
 	numeric.item = named.item,
-	item.uses.numbers = FALSE) {
+	item.uses.numbers = FALSE, escape.FUN = identity) {
 	
 	nms <- names(vec)
+	if (!is.null(nms)) {
+		nms <- escape.FUN(nms)
+	}
 	if (is.character(vec) && getOption('repr.vector.quote'))
-		char.vec <- shQuote(vec)
+		char.vec <- escape.FUN(shQuote(vec))
 	else
-		char.vec <- as.character(vec)
+		char.vec <- escape.FUN(as.character(vec))
 	
 	if (length(char.vec) == 1) {
 		if (is.null(nms)) {
@@ -71,7 +74,8 @@ repr_html.logical <- function(obj, ...) repr_vector_generic(
 	'\t<dt>%s</dt>\n\t\t<dd>%s</dd>\n',
 	'<strong>%s:</strong> %s',
 	'<ol class=list-inline>\n%s</ol>\n',
-	'<dl class=dl-horizontal>\n%s</dl>\n')
+	'<dl class=dl-horizontal>\n%s</dl>\n',
+	escape.FUN = html.escape)
 
 #' @name repr_*.vector
 #' @export
@@ -108,7 +112,8 @@ repr_markdown.logical <- function(obj, ...) repr_vector_generic(
 	'%s\n:   %s',
 	'**%s:** %s',
 	'%s\n\n',
-	item.uses.numbers = TRUE)
+	item.uses.numbers = TRUE,
+	escape.FUN = html.escape)
 
 #' @name repr_*.vector
 #' @export
@@ -146,7 +151,8 @@ repr_latex.logical <- function(obj, ...) repr_vector_generic(
 	'\\textbf{%s:} %s',
 	enum.wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
 	named.wrap = '\\begin{description*}\n%s\\end{description*}\n',
-	only.named.item = '\\textbf{%s:} %s')
+	only.named.item = '\\textbf{%s:} %s',
+	escape.FUN = latex.escape)
 
 #' @name repr_*.vector
 #' @export

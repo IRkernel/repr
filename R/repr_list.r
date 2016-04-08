@@ -14,10 +14,15 @@ repr_list_generic <- function(
 	enum.wrap, named.wrap = enum.wrap,
 	...,
 	numeric.item = named.item,
-	item.uses.numbers = FALSE) {
+	item.uses.numbers = FALSE,
+	escape.FUN = identity) {
 	
 	nms <- names(vec)
+	if (!is.null(nms)) {
+		nms <- escape.FUN(nms)
+	}
 	
+	# This does escaping, so no need to escape the content again
 	mapped <- lapply(vec, format2repr[[fmt]])
 	
 	if (length(mapped) == 1 && !is.null(nms)) {
@@ -57,7 +62,8 @@ repr_html.list <- function(obj, ...) repr_list_generic(
 	'<strong>$%s</strong> = %s',
 	'<ol>\n%s</ol>\n',
 	'<dl>\n%s</dl>\n',
-	numeric.item = '\t<dt>[[%s]]</dt>\n\t\t<dd>%s</dd>\n')
+	numeric.item = '\t<dt>[[%s]]</dt>\n\t\t<dd>%s</dd>\n',
+	escape.FUN = html.escape)
 
 
 
@@ -70,7 +76,8 @@ repr_markdown.list <- function(obj, ...) repr_list_generic(
 	'**$%s** = %s',
 	'%s\n\n',
 	numeric.item = '[[%s]]\n:   %s\n',
-	item.uses.numbers = TRUE)
+	item.uses.numbers = TRUE,
+	escape.FUN = html.escape)
 
 
 
@@ -83,4 +90,5 @@ repr_latex.list <- function(obj, ...) repr_list_generic(
 	'\\textbf{\\$%s} = %s',
 	enum.wrap  = '\\begin{enumerate}\n%s\\end{enumerate}\n',
 	named.wrap = '\\begin{description}\n%s\\end{description}\n',
-	numeric.item = '\\item[{[[%s]]}] %s\n')
+	numeric.item = '\\item[{[[%s]]}] %s\n',
+	escape.FUN = latex.escape)
