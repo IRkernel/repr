@@ -12,3 +12,6 @@ addons:
       # Install the headers for the Cairo package.
       - libcairo2-dev
       - libjpeg-dev
+
+#script:
+#  - "grep -q 'Status: 1 NOTE' ~/build/IRkernel/repr/repr.Rcheck/00check.log"
