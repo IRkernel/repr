@@ -85,7 +85,7 @@ repr_markdown.list <- function(obj, ...) repr_list_generic(
 #' @name repr_*.list
 #' @export
 repr_latex.list <- function(obj, ...) repr_list_generic(
-	latex.escape.names(obj), 'latex',
+	obj, 'latex',
 	'\\item %s\n',
 	'\\item[\\$%s] %s\n',
 	'\\textbf{\\$%s} = %s',
