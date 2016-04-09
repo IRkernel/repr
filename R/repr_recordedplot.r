@@ -79,7 +79,7 @@ repr_png.recordedplot <- function(obj,
 	
 	dev.cb <- function(tf)
 		if (CAIRO_INSTALLED)
-			Cairo::Cairo(width, height, tf, 'png', pointsize, 'transparent', bg, 'in', res)
+			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
 		else
 			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
 	
@@ -102,7 +102,7 @@ repr_jpg.recordedplot <- function(obj,
 	
 	dev.cb <- function(tf)
 		if (CAIRO_INSTALLED)
-			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, 'transparent', bg, 'in', res, quality = quality)
+			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality)
 		else
 			jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
 	
@@ -128,7 +128,7 @@ repr_svg.recordedplot <- function(obj,
 	
 	dev.cb <- function(tf)
 		if (CAIRO_INSTALLED)
-			Cairo::Cairo(width, height, tf, 'svg', pointsize, 'transparent', bg, 'in')
+			Cairo::Cairo(width, height, tf, 'svg', pointsize, bg, 'transparent', 'in')
 		else
 			svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	
@@ -151,7 +151,7 @@ repr_pdf.recordedplot <- function(obj,
 	if (capabilities('aqua'))
 		grDevices::quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
 	else if (CAIRO_INSTALLED)
-		Cairo::Cairo(width, height, tf, 'pdf', pointsize, 'transparent', bg, 'in')
+		Cairo::Cairo(width, height, tf, 'pdf', pointsize, bg, 'transparent', 'in')
 	else if (capabilities('cairo'))
 		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	else
