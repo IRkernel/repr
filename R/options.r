@@ -1,13 +1,10 @@
-#' These options are used to control the behavior of repr when not calling it directly.
+#' repr options
+#' 
+#' These options are used to control the behavior of repr when not calling it directly. Use \code{\link[base]{options}(repr.* = ...)} and \code{\link[base]{getOption}('repr.*')} to set and get them, respectively.
 #' 
 #' Once this package is loaded, all options are set to defaults which weren’t set beforehand.
 #' 
 #' Setting all options set to \code{NULL} are reset to defaults when reloading the package (or calling \code{repr:::.onload()}).
-#' 
-#' @usage \code{
-#' options(repr.* = ...)
-#' getOption('repr.*')
-#' }
 #' 
 #' @section Options:
 #' 
@@ -69,7 +66,6 @@ class_defaults <- list(
 	repr.matrix.latex.colspec = list(row.head = 'r|', col = 'l', end = ''),
 	repr.function.highlight = FALSE)
 
-#' @usage \code{repr_option_defaults$repr.*}
 #' @name repr-options
 #' @export
 repr_option_defaults <- c(plot_defaults, class_defaults)

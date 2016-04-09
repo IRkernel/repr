@@ -4,20 +4,17 @@
 \name{repr-options}
 \alias{repr-options}
 \alias{repr_option_defaults}
-\title{These options are used to control the behavior of repr when not calling it directly.}
+\title{repr options}
 \format{An object of class \code{list} of length 13.}
 \usage{
-\code{
-options(repr.* = ...)
-getOption('repr.*')
-}
-
-\code{repr_option_defaults$repr.*}
+repr_option_defaults
 }
 \description{
-Once this package is loaded, all options are set to defaults which weren’t set beforehand.
+These options are used to control the behavior of repr when not calling it directly. Use \code{\link[base]{options}(repr.* = ...)} and \code{\link[base]{getOption}('repr.*')} to set and get them, respectively.
 }
 \details{
+Once this package is loaded, all options are set to defaults which weren’t set beforehand.
+
 Setting all options set to \code{NULL} are reset to defaults when reloading the package (or calling \code{repr:::.onload()}).
 }
 \section{Options}{
