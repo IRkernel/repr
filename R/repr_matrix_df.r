@@ -13,11 +13,20 @@
 #' @include utils.r
 NULL
 
-ellip.h <- '\u22EF'
-ellip.v <- '\u22EE'
-ellip.d <- '\u22F1'
+# There is currently a problem on windows which can't display chars in th
+# text/plain output, which are not available in the current locale.
+# See https://github.com/IRkernel/repr/issues/28#issuecomment-208574856
+.char_fallback <- function(char, default) {
+  real_len <- nchar(char)
+  r_len <- nchar(capture.output(cat(char)))
+  if (real_len == r_len) char else default
+}
+ellip.h <- .char_fallback('\u22EF', '...')
+ellip.v <- .char_fallback('\u22EE', '...')
+ellip.d <- .char_fallback('\u22F1', '')
 
-ellipses <- c(ellip.h, ellip.v, ellip.d)
+# These are used for factor, so make sure they are unique
+ellipses <- unique(c(ellip.h, ellip.v, ellip.d))
 
 get.limit.index <- function(obj_dim, limit) {
 	stopifnot(obj_dim > limit)  # otherwise this function should not have been run

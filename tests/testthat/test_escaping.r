@@ -1,5 +1,10 @@
 context('LaTeX and HTML escaping')
 
+expect_equivalent_string <- function(result, expectation){
+	"Only use ' as a string delimiter in strings."
+	expect_equal(gsub('"', "'", x = result), expectation)
+}
+
 test_that('simple LaTeX escaping works', {
 	expect_equal(latex.escape('\\'), '\\textbackslash{}')
 	expect_equal(latex.escape('{}'), '\\{\\}')
@@ -21,8 +26,8 @@ test_that('simple HTML escaping works', {
 })
 
 test_that('LaTeX escaping in vectors works', {
-	expect_equal(repr_latex('['), "'{[}'")
-	expect_equal(repr_latex(c('[', '|')),
+	expect_equivalent_string(repr_latex('['), "'{[}'")
+	expect_equivalent_string(repr_latex(c('[', '|')),
 "\\begin{enumerate*}
 \\item '{[}'
 \\item '\\textbar{}'
@@ -31,8 +36,8 @@ test_that('LaTeX escaping in vectors works', {
 })
 
 test_that('HTML escaping in vectors works', {
-	expect_equal(repr_html('<'), "'&lt;'")
-	expect_equal(repr_html(c('<', '&')),
+	expect_equivalent_string(repr_html('<'), "'&lt;'")
+	expect_equivalent_string(repr_html(c('<', '&')),
 "<ol class=list-inline>
 \t<li>'&lt;'</li>
 \t<li>'&amp;'</li>
@@ -77,11 +82,11 @@ test_that('HTML escaping in matrices works', {
 })
 
 test_that('LaTeX escaping in lists works', {
-	expect_equal(repr_latex(list(lbr = '[')), "\\textbf{\\$lbr} = '{[}'")
-	expect_equal(repr_latex(list(`&` = '%')), "\\textbf{\\$`\\&`} = '\\%'")
+	expect_equivalent_string(repr_latex(list(lbr = '[')), "\\textbf{\\$lbr} = '{[}'")
+	expect_equivalent_string(repr_latex(list(`&` = '%')), "\\textbf{\\$`\\&`} = '\\%'")
 })
 
 test_that('HTML escaping in lists works', {
-	expect_equal(repr_html(list(lt = '<')), "<strong>$lt</strong> = '&lt;'")
-	expect_equal(repr_html(list(`&` = '<')), "<strong>$`&amp;`</strong> = '&lt;'")
+	expect_equivalent_string(repr_html(list(lt = '<')), "<strong>$lt</strong> = '&lt;'")
+	expect_equivalent_string(repr_html(list(`&` = '<')), "<strong>$`&amp;`</strong> = '&lt;'")
 })

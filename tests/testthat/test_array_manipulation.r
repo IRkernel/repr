@@ -46,9 +46,9 @@ test_that('get.limit.index sets the right indexes', {
   expect_equal(lim_index$end, c(7, 8, 9, 10))  
 })
 
+
 test_that('ellip.limit.vec returns correctly for numerics', {
-  ellip.h <- '\u22EF'
-  
+
   test_vec <- 10:1
   lim <- 2
   limited_vec <- ellip.limit.vec(test_vec, lim, ellip.h)
@@ -70,8 +70,6 @@ test_that('ellip.limit.vec returns correctly for numerics', {
 
 
 test_that('ellip.limit.vec returns correctly for factors', {
-  ellip.h <- '\u22EF'
-  
   test_vec <- factor(10:1)
   lim <- 2
   limited_vec <- ellip.limit.vec(test_vec, lim, ellip.h)
@@ -130,7 +128,6 @@ test_that('ellip.limit.arr doesn\'t change arrays that are small', {
 })
 
 test_that('ellip.limit.arr limits arrays that are wide (but not long)', {
-  ellip.h <- '\u22EF'
   # Make sure the limits are reasonable before we test.
   orig_rows_limit <- getOption('repr.matrix.max.rows')
   orig_cols_limit <- getOption('repr.matrix.max.cols')
@@ -197,7 +194,6 @@ test_that('ellip.limit.arr limits arrays that are wide (but not long)', {
 })
 
 test_that('ellip.limit.arr limits arrays that are long (but not wide)', {
-  ellip.v <- '\u22EE'
   # Make sure the limits are reasonable before we test.
   orig_rows_limit <- getOption('repr.matrix.max.rows')
   orig_cols_limit <- getOption('repr.matrix.max.cols')
@@ -259,16 +255,13 @@ test_that('ellip.limit.arr limits arrays that are long (but not wide)', {
 
 
 test_that('ellip.limit.arr limits arrays that are long and wide', {
-  ellip.h <- '\u22EF'
-  ellip.v <- '\u22EE'
-  ellip.d <- '\u22F1'
-  ellipses <- c(ellip.h, ellip.v, ellip.d)
+
   # Make sure the limits are reasonable before we test.
   orig_rows_limit <- getOption('repr.matrix.max.rows')
   orig_cols_limit <- getOption('repr.matrix.max.cols')
   
   
-  # Make a 7x7 because I want to test with limits of 4, 5 and 6. I want to test 
+  # Make a 7x7 because I want to test with limits of 4, 5 and 6. I want to test
   # both the normal cases and the weird case where a dimension is one less than
   # the limit (and therefore the 'smaller' output array is actually the same dim
   # as the original)
@@ -307,8 +300,8 @@ test_that('ellip.limit.arr limits arrays that are long and wide', {
   limited_df <- ellip.limit.arr(test_df)
   limited_dt <- ellip.limit.arr(test_dt)
   limited_tbl <- ellip.limit.arr(test_df)
-  expected_mat <- matrix(c('1', '2', '3', ellip.v, '6', '7', '8', '9', '10', 
-    ellip.v, '13', '14', '15', '16', '17', ellip.v, '20', '21', ellip.h, 
+  expected_mat <- matrix(c('1', '2', '3', ellip.v, '6', '7', '8', '9', '10',
+    ellip.v, '13', '14', '15', '16', '17', ellip.v, '20', '21', ellip.h,
     ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, '36', '37', '38', ellip.v,'41',
     '42', '43', '44', '45', ellip.v, '48', '49'), nrow = 6L)
   expected_df <- as.data.frame(expected_mat)
@@ -333,7 +326,7 @@ test_that('ellip.limit.arr limits arrays that are long and wide', {
 
   expected_mat <- matrix(c('1', '2', '3', ellip.v, '5', '6', '7', '8', '9',
     '10', ellip.v, '12', '13', '14', '15', '16', '17', ellip.v, '19', '20',
-    '21', ellip.h,  ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, ellip.h, '29', '30', '31', ellip.v, '33', '34', '35', '36', '37', '38', ellip.v, '40', 
+    '21', ellip.h,  ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, ellip.h, '29', '30', '31', ellip.v, '33', '34', '35', '36', '37', '38', ellip.v, '40',
     '41', '42', '43', '44', '45', ellip.v, '47', '48', '49'), nrow = 7L)
   expected_df <- as.data.frame(expected_mat, stringsAsFactors = FALSE)
   expected_df[, 4] <- factor(expected_df[, 4], levels = ellipses)
