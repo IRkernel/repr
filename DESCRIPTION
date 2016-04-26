@@ -21,10 +21,7 @@ Imports:
 Suggests:
     highr,
     Cairo,
-    testthat,
-    data.table,
-    dplyr,
-    htmlwidgets
+    testthat
 Enhances: data.table, dplyr, htmlwidgets
 License: GPL-3
 LazyData: true
