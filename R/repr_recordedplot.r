@@ -52,8 +52,8 @@ repr_text.recordedplot <- function(obj, ...) {
 repr_recordedplot_generic <- function(obj, ext, binary, dev.cb) {
 	tf <- tempfile(fileext = ext)
 	dev.cb(tf)
- 	replayPlot(obj)
-	dev.off()
+	grDevices::replayPlot(obj)
+	grDevices::dev.off()
 	if (binary)
 		readBin(tf, raw(), file.info(tf)$size)
 	else
@@ -81,7 +81,7 @@ repr_png.recordedplot <- function(obj,
 		if (CAIRO_INSTALLED)
 			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
 		else
-			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
+			grDevices::png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
 	
 	repr_recordedplot_generic(obj, '.png', TRUE, dev.cb)
 }
@@ -104,7 +104,7 @@ repr_jpg.recordedplot <- function(obj,
 		if (CAIRO_INSTALLED)
 			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality)
 		else
-			jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
+			grDevices::jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
 	
 	repr_recordedplot_generic(obj, '.jpg', TRUE, dev.cb)
 }
@@ -130,7 +130,7 @@ repr_svg.recordedplot <- function(obj,
 		if (CAIRO_INSTALLED)
 			Cairo::Cairo(width, height, tf, 'svg', pointsize, bg, 'transparent', 'in')
 		else
-			svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
+			grDevices::svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	
 	repr_recordedplot_generic(obj, '.svg', FALSE, dev.cb)
 }
@@ -153,7 +153,7 @@ repr_pdf.recordedplot <- function(obj,
 	else if (CAIRO_INSTALLED)
 		Cairo::Cairo(width, height, tf, 'pdf', pointsize, bg, 'transparent', 'in')
 	else if (capabilities('cairo'))
-		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
+		grDevices::cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	else
-		pdf(tf, width, height, FALSE, family, title, bg = bg, pointsize = pointsize)
+		grDevices::pdf(tf, width, height, FALSE, family, title, bg = bg, pointsize = pointsize)
 })

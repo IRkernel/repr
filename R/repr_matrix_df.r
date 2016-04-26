@@ -18,7 +18,7 @@ NULL
 # See https://github.com/IRkernel/repr/issues/28#issuecomment-208574856
 .char_fallback <- function(char, default) {
   real_len <- nchar(char)
-  r_len <- nchar(capture.output(cat(char)))
+  r_len <- nchar(utils::capture.output(cat(char)))
   if (real_len == r_len) char else default
 }
 ellip.h <- .char_fallback('\u22EF', '...')
@@ -212,7 +212,7 @@ repr_latex.data.frame <- repr_latex.matrix
 #' @name repr_*.matrix/data.frame
 #' @export
 repr_text.matrix <- function(obj, ...)
-	paste(capture.output(print(ellip.limit.arr(obj))), collapse = '\n')
+	paste(utils::capture.output(print(ellip.limit.arr(obj))), collapse = '\n')
 
 #' @name repr_*.matrix/data.frame
 #' @export

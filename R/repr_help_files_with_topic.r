@@ -44,7 +44,7 @@ repr_help_files_with_topic_generic <- function(obj, Rd2_) {
 	
 	rd <- get_help_file(file)
 	
-	output <- capture.output(Rd2_(rd, package = pkgname, outputEncoding = 'UTF-8'))
+	output <- utils::capture.output(Rd2_(rd, package = pkgname, outputEncoding = 'UTF-8'))
 	
 	if (identical(Rd2_, tools::Rd2HTML)) {
 		head.end.idx <- which(output == '</head><body>')

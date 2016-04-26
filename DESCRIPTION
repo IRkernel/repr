@@ -15,6 +15,9 @@ Description: String and binary representations of objects for several formats /
     mime types.
 Depends:
     R (>= 3.0.1)
+Imports:
+    utils,
+    grDevices
 Suggests:
     highr,
     Cairo,
