@@ -147,7 +147,7 @@ repr_matrix_generic <- function(
 	}
 	
 	rows <- lapply(seq_len(nrow(x)), function(r) {
-		row <- escape.FUN(x[r, ])
+		row <- escape.FUN(slice.row(x, r))
 		cells <- sprintf(cell, format(row))
 		if (has.rownames) {
 			row.head <- sprintf(row.head, escape.FUN(rownames(x)[[r]]))
@@ -171,7 +171,7 @@ repr_html.matrix <- function(obj, ...) repr_matrix_generic(
 	'<th scope=col>%s</th>',
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
 	'<td>%s</td>',
-	escape.FUN = html.escape)
+	escape.FUN = html.escape.vec)
 
 #' @name repr_*.matrix/data.frame
 #' @export
@@ -196,7 +196,7 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &',
-		escape.FUN = latex.escape)
+		escape.FUN = latex.escape.vec)
 
 	#TODO: remove this quick’n’dirty post processing
 	gsub(' &\\', '\\', r, fixed = TRUE)
@@ -212,7 +212,7 @@ repr_latex.data.frame <- repr_latex.matrix
 #' @name repr_*.matrix/data.frame
 #' @export
 repr_text.matrix <- function(obj, ...)
-	paste(utils::capture.output(print(ellip.limit.arr(obj))), collapse = '\n')
+	paste(utils::capture.output(print(ellip.limit.arr(as.data.frame(obj)))), collapse = '\n')
 
 #' @name repr_*.matrix/data.frame
 #' @export
