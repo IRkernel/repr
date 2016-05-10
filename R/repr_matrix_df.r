@@ -211,8 +211,15 @@ repr_latex.data.frame <- repr_latex.matrix
 
 #' @name repr_*.matrix/data.frame
 #' @export
-repr_text.matrix <- function(obj, ...)
-	paste(utils::capture.output(print(ellip.limit.arr(as.data.frame(obj)))), collapse = '\n')
+repr_text.matrix <- function(obj, ...) {
+	if (inherits(obj, c('tbl', 'data.table'))) {
+		# Coerce to data.frame to avoid special printing in dplyr and data.table.
+		obj <- as.data.frame(obj)
+	}
+	limited_obj <- ellip.limit.arr(obj)
+	print_output <- utils::capture.output(print(limited_obj))
+	paste(print_output, collapse = '\n')
+}
 
 #' @name repr_*.matrix/data.frame
 #' @export
