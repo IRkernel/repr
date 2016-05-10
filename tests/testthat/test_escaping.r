@@ -1,5 +1,9 @@
 context('LaTeX and HTML escaping')
 
+has_dt <- requireNamespace('data.table', quietly = TRUE)
+has_dplyr <- requireNamespace('dplyr', quietly = TRUE)
+
+
 expect_equivalent_string <- function(result, expectation){
 	"Only use ' as a string delimiter in strings."
 	expect_equal(gsub('"', "'", x = result), expectation)
@@ -89,4 +93,108 @@ test_that('LaTeX escaping in lists works', {
 test_that('HTML escaping in lists works', {
 	expect_equivalent_string(repr_html(list(lt = '<')), "<strong>$lt</strong> = '&lt;'")
 	expect_equivalent_string(repr_html(list(`&` = '<')), "<strong>$`&amp;`</strong> = '&lt;'")
+})
+
+test_that('Factors are maintained in small arrays for text', {
+	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A", "B", "C", "D")))
+	expected <- "  a b\n1 1 A\n2 2 B\n3 3 C\n4 4 D"
+	expect_equal(repr_text(df), expected)
+	if (has_dt) {
+		dt <- data.table::as.data.table(df)
+		answer <- repr_text(dt)
+		expect_equal(answer, expected)
+	}
+	if (has_dplyr) {
+		dtbl <- dplyr::as.tbl(df)
+		answer <- repr_text(dtbl)
+		expect_equal(answer, expected)
+	}
+})
+
+test_that('Factors are maintained in small arrays for HTML', {
+	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A", "B", "C", "D")))
+	# Sometimes extra whitespace is added, different than what I expected.
+	# That's fine, just strip out all white space.
+	expected <- gsub('\\s', '',
+		"<table>\n<thead><tr><th></th><th scope=col>a</th><th scope=col>b</th></tr></thead>\n<tbody>\n\t<tr><th scope=row>1</th><td>1</td><td>A</td></tr>\n\t<tr><th scope=row>2</th><td>2</td><td>B</td></tr>\n\t<tr><th scope=row>3</th><td>3</td><td>C</td></tr>\n\t<tr><th scope=row>4</th><td>4</td><td>D</td></tr>\n</tbody>\n</table>\n",
+		perl = TRUE)
+	answer <- gsub('\\s', '', repr_html(df), perl = TRUE)
+	expect_equal(answer, expected)
+
+	if (has_dt) {
+		dt <- data.table::as.data.table(df)
+		answer <- gsub('\\s', '', repr_html(dt), perl = TRUE)
+		expect_equal(answer, expected)
+	}
+	if (has_dplyr) {
+		dtbl <- dplyr::as.tbl(df)
+		answer <- gsub('\\s', '', repr_html(dtbl), perl = TRUE)
+		expect_equal(answer, expected)
+	}
+})
+
+test_that('Factors are sanitized in small data.frames for HTML', {
+	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A&", "B>", "C", "D")))
+	# Sometimes extra whitespace is added, different than what I expected.
+	# That's fine, just strip out all white space.
+	expected <- gsub('\\s', '',
+		"<table>\n<thead><tr><th></th><th scope=col>a</th><th scope=col>b</th></tr></thead>\n<tbody>\n\t<tr><th scope=row>1</th><td>1</td><td>A&amp;</td></tr>\n\t<tr><th scope=row>2</th><td>2</td><td>B&gt;</td></tr>\n\t<tr><th scope=row>3</th><td>3</td><td>C</td></tr>\n\t<tr><th scope=row>4</th><td>4</td><td>D</td></tr>\n</tbody>\n</table>\n",
+		perl = TRUE)
+	answer <- gsub('\\s', '', repr_html(df), perl = TRUE)
+	expect_equal(answer, expected)
+
+	if (has_dt) {
+		dt <- data.table::as.data.table(df)
+		answer <- gsub('\\s', '', repr_html(df), perl = TRUE)
+		expect_equal(answer, expected)
+	}
+	if (has_dplyr) {
+		dtbl <- dplyr::as.tbl(df)
+		answer <- gsub('\\s', '', repr_html(dtbl), perl = TRUE)
+		expect_equal(answer, expected)
+	}
+})
+
+test_that('Factors are maintained in small arrays for LaTeX', {
+	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A", "B", "C", "D")))
+	# Sometimes extra whitespace is added, different than what I expected.
+	# That's fine, just strip out all white space.
+	expected <- gsub('\\s', '',
+		"\\begin{tabular}{r|ll}\n  & a & b\\\\\n\\hline\n\t1 & 1 & A\\\\\n\t2 & 2 & B\\\\\n\t3 & 3 & C\\\\\n\t4 & 4 & D\\\\\n\\end{tabular}\n",
+		perl = TRUE)
+	answer <- gsub('\\s', '', repr_latex(df), perl = TRUE)
+	expect_equal(answer, expected)
+
+	if (has_dt) {
+		dt <- data.table::as.data.table(df)
+		answer <- gsub('\\s', '', repr_latex(dt), perl = TRUE)
+		expect_equal(answer, expected)
+	}
+	if (has_dplyr) {
+		dtbl <- dplyr::as.tbl(df)
+		answer <- gsub('\\s', '', repr_latex(dtbl), perl = TRUE)
+		expect_equal(answer, expected)
+	}
+})
+
+test_that('Factors are sanitized in small data.frames for LaTeX', {
+	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A&", "B%", "_C_", "D")))
+	# Sometimes extra whitespace is added, different than what I expected.
+	# That's fine, just strip out all white space.
+	expected <- gsub('\\s', '',
+		"\\begin{tabular}{r|ll}\n  & a & b\\\\\n\\hline\n\t1 & 1 & A\\&\\\\\n\t2 & 2 & B\\%\\\\\n\t3 & 3 & \\_C\\_\\\\\n\t4 & 4 &	 D\\\\\n\\end{tabular}\n",
+		perl = TRUE)
+	answer <- gsub('\\s', '', repr_latex(df), perl = TRUE)
+	expect_equal(answer, expected)
+
+	if (has_dt) {
+		dt <- data.table::as.data.table(df)
+		answer <- gsub('\\s', '', repr_latex(dt), perl = TRUE)
+		expect_equal(answer, expected)
+	}
+	if (has_dplyr) {
+		dtbl <- dplyr::as.tbl(df)
+		answer <- gsub('\\s', '', repr_latex(dtbl), perl = TRUE)
+		expect_equal(answer, expected)
+	}
 })
