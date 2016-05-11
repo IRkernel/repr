@@ -1,7 +1,6 @@
-
 context('Array and vector truncation')
 
-options('stringsAsFactors' = FALSE)
+options(stringsAsFactors = FALSE)
 
 has_dt <- requireNamespace('data.table', quietly = TRUE)
 has_dplyr <- requireNamespace('dplyr', quietly = TRUE)

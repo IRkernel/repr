@@ -97,19 +97,16 @@ latex.escape <- function(text) {
 slice.row <- function(df, row) {
 	# Slice an array, kind of like unlist(obj[row, ]), but respecting factors and
 	# upcasting as necessary.
-
 	slice <- c(df[row, ], recursive = TRUE)
-	col_classes <- vapply(df, class, FUN.VALUE = '')
-	if (! any(col_classes == 'factor')) {
-		return(slice)
-	}
-	factor_cols <- which(col_classes == 'factor')
-	for (col_idx in factor_cols) {
+	col_classes <- vapply(df, class, FUN.VALUE = character(1L))
+	
+	for (col_idx in which(col_classes == 'factor')) {
 		# This syntax doesn't work with matrices, but factor matrices are close to
 		# impossible.  See: http://stackoverflow.com/a/28724756
-		slice[col_idx] <- levels(df[[col_idx]])[slice[col_idx]]
+		slice[col_idx] <- levels(df[[col_idx]])[df[[row, col_idx]]]
 	}
-	return(slice)
+	
+	slice
 }
 
 # Create the actually-used functions from the shells above.
