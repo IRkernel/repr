@@ -73,13 +73,13 @@ latex.escape <- function(text) {
 }
 
 .escape.vec <- function(vec, escape_type) {
-	# .escape.vec should never change the class of its input.
-	# That seems useful, since functions like ellip.limit.arr check class.
 	# escape_type must be 'latex' or 'html'
 	stopifnot(any(escape_type == c('html', 'latex')))
-	# if (!(is.vector(vec) || is.factor(vec))) {
-	#     stop('expected `vec` to be a vector or factor but it is a ', paste(class(vec), collapse = ', '))
-	# }
+	# .escape.vec should never change the class of its input.
+	# That seems useful, since functions like ellip.limit.arr check class.
+	if (!(is.vector(vec) || is.factor(vec))) {
+	    stop('expected `vec` to be a vector or factor but it is a ', paste(class(vec), collapse = ', '))
+	}
 
 	detect.specials  <- match.fun(paste0('any.', escape_type, '.specials'))
 	escape.specials <- match.fun(paste0(escape_type, '.escape'))
