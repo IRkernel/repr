@@ -12,9 +12,11 @@ repos:
   IRkernel: https://irkernel.github.io/
 
 r_packages:
-  # Additional packages for tests...
+  # Enhanced packages
   - data.table
   - dplyr
+  - htmlwidgets
+  # Needed for building
   - roxygen2
 
 addons:
