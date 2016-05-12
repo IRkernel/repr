@@ -36,6 +36,7 @@ Collate:
     'repr_htmlwidget.r'
     'repr_list.r'
     'repr_matrix_df.r'
+    'repr_packageIQR.r'
     'repr_recordedplot.r'
     'repr_vector.r'
 RoxygenNote: 5.0.1
