@@ -16,7 +16,11 @@
 \item{...}{ignored}
 }
 \description{
-plain text representations of packageIQR objects like the list of vailable example 
-data or vignettes
+Text representations of packageIQR objects like the list of available example data or vignettes
+}
+\examples{
+repr_html(data(package = 'base'))
+repr_text(vignette(package = 'highr'))
+
 }
 

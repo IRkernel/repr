@@ -1,74 +1,51 @@
 #' packageIQR representations
-#'
-#' plain text representations of packageIQR objects like the list of vailable example
-#' data or vignettes
-#'
+#' 
+#' Text representations of packageIQR objects like the list of available example data or vignettes
+#' 
 #' @param obj  The packageIQR obj to create a representation for
 #' @param ...  ignored
-#'
+#' 
+#' @examples
+#' repr_html(data(package = 'base'))
+#' repr_text(vignette(package = 'highr'))
+#' 
 #' @name repr_*.packageIQR
 #' @export
-repr_text.packageIQR <- function(obj, ...)
-{
+repr_text.packageIQR <- function(obj, ...) {
 	# this is mostly copied from utils:::print.packageIQR
-	db <- obj$results
-	out <- if (nrow(db) > 0L) {
-		lapply(split(seq_len(nrow(db)), db[, 'Package']),
-					 function(ind) {
-					 	db[ind, c('Item', 'Title'), drop = FALSE]
-					 })
-	}
-	output <- vector('character')
-	outConn = textConnection('output', 'w', local = TRUE)
+	db <- as.data.frame(obj$results, stringsAsFactors = FALSE)
+	idx_by_pkg <- split(seq_len(nrow(db)), db$Package)
+	db_by_pkg <- lapply(idx_by_pkg, function(ind) db[ind, ])
 	
-	first <- TRUE
+	output <- character(0L)
 	
-	for (pkg in names(out)) {
-		writeLines(paste0(
-			ifelse(first, '', '\n'),
-			obj$title,
-			' in package ',
-			sQuote(pkg),
-			':\n'
-		),
-		outConn)
-		writeLines(formatDL(out[[pkg]][, 'Item'], out[[pkg]][, 'Title']), outConn)
-		first <- FALSE
+	for (pkg_name in names(db_by_pkg)) {
+		package <- db_by_pkg[[pkg_name]]
+		output <- c(
+			output,
+			sprintf('%s in package %s:\n', obj$title, sQuote(pkg_name)),
+			formatDL(package$Item, package$Title))
 	}
-	#  print(first)
-	if (first) {
-		writeLines(paste('no', tolower(obj$title), 'found'), outConn)
-		if (!is.null(obj$footer))
-			writeLines(c('', obj$footer), outConn)
-	}
-	else {
-		if (!is.null(obj$footer))
-			writeLines(c('\n', obj$footer), outConn)
-	}
-	close(outConn)
+	
+	if (length(db_by_pkg) == 0L)
+		output <- c(output, sprintf('no %s found', tolower(obj$title)))
+	
+	if (!is.null(obj$footer))
+		output <- c(output, paste0('\n', obj$footer))  # add 2 \n
+	
 	paste(output, collapse = '\n')
 }
 
 #' @name repr_*.packageIQR
 #' @export
-repr_html.packageIQR <- function(obj, ...)
-{
-	db <-
-		as.data.frame(obj$results, stringsAsFactors = FALSE)[c('Package', 'Item', 'Title')]
-	title = sprintf('<h3>%s</h3>', obj$title)
-	if (nrow(db) == 0) {
-		content = sprintf('<p>No %s found</p>', tolower(obj$title))
+repr_html.packageIQR <- function(obj, ...) {
+	db <- as.data.frame(obj$results, stringsAsFactors = FALSE)[c('Package', 'Item', 'Title')]
+	title <- sprintf('<h3>%s</h3>', obj$title)
+	content <- if (nrow(db) == 0L) {
+		sprintf('<p>No %s found</p>', tolower(obj$title))
 	} else {
-		oldrows = getOption('repr.matrix.max.rows')
-		options(repr.matrix.max.rows = 1000)
-		on.exit({
-			options(repr.matrix.max.rows = oldrows)
-		})
-		content <- repr_html(db)
+		repr_html(db, rows = 1000L)
 	}
-	footer <- ''
-	if (!is.null(obj$footer)) {
-		footer <- sprintf('<p>%s</p>', obj$footer)
-	}
+	footer <- sprintf('<p>%s</p>', obj$footer)  # will be character(0L) if is.null(footer)
 	paste(title, content, footer, sep = '\n')
 }
