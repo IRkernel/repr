@@ -3,10 +3,12 @@ repr&emsp;[![Build Status](https://travis-ci.org/IRkernel/repr.svg?branch=master
 
 String and byte representations for all kinds of R objects.
 
-This package has several generic functions to create all mimetypes that [Jupyter][] knows about, but is totally independent of it.
+This package exists to reliably create readable text (and viewable image) representations of data without the side effects [`print()`][print] can cause, such as invoking a [pager][file_show] and plotting to a plot device. In other words, all repr functions and methods are pure.
 
-It is intended to be the basis of several packages that need to create rich text and graphics from R objects, such as the Jupyter [IRkernel][], [knitr][], and others, such as a future more powerful replacement for `R CMD Rd2pdf`.
+It is intended to be the basis of several packages that need to create rich text and graphics from R objects, such as [Jupyter][]’s [IRkernel][], [knitr][], and others, such as a future more powerful replacement for `R CMD Rd2pdf`.
 
+[print]: https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.html
+[file_show]: https://stat.ethz.ch/R-manual/R-devel/library/base/html/file.show.html
 [Jupyter]: http://jupyter.org/
 [IRkernel]: https://github.com/IRkernel/IRkernel
 [knitr]: http://yihui.name/knitr/
