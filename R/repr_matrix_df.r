@@ -132,12 +132,15 @@ repr_matrix_generic <- function(
 	header.wrap, corner, head,
 	body.wrap, row.wrap, row.head,
 	cell, last.cell = cell,
-	escape.FUN = identity
+	escape.FUN = identity,
+	...,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols')
 ) {
 	has.rownames <- !is.null(rownames(x))
 	has.colnames <- !is.null(colnames(x))
 	
-	x <- ellip.limit.arr(x)
+	x <- ellip.limit.arr(x, rows, cols)
 	
 	header <- ''
 	if (has.colnames) {
@@ -171,7 +174,8 @@ repr_html.matrix <- function(obj, ...) repr_matrix_generic(
 	'<th scope=col>%s</th>',
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
 	'<td>%s</td>',
-	escape.FUN = html.escape.vec)
+	escape.FUN = html.escape.vec,
+	...)
 
 #' @name repr_*.matrix/data.frame
 #' @export
@@ -196,7 +200,8 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 		'%s\\\\\n\\hline\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &',
-		escape.FUN = latex.escape.vec)
+		escape.FUN = latex.escape.vec,
+		...)
 
 	#TODO: remove this quick’n’dirty post processing
 	gsub(' &\\', '\\', r, fixed = TRUE)
