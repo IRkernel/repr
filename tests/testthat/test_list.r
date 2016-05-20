@@ -19,6 +19,6 @@ test_that('named lists display correctly', {
 })
 
 test_that('lists with unknown element types don’t display', {
-	setClass('__unknown', representation(n = 'character'))
-	expect_identical(repr_html(list(1, new('__unknown'))), NULL)
+	methods::setClass('__unknown', methods::representation(n = 'character'))
+	expect_identical(repr_html(list(1, methods::new('__unknown'))), NULL)
 })
