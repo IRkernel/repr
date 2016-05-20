@@ -26,6 +26,11 @@ repr_list_generic <- function(
 	# This does escaping, so no need to escape the content again
 	mapped <- lapply(vec, format2repr[[fmt]])
 	
+	# if any elements cannot be represented, return NULL
+	if (any(vapply(vec, is.null, logical(1)) != vapply(mapped, is.null, logical(1)))) {
+		return(NULL)
+	}
+	
 	if (length(mapped) == 1 && !is.null(nms)) {
 		ret <- sprintf(only.named.item, nms, mapped[[1]])
 	} else {
