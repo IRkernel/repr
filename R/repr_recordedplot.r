@@ -1,5 +1,15 @@
 CAIRO_INSTALLED <- requireNamespace('Cairo')
 
+# checking capability of X11 is slow, the short circult logic avoids
+# this if any other devices are found.
+check_capability <- function(dev) {
+	devices <- c(dev, 'aqua', 'cairo', 'X11')
+	for (d in devices) {
+		if (capabilities(d)) return(TRUE)
+	}
+	FALSE
+}
+
 plot_title <- function(p, default = NULL) {
 	for (call in rev(p[[1]])) {
 		args <- call[[2]]
@@ -75,7 +85,7 @@ repr_png.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 ...) {
-	if (!CAIRO_INSTALLED && !any(capabilities(c('aqua', 'cairo', 'X11', 'png')))) return(NULL)
+	if (!CAIRO_INSTALLED && !check_capability('png')) return(NULL)
 	
 	dev.cb <- function(tf)
 		if (CAIRO_INSTALLED)
@@ -98,7 +108,7 @@ repr_jpg.recordedplot <- function(obj,
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
 ...) {
-	if (!CAIRO_INSTALLED && !any(capabilities(c('aqua', 'cairo', 'X11', 'jpeg')))) return(NULL)
+	if (!CAIRO_INSTALLED && !check_capability('jpeg')) return(NULL)
 	
 	dev.cb <- function(tf)
 		if (CAIRO_INSTALLED)
