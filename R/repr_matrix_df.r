@@ -47,24 +47,7 @@ ellip.limit.vec <- function(v, num, ellip) {
 	c(v[lims$begin], ellip, v[lims$end])
 }
 
-ellip.limit.arr <- function(
-	a,
-	rows = getOption('repr.matrix.max.rows'),
-	cols = getOption('repr.matrix.max.cols')
-) {
-	stopifnot(rows >= 2L, cols >= 2L)
-
-	# Don't worry about any of the code below if the array is already small.
-	if (rows >= nrow(a) && cols >= ncol(a)) {
-		return(a)
-	}
-
-	left   <- seq_len(ceiling(cols / 2))
-	right  <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
-	top    <- seq_len(ceiling(rows / 2))
-	bottom <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
-	
-	# fix columns that won't like ellipsis being inserted
+fix.data.frame.format <- function(a) {
 	if (is.data.frame(a)) {
 		# data.tables can't be indexed by column number, unless you provide the
 		# with=FALSE parameter. To avoid the hassle, just convert to a normal table.
@@ -84,7 +67,29 @@ ellip.limit.arr <- function(
 			}
 		}
 	}
+	a
+}
 
+ellip.limit.arr <- function(
+	a,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols')
+) {
+	# fix columns that won't like ellipsis being inserted
+	a <- fix.data.frame.format(a)
+	
+	stopifnot(rows >= 2L, cols >= 2L)
+
+	# Don't worry about any of the code below if the array is already small.
+	if (rows >= nrow(a) && cols >= ncol(a)) {
+		return(a)
+	}
+
+	left   <- seq_len(ceiling(cols / 2))
+	right  <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
+	top    <- seq_len(ceiling(rows / 2))
+	bottom <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
+	
 	if (rows < nrow(a) && inherits(a, 'tbl')) {
 		# tbl objects from dplyr automatically reset their row names when sliced.
 		# we'd like to make it clear that the array has had rows cut out, so that
