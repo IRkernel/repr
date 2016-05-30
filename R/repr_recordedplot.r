@@ -1,4 +1,4 @@
-CAIRO_INSTALLED <- requireNamespace('Cairo')
+is_cairo_installed <- function() requireNamespace('Cairo')
 
 # checking capability of X11 is slow, the short circult logic avoids
 # this if any other devices are found.
@@ -85,10 +85,10 @@ repr_png.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 ...) {
-	if (!CAIRO_INSTALLED && !check_capability('png')) return(NULL)
+	if (!is_cairo_installed() && !check_capability('png')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (CAIRO_INSTALLED)
+		if (is_cairo_installed())
 			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
 		else
 			grDevices::png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
@@ -108,10 +108,10 @@ repr_jpg.recordedplot <- function(obj,
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
 ...) {
-	if (!CAIRO_INSTALLED && !check_capability('jpeg')) return(NULL)
+	if (!is_cairo_installed() && !check_capability('jpeg')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (CAIRO_INSTALLED)
+		if (is_cairo_installed())
 			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality)
 		else
 			grDevices::jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
@@ -134,10 +134,10 @@ repr_svg.recordedplot <- function(obj,
 	#special
 	family    = getOption('repr.plot.family'),
 ...) {
-	if (!CAIRO_INSTALLED && !capabilities('cairo')) return(NULL) #only cairo can do SVG
+	if (!is_cairo_installed() && !capabilities('cairo')) return(NULL) #only cairo can do SVG
 	
 	dev.cb <- function(tf)
-		if (CAIRO_INSTALLED)
+		if (is_cairo_installed())
 			Cairo::Cairo(width, height, tf, 'svg', pointsize, bg, 'transparent', 'in')
 		else
 			grDevices::svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
@@ -160,7 +160,7 @@ repr_pdf.recordedplot <- function(obj,
 	
 	if (capabilities('aqua'))
 		grDevices::quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
-	else if (CAIRO_INSTALLED)
+	else if (is_cairo_installed())
 		Cairo::Cairo(width, height, tf, 'pdf', pointsize, bg, 'transparent', 'in')
 	else if (capabilities('cairo'))
 		grDevices::cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
