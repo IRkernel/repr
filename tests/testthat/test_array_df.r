@@ -24,3 +24,14 @@ test_that('mixed factors and strings display correctly', {
 </table>
 ')
 })
+
+test_that('date display correctly', {
+	df = data.frame(a = as.POSIXct('2016-05-28 10:00:00', tz = 'UTC'))
+	expect_equal(repr_html(df), '<table>
+<thead><tr><th></th><th scope=col>a</th></tr></thead>
+<tbody>
+\t<tr><th scope=row>1</th><td>2016-05-28 10:00:00</td></tr>
+</tbody>
+</table>
+')
+})
