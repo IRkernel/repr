@@ -108,20 +108,22 @@ test_that('ellip.limit.arr doesn\'t change arrays that are small', {
   
   # Run some tests.
   test_mat <- matrix(1:10, ncol = 2)
-  test_df <- as.data.frame(test_mat)
+  test_df <- data.frame(V1 = 1:5, V2 = 6:10)
+  expected_mat <- matrix(c(format(1:5), format(6:10)), ncol = 2)
+  expected_df_mat <- structure(expected_mat, dimnames = list(1:5, c('V1', 'V2')))
   limited_mat <- ellip.limit.arr(test_mat)
-  limited_df <- ellip.limit.arr(test_df)
-  expect_equal(test_mat, limited_mat)
-  expect_equal(test_df,  limited_df)
+  limited_df_mat <- ellip.limit.arr(test_df)
+  expect_equal(limited_mat, expected_mat)
+  expect_equal(limited_df_mat, expected_df_mat)
   if (has_dt) {
     test_dt <- data.table::as.data.table(test_mat)
-    limited_dt <- ellip.limit.arr(test_dt)
-    expect_equal(test_dt,  limited_dt)
+    limited_dt_mat <- ellip.limit.arr(test_dt)
+    expect_equal(limited_dt_mat, expected_df_mat)
   }
   if (has_dplyr) {
     test_tbl <- dplyr::as.tbl(test_df)
-    limited_tbl <- ellip.limit.arr(test_tbl)
-    expect_equal(test_tbl,  limited_tbl)
+    limited_tbl_mat <- ellip.limit.arr(test_tbl)
+    expect_equal(limited_tbl_mat, expected_df_mat)
   }
 
   # Reset limits
@@ -148,27 +150,22 @@ test_that('ellip.limit.arr limits arrays that are wide (but not long)', {
   # We'll test even and odd limits, sticking with small numbers to keep things sane.
   options('repr.matrix.max.cols' = 4L)
   limited_mat <- ellip.limit.arr(test_mat)
-  limited_df <- ellip.limit.arr(test_df)
-  expected_mat <- matrix(c('16', '15', '14', '13', ellip.h, ellip.h, '4', '3', 
-    '2', '1'), nrow = 2L)
-  expected_df <- data.frame(V1 = c(16, 15), V2 = c(14, 13), ellips = rep(ellip.h, 2L),
-    V7 = c(4, 3), V8 = c(2, 1))
-  names(expected_df) <- c('V1', 'V2', ellip.h, 'V7', 'V8')
+  limited_df  <- ellip.limit.arr(test_df)
+  expected_mat <- matrix(c('16', '15', '14', '13', ellip.h, ellip.h, '4', '3', '2', '1'), nrow = 2L)
+  expected_df_mat  <- as.matrix(data.frame(V1 = c(16, 15), V2 = c(14, 13), ellips = rep(ellip.h, 2L), V7 = c(4, 3), V8 = c(2, 1)))
+  colnames(expected_df_mat)[[3]] <- ellip.h
+  rownames(expected_df_mat) <- 1:2  # TODO: is this correct or should it rather not have those
   expect_equal(limited_mat, expected_mat)
-  expect_equal(limited_df,  expected_df)
+  expect_equal(limited_df,  expected_df_mat)
   if (has_dt) {
     test_dt <- data.table::as.data.table(test_mat)
     limited_dt <- ellip.limit.arr(test_dt)
-    # The code, as a shortcut, just converts data.tables to data.frames.
-    #expected_dt <- data.table::as.data.table(expected_df)
-    expected_dt <- expected_df
-    expect_equal(limited_dt,  expected_dt)
+    expect_equal(limited_dt, expected_df_mat)
   }
   if (has_dplyr) {
     test_tbl <- dplyr::as.tbl(test_df)
     limited_tbl <- ellip.limit.arr(test_tbl)
-    expected_tbl <- expected_df  # curtailed tbl's get converted to data.frames.
-    expect_equal(limited_tbl, expected_tbl)
+    expect_equal(limited_tbl, expected_df_mat)
   }
 
   # Repeat with an odd limit.
@@ -176,25 +173,20 @@ test_that('ellip.limit.arr limits arrays that are wide (but not long)', {
   limited_mat <- ellip.limit.arr(test_mat)
   limited_df <- ellip.limit.arr(test_df)
   
-  expected_mat <- matrix(c('16', '15', '14', '13', '12', '11', ellip.h, ellip.h, 
-    '4', '3', '2', '1'), nrow = 2L)
-  expected_df <- data.frame(V1 = c(16, 15), V2 = c(14, 13), V3 = c(12, 11), 
-    ellips = rep(ellip.h, 2L), V7 = c(4, 3), V8 = c(2, 1))
-  names(expected_df) <- c('V1', 'V2', 'V3', ellip.h, 'V7', 'V8')
+  expected_mat <- matrix(c('16', '15', '14', '13', '12', '11', ellip.h, ellip.h, '4', '3', '2', '1'), nrow = 2L)
+  expected_df_mat <- as.matrix(data.frame(V1 = c(16, 15), V2 = c(14, 13), V3 = c(12, 11), ellips = rep(ellip.h, 2L), V7 = c(4, 3), V8 = c(2, 1)))
+  colnames(expected_df_mat)[[4]] <- ellip.h
+  rownames(expected_df_mat) <- 1:2  # TODO: see above
 
   expect_equal(limited_mat, expected_mat)
-  expect_equal(limited_df,  expected_df)
+  expect_equal(limited_df,  expected_df_mat)
   if (has_dt) {
     limited_dt <- ellip.limit.arr(test_dt)
-    # The code, as a shortcut, just converts data.tables to data.frames.
-    #expected_dt <- data.table::as.data.table(expected_df)
-    expected_dt <- expected_df
-    expect_equal(limited_dt,  expected_dt)
+    expect_equal(limited_dt, expected_df_mat)
   }
   if (has_dplyr) {
     limited_tbl <- ellip.limit.arr(test_tbl)
-    expected_tbl <- expected_df  # curtailed tbl's get converted to data.frames.
-    expect_equal(limited_tbl, expected_tbl)
+    expect_equal(limited_tbl, expected_df_mat)
   }
   
   # Reset limits
@@ -220,48 +212,46 @@ test_that('ellip.limit.arr limits arrays that are long (but not wide)', {
   options('repr.matrix.max.rows' = 4L)
   limited_mat <- ellip.limit.arr(test_mat)
   limited_df <- ellip.limit.arr(test_df)
-  expected_mat <- matrix(c('16', '15', ellip.v, '10', '9', '8', '7', ellip.v, 
-    '2', '1'), ncol = 2L)
-  expected_df <- data.frame(V1 = c('16', '15', ellip.v, '10', '9'), 
-    V2 = c('8', '7', ellip.v, '2', '1'))
-  rownames(expected_df) <- c('1', '2', ellip.v, '7', '8')
+  expected_mat <- matrix(c(
+  	'16', '15', ellip.v, '10', ' 9',
+  	'8', '7', ellip.v, '2', '1'), ncol = 2L)
+  expected_df_mat <- as.matrix(data.frame(
+  	V1 = c('16', '15', ellip.v, '10', ' 9'),
+  	V2 = c('8', '7', ellip.v, '2', '1')))
+  rownames(expected_df_mat) <- c('1', '2', ellip.v, '7', '8')
   expect_equal(limited_mat, expected_mat)
-  expect_equal(limited_df,  expected_df)
+  expect_equal(limited_df,  expected_df_mat)
   if (has_dt) {
     test_dt <- data.table::as.data.table(test_mat)
     limited_dt <- ellip.limit.arr(test_dt)
-    expected_dt <- expected_df
-    expect_equal(limited_dt,  expected_dt)
+    expect_equal(limited_dt, expected_df_mat)
   }
   if (has_dplyr) {
     test_tbl <- dplyr::as.tbl(test_df)
     limited_tbl <- ellip.limit.arr(test_tbl)
-    expected_tbl <- expected_df  # curtailed tbl's get converted to data.frames.
-    expect_equal(limited_tbl, expected_tbl)
+    expect_equal(limited_tbl, expected_df_mat)
   }
   
   # Repeat with an odd limit.
   options('repr.matrix.max.rows' = 5L)
   limited_mat <- ellip.limit.arr(test_mat)
   limited_df <- ellip.limit.arr(test_df)
-  expected_mat <- matrix(c('16', '15', '14', ellip.v, '10', '9', '8', '7', '6', 
-    ellip.v, '2', '1'), ncol = 2L)
-  expected_df <- as.data.frame(expected_mat)
-  rownames(expected_df) <- c('1', '2', '3', ellip.v, '7', '8')
-  expected_tbl <- expected_df  # long tbl's get converted to data.frames.
+  expected_mat <- matrix(c(
+  	'16', '15', '14', ellip.v, '10', ' 9',
+  	'8', '7', '6', ellip.v, '2', '1'), ncol = 2L)
+  expected_df_mat <- as.matrix(data.frame(
+  	V1 = c('16', '15', '14', ellip.v, '10', ' 9'),
+  	V2 = c('8', '7', '6', ellip.v, '2', '1')))
+  rownames(expected_df_mat) <- c('1', '2', '3', ellip.v, '7', '8')
   expect_equal(limited_mat, expected_mat)
-  expect_equal(limited_df,  expected_df)
+  expect_equal(limited_df,  expected_df_mat)
   if (has_dt) {
-    # The code, as a shortcut, just converts data.tables to data.frames.
-    #expected_dt <- data.table::as.data.table(expected_df)
-    expected_dt <- expected_df
     limited_dt <- ellip.limit.arr(test_dt)
-    expect_equal(limited_dt,  expected_dt)
+    expect_equal(limited_dt,  expected_df_mat)
   }
   if (has_dplyr) {
     limited_tbl <- ellip.limit.arr(test_tbl)
-    expected_tbl <- expected_df  # curtailed tbl's get converted to data.frames.
-    expect_equal(limited_tbl, expected_tbl)
+    expect_equal(limited_tbl, expected_df_mat)
   }
   
   # Reset limits
@@ -294,84 +284,79 @@ test_that('ellip.limit.arr limits arrays that are long and wide', {
   options('repr.matrix.max.cols' = 4L)
   limited_mat <- ellip.limit.arr(test_mat)
   limited_df <- ellip.limit.arr(test_df)
-  expected_mat <- matrix(c('1', '2', ellip.v, '6', '7', '8', '9', ellip.v, '13',
-    '14', ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, '36', '37',
-    ellip.v, '41', '42', '43', '44', ellip.v, '48', '49'), nrow = 5L)
-  expected_df <- as.data.frame(expected_mat)
-  expected_df[, 3] <- factor(expected_df[, 3], levels = ellipses)
-  names(expected_df) <- c('V1', 'V2', ellip.h, 'V6', 'V7')
-  rownames(expected_df) <- c('1', '2', ellip.v, '6', '7')
+  expected_mat <- matrix(c(
+  	'1', '2', ellip.v, '6', '7',
+  	'8', '9', ellip.v, '13', '14',
+  	ellip.h, ellip.h, ellip.d, ellip.h, ellip.h,
+  	'36', '37', ellip.v, '41', '42',
+  	'43', '44', ellip.v, '48', '49'), nrow = 5L)
+  expected_df_mat <- as.matrix(as.data.frame(expected_mat))
+  colnames(expected_df_mat) <- c('V1', 'V2', ellip.h, 'V6', 'V7')
+  rownames(expected_df_mat) <- c('1', '2', ellip.v, '6', '7')
 
   expect_equal(limited_mat, expected_mat)
-  expect_equal(limited_df,  expected_df)
+  expect_equal(limited_df,  expected_df_mat)
   if (has_dt) {
     test_dt <- data.table::as.data.table(test_mat)
     limited_dt <- ellip.limit.arr(test_dt)
-    # The code, as a shortcut, just converts data.tables to data.frames.
-    #expected_dt <- data.table::as.data.table(expected_df)
-    expected_dt <- expected_df
-    expect_equal(limited_dt,  expected_dt)
+    expect_equal(limited_dt,  expected_df_mat)
   }
   if (has_dplyr) {
     test_tbl <- dplyr::as.tbl(test_df)
     limited_tbl <- ellip.limit.arr(test_tbl)
-    expected_tbl <- expected_df  # curtailed tbl's get converted to data.frames.
-    expect_equal(limited_tbl, expected_tbl)
+    expect_equal(limited_tbl, expected_df_mat)
   }
   options('repr.matrix.max.rows' = 5L)
   options('repr.matrix.max.cols' = 5L)
   limited_mat <- ellip.limit.arr(test_mat)
   limited_df <- ellip.limit.arr(test_df)
-  expected_mat <- matrix(c('1', '2', '3', ellip.v, '6', '7', '8', '9', '10',
-    ellip.v, '13', '14', '15', '16', '17', ellip.v, '20', '21', ellip.h,
-    ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, '36', '37', '38', ellip.v,'41',
-    '42', '43', '44', '45', ellip.v, '48', '49'), nrow = 6L)
-  expected_df <- as.data.frame(expected_mat)
-  expected_df[, 4] <- factor(expected_df[, 4], levels = ellipses)
-  names(expected_df) <- c('V1', 'V2', 'V3', ellip.h, 'V6', 'V7')
-  rownames(expected_df) <- c('1', '2', '3', ellip.v, '6', '7')
+  expected_mat <- matrix(c(
+  	'1', '2', '3', ellip.v, '6', '7',
+  	' 8', ' 9', '10', ellip.v, '13', '14',
+  	'15', '16', '17', ellip.v, '20', '21',
+  	ellip.h, ellip.h, ellip.h, ellip.d, ellip.h, ellip.h,
+  	'36', '37', '38', ellip.v,'41', '42',
+  	'43', '44', '45', ellip.v, '48', '49'), nrow = 6L)
+  expected_df_mat <- as.matrix(as.data.frame(expected_mat))
+  colnames(expected_df_mat) <- c('V1', 'V2', 'V3', ellip.h, 'V6', 'V7')
+  rownames(expected_df_mat) <- c('1', '2', '3', ellip.v, '6', '7')
 
   expect_equal(limited_mat, expected_mat)
-  expect_equal(limited_df,  expected_df)
+  expect_equal(limited_df,  expected_df_mat)
   if (has_dt) {
     limited_dt <- ellip.limit.arr(test_dt)
-    # The code, as a shortcut, just converts data.tables to data.frames.
-    #expected_dt <- data.table::as.data.table(expected_df)
-    expected_dt <- expected_df
-    expect_equal(limited_dt,  expected_dt)
+    expect_equal(limited_dt,  expected_df_mat)
   }
   if (has_dplyr) {
     limited_tbl <- ellip.limit.arr(test_tbl)
-    expected_tbl <- expected_df  # curtailed tbl's get converted to data.frames.
-    expect_equal(limited_tbl, expected_tbl)
+    expect_equal(limited_tbl, expected_df_mat)
   }
   options('repr.matrix.max.rows' = 6L)
   options('repr.matrix.max.cols' = 6L)
   limited_mat <- ellip.limit.arr(test_mat)
   limited_df <- ellip.limit.arr(test_df)
 
-  expected_mat <- matrix(c('1', '2', '3', ellip.v, '5', '6', '7', '8', '9',
-    '10', ellip.v, '12', '13', '14', '15', '16', '17', ellip.v, '19', '20',
-    '21', ellip.h,  ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, ellip.h, '29', '30', '31', ellip.v, '33', '34', '35', '36', '37', '38', ellip.v, '40',
-    '41', '42', '43', '44', '45', ellip.v, '47', '48', '49'), nrow = 7L)
-  expected_df <- as.data.frame(expected_mat, stringsAsFactors = FALSE)
-  expected_df[, 4] <- factor(expected_df[, 4], levels = ellipses)
-  names(expected_df) <- c('V1', 'V2', 'V3', ellip.h, 'V5', 'V6', 'V7')
-  rownames(expected_df) <- c('1', '2', '3', ellip.v, '5', '6', '7')
+  expected_mat <- matrix(c(
+  	'1', '2', '3', ellip.v, '5', '6', '7',
+  	' 8', ' 9', '10', ellip.v, '12', '13', '14',
+  	'15', '16', '17', ellip.v, '19', '20', '21',
+  	ellip.h,  ellip.h, ellip.h, ellip.d, ellip.h, ellip.h, ellip.h,
+  	'29', '30', '31', ellip.v, '33', '34', '35',
+  	'36', '37', '38', ellip.v, '40', '41', '42',
+  	'43', '44', '45', ellip.v, '47', '48', '49'), nrow = 7L)
+  expected_df_mat <- as.matrix(as.data.frame(expected_mat, stringsAsFactors = FALSE))
+  colnames(expected_df_mat) <- c('V1', 'V2', 'V3', ellip.h, 'V5', 'V6', 'V7')
+  rownames(expected_df_mat) <- c('1', '2', '3', ellip.v, '5', '6', '7')
 
   expect_equal(limited_mat, expected_mat)
-  expect_equal(limited_df,  expected_df)
+  expect_equal(limited_df,  expected_df_mat)
   if (has_dt) {
     limited_dt <- ellip.limit.arr(test_dt)
-    # The code, as a shortcut, just converts data.tables to data.frames.
-    #expected_dt <- data.table::as.data.table(expected_df)
-    expected_dt <- expected_df
-    expect_equal(limited_dt,  expected_dt)
+    expect_equal(limited_dt,  expected_df_mat)
   }
   if (has_dplyr) {
     limited_tbl <- ellip.limit.arr(test_tbl)
-    expected_tbl <- expected_df  # curtailed tbl's get converted to data.frames.
-    expect_equal(limited_tbl, expected_tbl)
+    expect_equal(limited_tbl, expected_df_mat)
   }
 
   # Reset limits

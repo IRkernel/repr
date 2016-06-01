@@ -47,81 +47,83 @@ ellip.limit.vec <- function(v, num, ellip) {
 	c(v[lims$begin], ellip, v[lims$end])
 }
 
+# returns a character array with optionally a section of columns and rows in the middle replaced by ellipses
 ellip.limit.arr <- function(
 	a,
 	rows = getOption('repr.matrix.max.rows'),
 	cols = getOption('repr.matrix.max.cols')
 ) {
 	stopifnot(rows >= 2L, cols >= 2L)
-
-	# Don't worry about any of the code below if the array is already small.
-	if (rows >= nrow(a) && cols >= ncol(a)) {
-		return(a)
-	}
-
-	left   <- seq_len(ceiling(cols / 2))
-	right  <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
-	top    <- seq_len(ceiling(rows / 2))
-	bottom <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
 	
-	# fix columns that won't like ellipsis being inserted
-	if (is.data.frame(a)) {
-		# data.tables can't be indexed by column number, unless you provide the
-		# with=FALSE parameter. To avoid the hassle, just convert to a normal table.
-		# dplyr's tbl_* objects don't collapse to a vector when indexed by column,
-		# so functions like 'is.factor' always return false. Again, just drop to a
-		# basic data.table and avoid the hassle.
-		if (inherits(a, c('data.table', 'tbl'))) {
-			a <- as.data.frame(a)
-		}
-		for (c in seq_len(ncol(a))) {
-			if (is.factor(a[, c])) {
-				# Factors: add ellipses to levels
-				levels(a[, c]) <- c(levels(a[, c]), ellipses)
-			} else if (inherits(a[, c], 'Date') || inherits(a[, c], 'POSIXt') ) {
-				# Dates: convert to plain strings
-				a[, c] <- as.character(a[, c])
-			}
-		}
+	many_rows <- rows < nrow(a)
+	many_cols <- cols < ncol(a)
+	
+	# create sequences of indices to bisect rows and columns
+	if (many_rows) {
+		upper <- seq_len(ceiling(rows / 2))
+		lower <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
 	}
-
-	if (rows < nrow(a) && inherits(a, 'tbl')) {
-		# tbl objects from dplyr automatically reset their row names when sliced.
-		# we'd like to make it clear that the array has had rows cut out, so that
-		# behavior isn't ideal here. If we're row-slicing a tbl object, first 
-		# convert to an ordinary data.frame.
-		a <- as.data.frame(a)
+	if (many_cols) {
+		left  <- seq_len(ceiling(cols / 2))
+		right <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
 	}
 	
-	if (rows < nrow(a) && cols < ncol(a)) {
-		if (is.matrix(a)) {
-			# If a is a matrix, R will coerce the factor to character and sub in 
-			# the factor *value*, not the level.  You end up with a bunch of 1s.
-			ehf <- ellip.h
+	# assign a list of parts that can be coerced to strings
+	omit <- if (many_rows && many_cols) {
+		parts <- list(
+			ul = a[upper, left], ur = a[upper, right],
+			ll = a[lower, left], lr = a[lower, right])
+		'both'
+	} else if (many_rows) {
+		parts <- list(
+			upper = a[upper, , drop = FALSE],
+			lower = a[lower, , drop = FALSE])
+		'rows'
+	} else if (many_cols) {
+		parts <- list(
+			left  = a[, left,  drop = FALSE],
+			right = a[, right, drop = FALSE])
+		'cols'
+	} else {
+		parts <- list(full = a)
+		'none'
+	} 
+	
+	# coerce to formatted character matrices; rowwise or colwise
+	f_parts <- lapply(parts, function(part) {
+		f_part <- if (is.data.frame(part)) {
+			vapply(part, format, character(nrow(part)))
 		} else {
-			ehf <- factor(ellip.h, levels = ellipses)
+			# format(part) would work, but e.g. would left-pad *both* rows of matrix(7:10, 2L) instead of one
+			apply(part, 2L, format)
 		}
-		rv <- rbind(
-			cbind(a[   top, left], ehf, a[   top, right], deparse.level = 0),
-			ellip.limit.vec(rep(ellip.v, ncol(a)), cols, ellip.d),
-			cbind(a[bottom, left], ehf, a[bottom, right], deparse.level = 0),
-			deparse.level = 0)
-	} else if (rows < nrow(a) && cols >= ncol(a)) {
-		rv <- rbind(a[top, , drop = FALSE], ellip.v, a[bottom, , drop = FALSE], deparse.level = 0)
-	} else if (rows >= nrow(a) && cols < ncol(a)) {
-		rv <- cbind(a[, left, drop = FALSE], ellip.h, a[, right, drop = FALSE], deparse.level = 0)
+		# vapply returns a vector for 1-column dfs
+		dim(f_part) <- dim(part)
+		dimnames(f_part) <- dimnames(part)
+		f_part
+	})
+	
+	# stitch together parts to get a single formatted character matrix
+	f_mat <- switch(omit,
+		rows = rbind(f_parts$upper, ellip.v, f_parts$lower, deparse.level = 0L),
+		cols = cbind(f_parts$left,  ellip.h, f_parts$right, deparse.level = 0L),
+		none = f_parts$full,
+		both = rbind(
+			cbind(f_parts$ul, ellip.h, f_parts$ur, deparse.level = 0L),
+			ellip.limit.vec(rep(ellip.v, cols + 1L), cols, ellip.d),
+			cbind(f_parts$ll, ellip.h, f_parts$lr, deparse.level = 0L)))
+	
+	# If there were no dimnames before, as is often true for matrices, don't assign them.
+	if (many_rows && !is.null(rownames(a))) {
+		rownames(f_mat)[[length(upper) + 1L]] <- ellip.v
+		# fix rownames for tbls, which explicitly set them to 1:n when subsetting
+		rownames(f_mat)[seq.int(length(upper) + 2L, nrow(f_mat))] <- lower
+	}
+	if (many_cols && !is.null(colnames(a))) {
+		colnames(f_mat)[[length(left)  + 1L]] <- ellip.h
 	}
 
-	if (rows < nrow(a) && (! is.null(rownames(rv)))) {
-		# If there were no rownames before, as is often true for matrices, don't assign them.
-		rownames(rv)[[ top[[length(top) ]] + 1L]] <- ellip.v
-	}
-	if (cols < ncol(a) && (! is.null(colnames(rv)))) {
-		# If there were no colnames before, as is often true for matrices, don't assign them.
-		colnames(rv)[[left[[length(left)]] + 1L]] <- ellip.h
-	}
-
-	rv
+	f_mat
 }
 
 # HTML --------------------------------------------------------------------
@@ -222,7 +224,7 @@ repr_text.matrix <- function(obj, ...) {
 		obj <- as.data.frame(obj)
 	}
 	limited_obj <- ellip.limit.arr(obj)
-	print_output <- utils::capture.output(print(limited_obj))
+	print_output <- utils::capture.output(print(limited_obj, quote = FALSE))
 	paste(print_output, collapse = '\n')
 }
 
