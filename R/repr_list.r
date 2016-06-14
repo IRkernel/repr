@@ -61,40 +61,48 @@ repr_list_generic <- function(
 
 #' @name repr_*.list
 #' @export
-repr_html.list <- function(obj, ...) repr_list_generic(
-	obj, 'html',
-	'\t<li>%s</li>\n',
-	'\t<dt>$%s</dt>\n\t\t<dd>%s</dd>\n',
-	'<strong>$%s</strong> = %s',
-	'<ol>\n%s</ol>\n',
-	'<dl>\n%s</dl>\n',
-	numeric.item = '\t<dt>[[%s]]</dt>\n\t\t<dd>%s</dd>\n',
-	escape.FUN = html.escape)
+repr_html.list <- function(obj, ...) {
+	if (length(class(obj)) > 1) return(NextMethod())
+	repr_list_generic(
+		obj, 'html',
+		'\t<li>%s</li>\n',
+		'\t<dt>$%s</dt>\n\t\t<dd>%s</dd>\n',
+		'<strong>$%s</strong> = %s',
+		'<ol>\n%s</ol>\n',
+		'<dl>\n%s</dl>\n',
+		numeric.item = '\t<dt>[[%s]]</dt>\n\t\t<dd>%s</dd>\n',
+		escape.FUN = html.escape)
+}
+
+
+#' @name repr_*.list
+#' @export
+repr_markdown.list <- function(obj, ...) {
+	if (length(class(obj)) > 1) return(NextMethod())
+	repr_list_generic(
+		obj, 'markdown',
+		'%s. %s\n',
+		'$%s\n:   %s\n',
+		'**$%s** = %s',
+		'%s\n\n',
+		numeric.item = '[[%s]]\n:   %s\n',
+		item.uses.numbers = TRUE,
+		escape.FUN = html.escape)
+}
 
 
 
 #' @name repr_*.list
 #' @export
-repr_markdown.list <- function(obj, ...) repr_list_generic(
-	obj, 'markdown',
-	'%s. %s\n',
-	'$%s\n:   %s\n',
-	'**$%s** = %s',
-	'%s\n\n',
-	numeric.item = '[[%s]]\n:   %s\n',
-	item.uses.numbers = TRUE,
-	escape.FUN = html.escape)
-
-
-
-#' @name repr_*.list
-#' @export
-repr_latex.list <- function(obj, ...) repr_list_generic(
-	obj, 'latex',
-	'\\item %s\n',
-	'\\item[\\$%s] %s\n',
-	'\\textbf{\\$%s} = %s',
-	enum.wrap  = '\\begin{enumerate}\n%s\\end{enumerate}\n',
-	named.wrap = '\\begin{description}\n%s\\end{description}\n',
-	numeric.item = '\\item[{[[%s]]}] %s\n',
-	escape.FUN = latex.escape)
+repr_latex.list <- function(obj, ...) {
+	if (length(class(obj)) > 1) return(NextMethod())
+	repr_list_generic(
+		obj, 'latex',
+		'\\item %s\n',
+		'\\item[\\$%s] %s\n',
+		'\\textbf{\\$%s} = %s',
+		enum.wrap  = '\\begin{enumerate}\n%s\\end{enumerate}\n',
+		named.wrap = '\\begin{description}\n%s\\end{description}\n',
+		numeric.item = '\\item[{[[%s]]}] %s\n',
+		escape.FUN = latex.escape)
+}
