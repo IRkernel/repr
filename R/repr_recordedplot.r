@@ -1,4 +1,4 @@
-is_cairo_installed <- function() requireNamespace('Cairo')
+is_cairo_installed <- function() requireNamespace('Cairo', quietly = TRUE)
 
 # checking capability of X11 is slow, the short circult logic avoids
 # this if any other devices are found.
