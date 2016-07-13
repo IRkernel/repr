@@ -34,7 +34,11 @@ repr_html.function <- function(obj, highlight = getOption('repr.function.highlig
 #' @name repr_*.function
 #' @export
 repr_latex.function <- function(obj, highlight = getOption('repr.function.highlight'), ...) {
-	minted.wrap <- '\\begin{minted}{r}\n%s\n\\end{minted}'
+	if (getOption('repr.function.highlightlatex')) {
+		minted.wrap <- '\\begin{minted}{r}\n%s\n\\end{minted}'
+	} else {
+		minted.wrap <- '\\begin{Verbatim}[commandchars=\\\\\\{\\}]\n%s\n\\end{Verbatim}'
+	}
 	repr_function_generic(obj, 'latex', latex.escape, '%s', minted.wrap, highlight, ...)
 }
 
