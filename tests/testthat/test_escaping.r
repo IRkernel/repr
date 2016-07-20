@@ -58,7 +58,8 @@ test_that('LaTeX escaping in matrices works', {
 ')
 	expect_equal(repr_latex(matrix(c(']', '}', '&', '_'), 2, 2, TRUE, list(c('$', '#'), c('%', '|')))),
 '\\begin{tabular}{r|ll}
-  & \\% & \\textbar{}\\\\\n\\hline
+  & \\% & \\textbar{}\\\\
+\\hline
 \t\\$ & {]} & \\}\\\\
 \t\\# & \\& & \\_\\\\
 \\end{tabular}
@@ -116,7 +117,16 @@ test_that('Factors are maintained in small arrays for HTML', {
 	# Sometimes extra whitespace is added, different than what I expected.
 	# That's fine, just strip out all white space.
 	expected <- gsub('\\s', '',
-		"<table>\n<thead><tr><th></th><th scope=col>a</th><th scope=col>b</th></tr></thead>\n<tbody>\n\t<tr><th scope=row>1</th><td>1</td><td>A</td></tr>\n\t<tr><th scope=row>2</th><td>2</td><td>B</td></tr>\n\t<tr><th scope=row>3</th><td>3</td><td>C</td></tr>\n\t<tr><th scope=row>4</th><td>4</td><td>D</td></tr>\n</tbody>\n</table>\n",
+'<table>
+<thead><tr><th></th><th scope=col>a</th><th scope=col>b</th></tr></thead>
+<tbody>
+\t<tr><th scope=row>1</th><td>1</td><td>A</td></tr>
+\t<tr><th scope=row>2</th><td>2</td><td>B</td></tr>
+\t<tr><th scope=row>3</th><td>3</td><td>C</td></tr>
+\t<tr><th scope=row>4</th><td>4</td><td>D</td></tr>
+</tbody>
+</table>
+',
 		perl = TRUE)
 	answer <- gsub('\\s', '', repr_html(df), perl = TRUE)
 	expect_equal(answer, expected)
@@ -138,7 +148,16 @@ test_that('Factors are sanitized in small data.frames for HTML', {
 	# Sometimes extra whitespace is added, different than what I expected.
 	# That's fine, just strip out all white space.
 	expected <- gsub('\\s', '',
-		"<table>\n<thead><tr><th></th><th scope=col>a</th><th scope=col>b</th></tr></thead>\n<tbody>\n\t<tr><th scope=row>1</th><td>1</td><td>A&amp;</td></tr>\n\t<tr><th scope=row>2</th><td>2</td><td>B&gt;</td></tr>\n\t<tr><th scope=row>3</th><td>3</td><td>C</td></tr>\n\t<tr><th scope=row>4</th><td>4</td><td>D</td></tr>\n</tbody>\n</table>\n",
+'<table>
+<thead><tr><th></th><th scope=col>a</th><th scope=col>b</th></tr></thead>
+<tbody>
+\t<tr><th scope=row>1</th><td>1</td><td>A&amp;</td></tr>
+\t<tr><th scope=row>2</th><td>2</td><td>B&gt;</td></tr>
+\t<tr><th scope=row>3</th><td>3</td><td>C</td></tr>
+\t<tr><th scope=row>4</th><td>4</td><td>D</td></tr>
+</tbody>
+</table>
+',
 		perl = TRUE)
 	answer <- gsub('\\s', '', repr_html(df), perl = TRUE)
 	expect_equal(answer, expected)
@@ -160,7 +179,15 @@ test_that('Factors are maintained in small arrays for LaTeX', {
 	# Sometimes extra whitespace is added, different than what I expected.
 	# That's fine, just strip out all white space.
 	expected <- gsub('\\s', '',
-		"\\begin{tabular}{r|ll}\n  & a & b\\\\\n\\hline\n\t1 & 1 & A\\\\\n\t2 & 2 & B\\\\\n\t3 & 3 & C\\\\\n\t4 & 4 & D\\\\\n\\end{tabular}\n",
+'\\begin{tabular}{r|ll}
+  & a & b\\\\
+\\hline
+\t1 & 1 & A\\\\
+\t2 & 2 & B\\\\
+\t3 & 3 & C\\\\
+\t4 & 4 & D\\\\
+\\end{tabular}
+',
 		perl = TRUE)
 	answer <- gsub('\\s', '', repr_latex(df), perl = TRUE)
 	expect_equal(answer, expected)
@@ -182,7 +209,15 @@ test_that('Factors are sanitized in small data.frames for LaTeX', {
 	# Sometimes extra whitespace is added, different than what I expected.
 	# That's fine, just strip out all white space.
 	expected <- gsub('\\s', '',
-		"\\begin{tabular}{r|ll}\n  & a & b\\\\\n\\hline\n\t1 & 1 & A\\&\\\\\n\t2 & 2 & B\\%\\\\\n\t3 & 3 & \\_C\\_\\\\\n\t4 & 4 &	 D\\\\\n\\end{tabular}\n",
+'\\begin{tabular}{r|ll}
+  & a & b\\\\
+\\hline
+\t1 & 1 & A\\&\\\\
+\t2 & 2 & B\\%\\\\
+\t3 & 3 & \\_C\\_\\\\
+\t4 & 4 &	 D\\\\
+\\end{tabular}
+',
 		perl = TRUE)
 	answer <- gsub('\\s', '', repr_latex(df), perl = TRUE)
 	expect_equal(answer, expected)
@@ -197,4 +232,13 @@ test_that('Factors are sanitized in small data.frames for LaTeX', {
 		answer <- gsub('\\s', '', repr_latex(dtbl), perl = TRUE)
 		expect_equal(answer, expected)
 	}
+})
+
+test_that('vector entries with consecutive spaces get wrapped', {
+	v <- c('one space', 'two  spaces')
+	expect_equal(repr_html(v), "<ol class=list-inline>
+\t<li>'one space'</li>
+\t<li><span style=white-space:pre-wrap>'two  spaces'</span></li>
+</ol>
+")
 })

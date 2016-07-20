@@ -4,6 +4,8 @@ html.escape <- function(text) {
 	for (chr in names(html.specials)) {
 		text <- gsub(chr, html.specials[[chr]], text, fixed = TRUE)
 	}
+	consec_spaces <- grepl('  ', text)
+	text[consec_spaces] <- sprintf('<span style=white-space:pre-wrap>%s</span>', 	text[consec_spaces])
 	text
 }
 
