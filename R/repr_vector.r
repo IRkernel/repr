@@ -149,8 +149,8 @@ repr_latex.logical <- function(obj, ...) repr_vector_generic(
 	'\\item %s\n',
 	'\\item[%s] %s\n',
 	'\\textbf{%s:} %s',
-	enum.wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
-	named.wrap = '\\begin{description*}\n%s\\end{description*}\n',
+	enum.wrap  = '\\begin{enumerate}\n%s\\end{enumerate}\n',
+	named.wrap = '\\begin{description}\n%s\\end{description}\n',
 	only.named.item = '\\textbf{%s:} %s',
 	escape.FUN = latex.escape)
 

@@ -32,10 +32,10 @@ test_that('simple HTML escaping works', {
 test_that('LaTeX escaping in vectors works', {
 	expect_equivalent_string(repr_latex('['), "'{[}'")
 	expect_equivalent_string(repr_latex(c('[', '|')),
-"\\begin{enumerate*}
+"\\begin{enumerate}
 \\item '{[}'
 \\item '\\textbar{}'
-\\end{enumerate*}
+\\end{enumerate}
 ")
 })
 

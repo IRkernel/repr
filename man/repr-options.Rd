@@ -5,7 +5,7 @@
 \alias{repr-options}
 \alias{repr_option_defaults}
 \title{repr options}
-\format{An object of class \code{list} of length 13.}
+\format{An object of class \code{list} of length 14.}
 \usage{
 repr_option_defaults
 }
@@ -51,6 +51,9 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 }
 \item{\code{repr.function.highlight}}{
  Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)
+}
+\item{\code{repr.function.highlightlatex}}{
+ Use the the latex package \code{minted} to higlight functions if \code{repr.function.highlight} is \code{FALSE}? Needs that latex package to be loaded in the tex file (default: FALSE)
 }
 
 }

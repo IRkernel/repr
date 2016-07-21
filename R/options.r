@@ -40,6 +40,9 @@
 #' \item{\code{repr.function.highlight}}{
 #'  Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)
 #' }
+#' \item{\code{repr.function.highlightlatex}}{
+#'  Use the the latex package \code{minted} to higlight functions if \code{repr.function.highlight} is \code{FALSE}? Needs that latex package to be loaded in the tex file (default: FALSE)
+#' }
 #' 
 #' }
 #'
@@ -64,7 +67,8 @@ class_defaults <- list(
 	repr.matrix.max.rows = 60,
 	repr.matrix.max.cols = 20,
 	repr.matrix.latex.colspec = list(row.head = 'r|', col = 'l', end = ''),
-	repr.function.highlight = FALSE)
+	repr.function.highlight = FALSE,
+	repr.function.highlightlatex = FALSE)
 
 #' @name repr-options
 #' @export
