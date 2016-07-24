@@ -28,9 +28,10 @@ repr <- function(obj, format = 'text', ...) {
 #' @export
 repr_text <- function(obj, ...) UseMethod('repr_text', obj)
 #' @name repr_text
+#' @importFrom utils capture.output
 #' @export
 repr_text.default <- function(obj, ...) {
-	paste(utils::capture.output(print(obj)), collapse = '\n')
+	paste(capture.output(print(obj)), collapse = '\n')
 }
 
 #' Representations for specific formats

@@ -63,7 +63,7 @@ class_defaults <- list(
 	repr.vector.quote = TRUE,
 	repr.matrix.max.rows = 60,
 	repr.matrix.max.cols = 20,
-	repr.matrix.latex.colspec = list(row.head = 'r|', col = 'l', end = ''),
+	repr.matrix.latex.colspec = list(row_head = 'r|', col = 'l', end = ''),
 	repr.function.highlight = FALSE)
 
 #' @name repr-options

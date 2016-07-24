@@ -1,5 +1,9 @@
 context('Vectors')
 
+test_that('empty vectors display correctly', {
+	expect_identical(repr_html(logical(0L)), '')
+})
+
 test_that('1 element vectors display correctly', {
 	expect_identical(repr_html(1), '1')
 })

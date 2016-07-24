@@ -16,49 +16,45 @@ NULL
 
 
 repr_vector_generic <- function(
-	vec, enum.item, named.item, only.named.item,
-	enum.wrap, named.wrap = enum.wrap,
+	vec, enum_item, named_item, only_named_item,
+	enum_wrap, named_wrap = enum_wrap,
 	...,
-	numeric.item = named.item,
-	item.uses.numbers = FALSE, escape.FUN = identity) {
+	numeric_item = named_item,
+	item_uses_numbers = FALSE, escape_fun = identity) {
+	
+	if (length(vec) == 0) return('')
 	
 	nms <- names(vec)
-	if (!is.null(nms)) {
-		nms <- escape.FUN(nms)
-	}
-	if (is.character(vec) && getOption('repr.vector.quote'))
-		char.vec <- escape.FUN(shQuote(vec))
-	else
-		char.vec <- escape.FUN(as.character(vec))
+	if (!is.null(nms))
+		nms <- escape_fun(nms)
 	
-	if (length(char.vec) == 1) {
-		if (is.null(nms)) {
-			ret <- char.vec
-		} else {
-			ret <- sprintf(only.named.item, nms, char.vec)
-		}
-	} else {
-		if (is.null(nms)) {
-			if (item.uses.numbers)
-				entries <- sprintf(enum.item, seq_along(char.vec), char.vec)
+	qt <- is.character(vec) && getOption('repr.vector.quote')
+	char_vec <- escape_fun(if (qt) r_quote(vec) else as.character(vec))
+	
+	if (length(char_vec) > 1) {
+		entries <-
+			if (!is.null(nms))
+				vapply(seq_along(char_vec), function(i) {
+					nm <- nms[[i]]
+					if (is.na(nm) || nchar(nm) == 0) {
+						sprintf(numeric_item, i, char_vec[[i]])
+					} else {
+						sprintf(named_item, nms[[i]], char_vec[[i]])
+					}
+				}, character(1))
+			else if (item_uses_numbers)
+				sprintf(enum_item, seq_along(char_vec), char_vec)
 			else
-				entries <- sprintf(enum.item, char.vec)
-		} else {
-			entries <- vapply(seq_along(char.vec), function(i) {
-				nm <- nms[[i]]
-				if (is.na(nm) || nchar(nm) == 0) {
-					sprintf(numeric.item, i, char.vec[[i]])
-				} else {
-					sprintf(named.item, nms[[i]], char.vec[[i]])
-				}
-			}, character(1))
-		}
+				sprintf(enum_item, char_vec)
 		
-		wrap <- if (is.null(nms)) enum.wrap else named.wrap
+		wrap <- if (is.null(nms)) enum_wrap else named_wrap
 		
-		ret <- sprintf(wrap, paste0(entries, collapse = ''))
+		sprintf(wrap, paste0(entries, collapse = ''))
+	} else if (is.null(nms)) {
+		char_vec
+	} else {
+		sprintf(only_named_item, nms, char_vec)
 	}
-	ret
 }
 
 
@@ -75,7 +71,7 @@ repr_html.logical <- function(obj, ...) repr_vector_generic(
 	'<strong>%s:</strong> %s',
 	'<ol class=list-inline>\n%s</ol>\n',
 	'<dl class=dl-horizontal>\n%s</dl>\n',
-	escape.FUN = html.escape)
+	escape_fun = html_escape)
 
 #' @name repr_*.vector
 #' @export
@@ -107,13 +103,13 @@ repr_html.character <- repr_html.logical
 #' @name repr_*.vector
 #' @export
 repr_markdown.logical <- function(obj, ...) repr_vector_generic(
-	obj,
+	html_escape_names(obj),
 	'%s. %s\n',
 	'%s\n:   %s',
 	'**%s:** %s',
 	'%s\n\n',
-	item.uses.numbers = TRUE,
-	escape.FUN = html.escape)
+	item_uses_numbers = TRUE,
+	escape_fun = html_escape)
 
 #' @name repr_*.vector
 #' @export
@@ -145,14 +141,14 @@ repr_markdown.character <- repr_markdown.logical
 #' @name repr_*.vector
 #' @export
 repr_latex.logical <- function(obj, ...) repr_vector_generic(
-	latex.escape.names(obj),  # escape vector names, regardless of class
+	latex_escape_names(obj),  # escape vector names, regardless of class
 	'\\item %s\n',
 	'\\item[%s] %s\n',
 	'\\textbf{%s:} %s',
-	enum.wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
-	named.wrap = '\\begin{description*}\n%s\\end{description*}\n',
-	only.named.item = '\\textbf{%s:} %s',
-	escape.FUN = latex.escape)
+	enum_wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
+	named_wrap = '\\begin{description*}\n%s\\end{description*}\n',
+	only_named_item = '\\textbf{%s:} %s',
+	escape_fun = latex_escape)
 
 #' @name repr_*.vector
 #' @export
