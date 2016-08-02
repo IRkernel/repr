@@ -4,9 +4,9 @@
 #' @param ...  ignored
 #' 
 #' @aliases
-#' repr_markdown.logical repr_markdown.integer repr_markdown.complex repr_markdown.numeric repr_markdown.factor repr_markdown.character
-#'    repr_latex.logical    repr_latex.integer    repr_latex.complex    repr_latex.numeric    repr_latex.factor    repr_latex.character
-#'     repr_html.logical     repr_html.integer     repr_html.complex     repr_html.numeric     repr_html.factor     repr_html.character
+#' repr_markdown.logical repr_markdown.integer repr_markdown.complex repr_markdown.numeric repr_markdown.factor repr_markdown.character repr_markdown.Date
+#'    repr_latex.logical    repr_latex.integer    repr_latex.complex    repr_latex.numeric    repr_latex.factor    repr_latex.character    repr_latex.Date
+#'     repr_html.logical     repr_html.integer     repr_html.complex     repr_html.numeric     repr_html.factor     repr_html.character     repr_html.Date
 #' @name repr_*.vector
 #' @include repr_list.r
 #' @include utils.r
@@ -20,6 +20,7 @@ repr_vector_generic <- function(
 	enum_wrap, named_wrap = enum_wrap,
 	...,
 	numeric_item = named_item,
+	individual_wrap = NULL, # will be passed the vector items twice so needs 2 times %s
 	item_uses_numbers = FALSE, escape_fun = identity) {
 	
 	if (length(vec) == 0) return('')
@@ -30,6 +31,10 @@ repr_vector_generic <- function(
 	
 	qt <- is.character(vec) && getOption('repr.vector.quote')
 	char_vec <- escape_fun(if (qt) r_quote(vec) else as.character(vec))
+	
+	if (!is.null(individual_wrap)) {
+		char_vec <- sprintf(individual_wrap, char_vec, char_vec)
+	}
 	
 	if (length(char_vec) > 1) {
 		entries <-
@@ -62,16 +67,20 @@ repr_vector_generic <- function(
 # HTML --------------------------------------------------------------------
 
 
-#' @name repr_*.vector
-#' @export
-repr_html.logical <- function(obj, ...) repr_vector_generic(
+repr_html_wrapper <- function(obj, individual_wrap, ...) repr_vector_generic(
 	obj,
 	'\t<li>%s</li>\n',
 	'\t<dt>%s</dt>\n\t\t<dd>%s</dd>\n',
 	'<strong>%s:</strong> %s',
 	'<ol class=list-inline>\n%s</ol>\n',
 	'<dl class=dl-horizontal>\n%s</dl>\n',
-	escape_fun = html_escape)
+	escape_fun = html_escape,
+	individual_wrap = individual_wrap)
+
+
+#' @name repr_*.vector
+#' @export
+repr_html.logical <- function(obj, ...) repr_html_wrapper(obj, NULL, ...)
 
 #' @name repr_*.vector
 #' @export
@@ -92,6 +101,11 @@ repr_html.factor <- repr_html.logical
 #' @name repr_*.vector
 #' @export
 repr_html.character <- repr_html.logical
+
+#' @name repr_*.vector
+#' @export
+repr_html.Date <- function(obj, ...) repr_html_wrapper(obj, '<time datetime="%s">%s</time>', ...)
+
 
 
 
@@ -131,6 +145,10 @@ repr_markdown.factor <- repr_markdown.logical
 #' @export
 repr_markdown.character <- repr_markdown.logical
 
+#' @name repr_*.vector
+#' @export
+repr_markdown.Date <- repr_markdown.logical
+
 
 
 
@@ -169,3 +187,7 @@ repr_latex.factor <- repr_latex.logical
 #' @name repr_*.vector
 #' @export
 repr_latex.character <- repr_latex.logical
+
+#' @name repr_*.vector
+#' @export
+repr_latex.Date <- repr_latex.logical

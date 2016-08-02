@@ -2,18 +2,21 @@
 % Please edit documentation in R/repr_vector.r
 \name{repr_*.vector}
 \alias{repr_*.vector}
+\alias{repr_html.Date}
 \alias{repr_html.character}
 \alias{repr_html.complex}
 \alias{repr_html.factor}
 \alias{repr_html.integer}
 \alias{repr_html.logical}
 \alias{repr_html.numeric}
+\alias{repr_latex.Date}
 \alias{repr_latex.character}
 \alias{repr_latex.complex}
 \alias{repr_latex.factor}
 \alias{repr_latex.integer}
 \alias{repr_latex.logical}
 \alias{repr_latex.numeric}
+\alias{repr_markdown.Date}
 \alias{repr_markdown.character}
 \alias{repr_markdown.complex}
 \alias{repr_markdown.factor}
@@ -34,6 +37,8 @@
 
 \method{repr_html}{character}(obj, ...)
 
+\method{repr_html}{Date}(obj, ...)
+
 \method{repr_markdown}{logical}(obj, ...)
 
 \method{repr_markdown}{integer}(obj, ...)
@@ -46,6 +51,8 @@
 
 \method{repr_markdown}{character}(obj, ...)
 
+\method{repr_markdown}{Date}(obj, ...)
+
 \method{repr_latex}{logical}(obj, ...)
 
 \method{repr_latex}{integer}(obj, ...)
@@ -57,6 +64,8 @@
 \method{repr_latex}{factor}(obj, ...)
 
 \method{repr_latex}{character}(obj, ...)
+
+\method{repr_latex}{Date}(obj, ...)
 }
 \arguments{
 \item{obj}{The vector to create a representation for}
