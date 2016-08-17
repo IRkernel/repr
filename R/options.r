@@ -38,7 +38,7 @@
 #' 	\code{end} mainly exists for when you want a vertical line there (default: 'r|', 'l', and '')
 #' }
 #' \item{\code{repr.function.highlight}}{
-#'  Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)
+#'  Use the \code{highr} package to insert highlighting instructions into the code? (default: TRUE)
 #' }
 #' 
 #' }
@@ -64,7 +64,7 @@ class_defaults <- list(
 	repr.matrix.max.rows = 60,
 	repr.matrix.max.cols = 20,
 	repr.matrix.latex.colspec = list(row_head = 'r|', col = 'l', end = ''),
-	repr.function.highlight = FALSE)
+	repr.function.highlight = TRUE)
 
 #' @name repr-options
 #' @export

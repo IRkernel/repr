@@ -10,12 +10,11 @@
 #' @include utils.r
 NULL
 
+#' @importFrom highr hilight
 repr_function_generic <- function(f, fmt, escape, high_wrap, norm_wrap, highlight) {
 	code <- deparse(f)
 	if (highlight) {
-		if (!requireNamespace('highr'))
-			stop(sprintf('Tried to create a %s representation of a function with highlighting, but the `highlight` package is not installed!', fmt))
-		code <- highr::hilight(code, fmt)
+		code <- hilight(code, fmt)
 		wrap <- high_wrap
 	} else {
 		code <- escape(code)

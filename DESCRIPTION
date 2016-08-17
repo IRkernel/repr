@@ -17,10 +17,10 @@ Depends:
     R (>= 3.0.1)
 Imports:
     utils,
-    grDevices
+    grDevices,
+    highr
 Suggests:
     methods,
-    highr,
     Cairo,
     testthat
 Enhances: data.table, dplyr, htmlwidgets

@@ -27,11 +27,10 @@ Exports
 Imports
 -------
 
-Per default, `repr` will not use any packages not part of the R distribution.
-
-Only if you want to use `repr_html.function` and `repr_latex.function`, and specify the parameter `highlight` or option `repr.function.highlight` to be `TRUE`, then be sure to have [highr][] installed.
+`repr` uses [highr][] to highlight functions, and can optionally improve plot output quality via [Cairo][].
 
 [highr]: https://github.com/yihui/highr
+[Cairo]: https://rforge.net/Cairo/
 
 Formats
 -------
