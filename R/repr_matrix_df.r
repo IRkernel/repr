@@ -80,6 +80,7 @@ arr_part_format <- function(part) {
 	f_part
 }
 
+#' @importFrom utils head tail
 arr_parts_combine <- function(parts, rownms, colnms) {
 	omit <- attr(parts, 'omit')
 	mat <- switch(omit,
@@ -204,7 +205,7 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 		' %s &',
 		escape_fun = latex_escape_vec,
 		...)
-
+	
 	#TODO: remove this quick’n’dirty post processing
 	gsub(' &\\', '\\', r, fixed = TRUE)
 }
@@ -212,6 +213,38 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 #' @name repr_*.matrix/data.frame
 #' @export
 repr_latex.data.frame <- repr_latex.matrix
+
+
+
+# Markdown -------------------------------------------------------------------
+
+
+
+#' @name repr_*.matrix/data.frame
+#' @export
+repr_markdown.matrix <- function(obj, ...) {
+	rows <- list(...)$rows
+	if (is.null(rows)) rows <- getOption('repr.matrix.max.rows')
+	
+	out_rows <- min(nrow(obj), rows + 1L)
+	underline <- paste(rep('---', out_rows), collapse = '|')
+	
+	repr_matrix_generic(
+		obj,
+		'\n%s%s\n',
+		sprintf('%%s\n|%s|\n', underline), '| <!--/--> | ', '%s | ',
+		'%s\n', '| %s\n', '%s | ',
+		'%s | ',
+		escape_fun = identity,  # TODO
+		..., rows = rows)
+}
+
+#' @name repr_*.matrix/data.frame
+#' @export
+repr_markdown.data.frame <- repr_markdown.matrix
+
+
+
 # Text -------------------------------------------------------------------
 
 

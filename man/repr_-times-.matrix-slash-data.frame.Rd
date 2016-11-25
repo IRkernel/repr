@@ -6,6 +6,8 @@
 \alias{repr_html.matrix}
 \alias{repr_latex.data.frame}
 \alias{repr_latex.matrix}
+\alias{repr_markdown.data.frame}
+\alias{repr_markdown.matrix}
 \alias{repr_text.data.frame}
 \alias{repr_text.matrix}
 \title{Tabular data representations}
@@ -19,6 +21,10 @@
 
 \method{repr_latex}{data.frame}(obj, ...,
   colspec = getOption("repr.matrix.latex.colspec"))
+
+\method{repr_markdown}{matrix}(obj, ...)
+
+\method{repr_markdown}{data.frame}(obj, ...)
 
 \method{repr_text}{matrix}(obj, ...)
 
