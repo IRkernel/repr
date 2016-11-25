@@ -48,12 +48,7 @@ ellip_limit_vec <- function(v, num, ellip) {
 	c(v[lims$begin], ellip, v[lims$end])
 }
 
-# returns a character array with optionally a section of columns and rows in the middle replaced by ellipses
-ellip_limit_arr <- function(
-	a,
-	rows = getOption('repr.matrix.max.rows'),
-	cols = getOption('repr.matrix.max.cols')
-) {
+arr_partition <- function(a, rows, cols) {
 	stopifnot(rows >= 2L, cols >= 2L)
 	
 	many_rows <- rows < nrow(a)
@@ -70,61 +65,75 @@ ellip_limit_arr <- function(
 	}
 	
 	# assign a list of parts that can be coerced to strings
-	omit <- if (many_rows && many_cols) {
-		parts <- list(
-			ul = a[upper, left], ur = a[upper, right],
-			ll = a[lower, left], lr = a[lower, right])
-		'both'
+	if (many_rows && many_cols) {
+		structure(list(
+			ul = a[upper, left],  ll = a[lower, left],
+			ur = a[upper, right], lr = a[lower, right]),
+		omit = 'both')
 	} else if (many_rows) {
-		parts <- list(
+		structure(list(
 			upper = a[upper, , drop = FALSE],
-			lower = a[lower, , drop = FALSE])
-		'rows'
+			lower = a[lower, , drop = FALSE]),
+		omit = 'rows')
 	} else if (many_cols) {
-		parts <- list(
+		structure(list(
 			left  = a[, left,  drop = FALSE],
-			right = a[, right, drop = FALSE])
-		'cols'
+			right = a[, right, drop = FALSE]),
+		omit = 'cols')
 	} else {
-		parts <- list(full = a)
-		'none'
-	} 
-	
-	# coerce to formatted character matrices; rowwise or colwise
-	f_parts <- lapply(parts, function(part) {
-		f_part <- if (is.data.frame(part)) {
-			vapply(part, format, character(nrow(part)))
-		} else {
-			# format(part) would work, but e.g. would left-pad *both* rows of matrix(7:10, 2L) instead of one
-			apply(part, 2L, format)
-		}
-		# vapply returns a vector for 1-column dfs
-		dim(f_part) <- dim(part)
-		dimnames(f_part) <- dimnames(part)
-		f_part
-	})
-	
-	# stitch together parts to get a single formatted character matrix
-	f_mat <- switch(omit,
-		rows = rbind(f_parts$upper, ellip_v, f_parts$lower, deparse.level = 0L),
-		cols = cbind(f_parts$left,  ellip_h, f_parts$right, deparse.level = 0L),
-		none = f_parts$full,
+		structure(list(full = a), omit = 'none')
+	}
+}
+
+arr_parts_format <- function(parts) structure(lapply(parts, arr_part_format), omit = attr(parts, 'omit'))
+arr_part_format <- function(part) {
+	f_part <- if (is.data.frame(part)) {
+		vapply(part, format, character(nrow(part)))
+	} else {
+		# format(part) would work, but e.g. would left-pad *both* rows of matrix(7:10, 2L) instead of one
+		apply(part, 2L, format)
+	}
+	# vapply returns a vector for 1-column dfs
+	dim(f_part) <- dim(part)
+	dimnames(f_part) <- dimnames(part)
+	f_part
+}
+
+arr_parts_combine <- function(parts, rownms, colnms) {
+	omit <- attr(parts, 'omit')
+	mat <- switch(omit,
+		rows = rbind(parts$upper, ellip_v, parts$lower, deparse.level = 0L),
+		cols = cbind(parts$left,  ellip_h, parts$right, deparse.level = 0L),
+		none = parts$full,
 		both = rbind(
-			cbind(f_parts$ul, ellip_h, f_parts$ur, deparse.level = 0L),
-			ellip_limit_vec(rep(ellip_v, cols + 1L), cols, ellip_d),
-			cbind(f_parts$ll, ellip_h, f_parts$lr, deparse.level = 0L)))
+			cbind(parts$ul, ellip_h, parts$ur, deparse.level = 0L),
+			c(rep(ellip_v, ncol(parts$ul)), ellip_d, rep(ellip_v, ncol(parts$ur))),
+			cbind(parts$ll, ellip_h, parts$lr, deparse.level = 0L)))
 	
 	# If there were no dimnames before, as is often true for matrices, don't assign them.
-	if (many_rows && !is.null(rownames(a))) {
-		rownames(f_mat)[[length(upper) + 1L]] <- ellip_v
+	if (omit %in% c('rows', 'both') && !is.null(rownms)) {
+		ellip_row <- nrow(parts[[1]]) + 1L
+		rownames(mat)[[ellip_row]] <- ellip_v
 		# fix rownames for tbls, which explicitly set them to 1:n when subsetting
-		rownames(f_mat)[seq.int(length(upper) + 2L, nrow(f_mat))] <- lower
+		rownames(mat)[seq.int(ellip_row + 1L, nrow(mat))] <- seq.int(to = length(rownms), length.out = nrow(parts[[2]]))
 	}
-	if (many_cols && !is.null(colnames(a))) {
-		colnames(f_mat)[[length(left)  + 1L]] <- ellip_h
+	if (omit %in% c('cols', 'both') && !is.null(colnms)) {
+		colnames(mat)[[ncol(parts[[1]])  + 1L]] <- ellip_h
 	}
+	
+	mat
+}
 
-	f_mat
+# returns a character array with optionally a section of columns and rows in the middle replaced by ellipses
+ellip_limit_arr <- function(
+	a,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols')
+) {
+	parts <- arr_partition(a, rows, cols)
+	stopifnot(match('ll', names(parts)) %in% c(NA, 2L))  # lower has to come second if available
+	f_parts <- arr_parts_format(parts)
+	arr_parts_combine(f_parts, rownames(a), colnames(a))
 }
 
 # HTML --------------------------------------------------------------------
