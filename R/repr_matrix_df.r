@@ -29,25 +29,6 @@ ellip_d <- .char_fallback('\u22F1', '')
 # These are used for factor, so make sure they are unique
 ellipses <- unique(c(ellip_h, ellip_v, ellip_d))
 
-get_limit_index <- function(obj_dim, limit) {
-	stopifnot(obj_dim > limit)  # otherwise this function should not have been run
-	left_or_top <- seq_len(ceiling(limit / 2))
-	right_or_bottom <- seq.int(obj_dim - floor(limit / 2) + 1L, obj_dim)
-	list(begin = left_or_top, end = right_or_bottom)
-}
-
-ellip_limit_vec <- function(v, num, ellip) {
-	stopifnot(num >= 2L)
-
-	lims <- get_limit_index(length(v), num)
-	# fix factors not having the appropriate levels
-	if (is.factor(v)) {
-		levels(v) <- c(levels(v), ellipses)
-	}
-	
-	c(v[lims$begin], ellip, v[lims$end])
-}
-
 arr_partition <- function(a, rows, cols) {
 	stopifnot(rows >= 2L, cols >= 2L)
 	
