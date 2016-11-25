@@ -93,10 +93,8 @@ arr_parts_combine <- function(parts, rownms, colnms) {
 	
 	# If there were no dimnames before, as is often true for matrices, don't assign them.
 	if (omit %in% c('rows', 'both') && !is.null(rownms)) {
-		ellip_row <- nrow(parts[[1]]) + 1L
-		rownames(mat)[[ellip_row]] <- ellip_v
-		# fix rownames for tbls, which explicitly set them to 1:n when subsetting
-		rownames(mat)[seq.int(ellip_row + 1L, nrow(mat))] <- seq.int(to = length(rownms), length.out = nrow(parts[[2]]))
+		# everything except ellip_v is to fix rownames for tbls, which explicitly set them to 1:n when subsetting
+		rownames(mat) <- c(head(rownms, nrow(parts[[1]])), ellip_v, tail(rownms, nrow(parts[[2]])))
 	}
 	if (omit %in% c('cols', 'both') && !is.null(colnms)) {
 		colnames(mat)[[ncol(parts[[1]])  + 1L]] <- ellip_h
@@ -117,7 +115,11 @@ ellip_limit_arr <- function(
 	arr_parts_combine(f_parts, rownames(a), colnames(a))
 }
 
+
+
 # HTML --------------------------------------------------------------------
+
+
 
 repr_matrix_generic <- function(
 	x,
@@ -222,7 +224,7 @@ repr_text.matrix <- function(obj, ...) {
 		# Coerce to data.frame to avoid special printing in dplyr and data.table.
 		obj <- as.data.frame(obj)
 	}
-	limited_obj <- ellip_limit_arr(obj)
+	limited_obj <- ellip_limit_arr(obj, ...)
 	print_output <- capture.output(print(limited_obj, quote = FALSE))
 	paste(print_output, collapse = '\n')
 }
