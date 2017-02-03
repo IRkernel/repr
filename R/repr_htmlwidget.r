@@ -24,29 +24,6 @@ repr_html.htmlwidget <- function(obj, ...) {
 }
 
 
-
-# sort of like htmlwidgets::saveWidget(), but for HTML tags
-save_html <- function(obj, ...) {
-	
-	if (!requireNamespace('htmlwidgets')) {
-		stop('Please install the htmlwidgets package')
-	}
-	if (!getFromNamespace("pandoc_available", asNamespace("htmlwidgets"))()) {
-		stop("Printing HTML tags requires pandoc. For details see:\n", 
-				 "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
-	}
-	
-	htmlfile <- tempfile(fileext = '.html')
-	libdir <- file.path(dirname(htmlfile), "lib")
-	htmltools::save_html(obj, file = htmlfile, libdir = libdir)
-	
-	# TODO: it would be nice if we didn't have to rely on pandoc 
-	# https://github.com/rstudio/htmltools/issues/73
-	getFromNamespace("pandoc_self_contained_html", asNamespace("htmlwidgets"))(htmlfile, htmlfile)
-	
-	readChar(htmlfile, file.info(htmlfile)$size)
-}
-
 #' HTML tag lists
 #'
 #' Standalone HTML representation and dummy text representation
@@ -71,8 +48,30 @@ repr_text.shiny.tag <- function(obj, ...) 'HTML tags cannot be represented in pl
 	
 #' @name repr_*.shiny.tag.list
 #' @export
-repr_html.shiny.tag.list <- save_html
+repr_html.shiny.tag.list <- function(obj, ...) {
+	
+	if (!requireNamespace('htmlwidgets')) {
+		stop('Please install the htmlwidgets package')
+	}
+	
+	pandoc_available <- getFromNamespace("pandoc_available", asNamespace("htmlwidgets"))
+	if (!pandoc_available()) {
+		stop("Printing HTML tags requires pandoc. For details see:\n", 
+				 "https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md")
+	}
+	
+	htmlfile <- tempfile(fileext = '.html')
+	save_html <- getFromNamespace("save_html", asNamespace("htmltools"))
+	save_html(obj, file = htmlfile, libdir = file.path(dirname(htmlfile), "lib"))
+	
+	# TODO: it would be nice if we didn't have to rely on pandoc 
+	# https://github.com/rstudio/htmltools/issues/73
+	pandoc <- getFromNamespace("pandoc_self_contained_html", asNamespace("htmlwidgets")) 
+	pandoc(htmlfile, htmlfile)
+	
+	readChar(htmlfile, file.info(htmlfile)$size)
+}
 
 #' @name repr_*.shiny.tag
 #' @export
-repr_html.shiny.tag <- save_html
+repr_html.shiny.tag <- repr_html.shiny.tag.list
