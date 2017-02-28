@@ -6,20 +6,20 @@
 #' @name repr_*.data.table
 #' @export
 repr_html.data.table <- function(obj, ...) {
-  if (data.table::shouldPrint(obj))
-    NextMethod()
+	if (data.table::shouldPrint(obj))
+		NextMethod()
 }
 
 #' @name repr_*.data.table
 #' @export
 repr_text.data.table <- function(obj, ...) {
-  if (data.table::shouldPrint(obj))
-    NextMethod()
+	if (data.table::shouldPrint(obj))
+		NextMethod()
 }
 
 #' @name repr_*.data.table
 #' @export
 repr_latex.data.table <- function(obj, ...) {
-  if (data.table::shouldPrint(obj))
-    NextMethod()
+	if (data.table::shouldPrint(obj))
+		NextMethod()
 }
