@@ -31,6 +31,7 @@ Collate:
     'generics.r'
     'options.r'
     'package.r'
+    'repr_datatable.r'
     'utils.r'
     'repr_function.r'
     'repr_help_files_with_topic.r'
