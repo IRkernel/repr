@@ -26,12 +26,12 @@ repr_html.htmlwidget <- function(obj, ...) {
 
 #' @name repr_*.htmlwidget
 #' @export
-repr_text.shiny.tag.list <- function(o, ...) sprintf(
+repr_text.shiny.tag.list <- function(obj, ...) sprintf(
 	'Use HTML to display this shiny-taglist of length %s with named elements %s',
-	length(o), paste(lapply(o, function(t) dQuote(t$elementId)), collapse = '\n'))
+	length(obj), paste(lapply(obj, function(t) dQuote(t$elementId)), collapse = '\n'))
 
 #' @name repr_*.htmlwidget
 #' @export
-repr_html.shiny.tag.list <- function(o, ...) {
-	paste(lapply(o, repr_html), collapse = '\n')
+repr_html.shiny.tag.list <- function(obj, ...) {
+	paste(lapply(obj, repr_html), collapse = '\n')
 }

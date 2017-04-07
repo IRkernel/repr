@@ -12,9 +12,9 @@
 
 \method{repr_html}{htmlwidget}(obj, ...)
 
-\method{repr_text}{shiny.tag.list}(o, ...)
+\method{repr_text}{shiny.tag.list}(obj, ...)
 
-\method{repr_html}{shiny.tag.list}(o, ...)
+\method{repr_html}{shiny.tag.list}(obj, ...)
 }
 \arguments{
 \item{obj}{The htmlwidget to create a representation for}
