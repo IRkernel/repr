@@ -23,7 +23,7 @@ plot_title <- function(p, default = NULL) {
 #' Plot representations
 #' 
 #' \code{repr_text.recordedplot} only returns a small info string containing the title (if any)
-#' while the others return a character vector (SVG) a raw vector (the rest) containing the image data.
+#' while the others return a character vector (SVG) or a raw vector (the rest) containing the image data.
 #' 
 #' All parameters can also be specified using the eponymous \code{repr.plot.*} \link{repr-options}.
 #' 
