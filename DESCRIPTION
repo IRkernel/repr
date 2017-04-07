@@ -27,7 +27,7 @@ Enhances: data.table, dplyr, htmlwidgets
 License: GPL-3
 LazyData: true
 Encoding: UTF-8
-Collate:
+Collate: 
     'generics.r'
     'options.r'
     'package.r'
@@ -41,4 +41,4 @@ Collate:
     'repr_packageIQR.r'
     'repr_recordedplot.r'
     'repr_vector.r'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1.9000

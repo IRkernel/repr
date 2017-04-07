@@ -27,4 +27,3 @@
 \description{
 Representations of functions
 }
-

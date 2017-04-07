@@ -2,11 +2,11 @@
 % Please edit documentation in R/repr_recordedplot.r
 \name{repr_*.recordedplot}
 \alias{repr_*.recordedplot}
-\alias{repr_jpg.recordedplot}
-\alias{repr_pdf.recordedplot}
-\alias{repr_png.recordedplot}
-\alias{repr_svg.recordedplot}
 \alias{repr_text.recordedplot}
+\alias{repr_png.recordedplot}
+\alias{repr_jpg.recordedplot}
+\alias{repr_svg.recordedplot}
+\alias{repr_pdf.recordedplot}
 \title{Plot representations}
 \usage{
 \method{repr_text}{recordedplot}(obj, ...)
@@ -74,4 +74,3 @@ dev.off()
 repr_text(p)
 
 }
-

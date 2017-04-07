@@ -55,5 +55,5 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 
 }
 }
-\keyword{datasets}
 
+\keyword{datasets}

@@ -2,9 +2,9 @@
 % Please edit documentation in R/repr_help_files_with_topic.r
 \name{repr_*.help_files_with_topic}
 \alias{repr_*.help_files_with_topic}
+\alias{repr_text.help_files_with_topic}
 \alias{repr_html.help_files_with_topic}
 \alias{repr_latex.help_files_with_topic}
-\alias{repr_text.help_files_with_topic}
 \title{Representations of help}
 \usage{
 \method{repr_text}{help_files_with_topic}(obj, ...)
@@ -21,4 +21,3 @@
 \description{
 Representations of help
 }
-

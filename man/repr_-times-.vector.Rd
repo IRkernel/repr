@@ -2,27 +2,27 @@
 % Please edit documentation in R/repr_vector.r
 \name{repr_*.vector}
 \alias{repr_*.vector}
-\alias{repr_html.Date}
-\alias{repr_html.character}
-\alias{repr_html.complex}
-\alias{repr_html.factor}
-\alias{repr_html.integer}
-\alias{repr_html.logical}
-\alias{repr_html.numeric}
-\alias{repr_latex.Date}
-\alias{repr_latex.character}
-\alias{repr_latex.complex}
-\alias{repr_latex.factor}
-\alias{repr_latex.integer}
-\alias{repr_latex.logical}
-\alias{repr_latex.numeric}
-\alias{repr_markdown.Date}
-\alias{repr_markdown.character}
-\alias{repr_markdown.complex}
-\alias{repr_markdown.factor}
-\alias{repr_markdown.integer}
 \alias{repr_markdown.logical}
+\alias{repr_markdown.integer}
+\alias{repr_markdown.complex}
 \alias{repr_markdown.numeric}
+\alias{repr_markdown.factor}
+\alias{repr_markdown.character}
+\alias{repr_markdown.Date}
+\alias{repr_latex.logical}
+\alias{repr_latex.integer}
+\alias{repr_latex.complex}
+\alias{repr_latex.numeric}
+\alias{repr_latex.factor}
+\alias{repr_latex.character}
+\alias{repr_latex.Date}
+\alias{repr_html.logical}
+\alias{repr_html.integer}
+\alias{repr_html.complex}
+\alias{repr_html.numeric}
+\alias{repr_html.factor}
+\alias{repr_html.character}
+\alias{repr_html.Date}
 \title{Representations of vectors}
 \usage{
 \method{repr_html}{logical}(obj, ...)
@@ -75,4 +75,3 @@
 \description{
 Representations of vectors
 }
-

@@ -3,8 +3,8 @@
 \name{repr_*.data.table}
 \alias{repr_*.data.table}
 \alias{repr_html.data.table}
-\alias{repr_latex.data.table}
 \alias{repr_text.data.table}
+\alias{repr_latex.data.table}
 \title{Representation of data.table objects}
 \usage{
 \method{repr_html}{data.table}(obj, ...)
@@ -21,4 +21,3 @@
 \description{
 Representation of data.table objects
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/repr_htmlwidget.r
 \name{repr_*.htmlwidget}
 \alias{repr_*.htmlwidget}
-\alias{repr_html.htmlwidget}
 \alias{repr_text.htmlwidget}
+\alias{repr_html.htmlwidget}
 \title{HTML widget representations}
 \usage{
 \method{repr_text}{htmlwidget}(obj, ...)
@@ -18,4 +18,3 @@
 \description{
 Standalone HTML representation and dummy text representation
 }
-

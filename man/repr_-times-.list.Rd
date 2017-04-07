@@ -3,8 +3,8 @@
 \name{repr_*.list}
 \alias{repr_*.list}
 \alias{repr_html.list}
-\alias{repr_latex.list}
 \alias{repr_markdown.list}
+\alias{repr_latex.list}
 \title{Representations of lists}
 \usage{
 \method{repr_html}{list}(obj, ...)
@@ -21,4 +21,3 @@
 \description{
 Representations of lists
 }
-

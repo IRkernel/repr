@@ -15,4 +15,3 @@ The LaTeX repr of functions with the \code{repr.function.highlight} option set t
 \seealso{
 \link{repr}, \link{repr-options}, \link{repr-generics}, \link{repr_text}
 }
-
