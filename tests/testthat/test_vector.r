@@ -17,6 +17,16 @@ test_that('plain vectors display correctly', {
 ')
 })
 
+test_that('character vectors add quotes to non-NA', {
+	expect_identical(repr_html(c('a', NA, 'c')),
+"<ol class=list-inline>
+\t<li>'a'</li>
+\t<li>NA</li>
+\t<li>'c'</li>
+</ol>
+")
+})
+
 test_that('named vectors display correctly', {
 	expect_identical(repr_html(c(a = 1, b = 2)),
 '<dl class=dl-horizontal>

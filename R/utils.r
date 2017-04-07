@@ -101,7 +101,7 @@ slice_row <- function(df, row) {
 	slice
 }
 
-r_quote <- function(char_vec) paste0("'", sub("'", "\\'", char_vec, fixed = TRUE), "'")
+r_quote <- function(char_vec) ifelse(is.na(char_vec), 'NA', paste0("'", sub("'", "\\'", char_vec, fixed = TRUE), "'"))
 
 # Create the actually-used functions from the shells above.
 latex_escape_names <- function(obj) .escape_names(obj, 'latex')
