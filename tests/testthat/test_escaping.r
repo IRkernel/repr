@@ -9,6 +9,10 @@ expect_equivalent_string <- function(result, expectation){
 	expect_identical(gsub('"', "'", x = result), expectation)
 }
 
+test_that('unprintables get escaped', {
+	expect_identical(repr_html('\1'), "'\\001'")
+})
+
 test_that('simple LaTeX escaping works', {
 	expect_identical(latex_escape('\\'), '\\textbackslash{}')
 	expect_identical(latex_escape('{}'), '\\{\\}')

@@ -30,7 +30,8 @@ repr_vector_generic <- function(
 		nms <- escape_fun(nms)
 	
 	qt <- is.character(vec) && getOption('repr.vector.quote')
-	char_vec <- escape_fun(if (qt) r_quote(vec) else as.character(vec))
+	# excape_fun is output format specific, encodeString ensures that non-printables come out as \-escapes
+	char_vec <- escape_fun(encodeString(as.character(vec), quote = if (qt) "'" else ''))
 	
 	if (!is.null(individual_wrap)) {
 		char_vec <- sprintf(individual_wrap, char_vec, char_vec)
