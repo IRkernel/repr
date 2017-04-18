@@ -4,9 +4,9 @@
 #' @param ...  ignored
 #' 
 #' @aliases
-#' repr_markdown.logical repr_markdown.integer repr_markdown.complex repr_markdown.numeric repr_markdown.factor repr_markdown.character repr_markdown.Date
-#'    repr_latex.logical    repr_latex.integer    repr_latex.complex    repr_latex.numeric    repr_latex.factor    repr_latex.character    repr_latex.Date
-#'     repr_html.logical     repr_html.integer     repr_html.complex     repr_html.numeric     repr_html.factor     repr_html.character     repr_html.Date
+#' repr_markdown.logical repr_markdown.integer repr_markdown.complex repr_markdown.numeric  repr_markdown.character repr_markdown.Date
+#'    repr_latex.logical    repr_latex.integer    repr_latex.complex    repr_latex.numeric     repr_latex.character    repr_latex.Date
+#'     repr_html.logical     repr_html.integer     repr_html.complex     repr_html.numeric      repr_html.character     repr_html.Date
 #' @name repr_*.vector
 #' @include repr_list.r
 #' @include utils.r
@@ -97,10 +97,6 @@ repr_html.numeric <- repr_html.logical
 
 #' @name repr_*.vector
 #' @export
-repr_html.factor <- repr_html.logical
-
-#' @name repr_*.vector
-#' @export
 repr_html.character <- repr_html.logical
 
 #' @name repr_*.vector
@@ -140,10 +136,6 @@ repr_markdown.numeric <- repr_markdown.logical
 
 #' @name repr_*.vector
 #' @export
-repr_markdown.factor <- repr_markdown.logical
-
-#' @name repr_*.vector
-#' @export
 repr_markdown.character <- repr_markdown.logical
 
 #' @name repr_*.vector
@@ -180,10 +172,6 @@ repr_latex.complex <- repr_latex.logical
 #' @name repr_*.vector
 #' @export
 repr_latex.numeric <- repr_latex.logical
-
-#' @name repr_*.vector
-#' @export
-repr_latex.factor <- repr_latex.logical
 
 #' @name repr_*.vector
 #' @export
