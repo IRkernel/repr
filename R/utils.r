@@ -101,6 +101,11 @@ slice_row <- function(df, row) {
 	slice
 }
 
+strindent <- function(string, indent = '\t') {
+	stripped <- gsub('\n$', '', string)
+	gsub('\n', paste0('\n', indent), paste0(indent, stripped))
+}
+
 # Create the actually-used functions from the shells above.
 latex_escape_names <- function(obj) .escape_names(obj, 'latex')
 html_escape_names  <- function(obj) .escape_names(obj, 'html')

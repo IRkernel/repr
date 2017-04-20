@@ -6,21 +6,18 @@
 \alias{repr_markdown.integer}
 \alias{repr_markdown.complex}
 \alias{repr_markdown.numeric}
-\alias{repr_markdown.factor}
 \alias{repr_markdown.character}
 \alias{repr_markdown.Date}
 \alias{repr_latex.logical}
 \alias{repr_latex.integer}
 \alias{repr_latex.complex}
 \alias{repr_latex.numeric}
-\alias{repr_latex.factor}
 \alias{repr_latex.character}
 \alias{repr_latex.Date}
 \alias{repr_html.logical}
 \alias{repr_html.integer}
 \alias{repr_html.complex}
 \alias{repr_html.numeric}
-\alias{repr_html.factor}
 \alias{repr_html.character}
 \alias{repr_html.Date}
 \title{Representations of vectors}
@@ -32,8 +29,6 @@
 \method{repr_html}{complex}(obj, ...)
 
 \method{repr_html}{numeric}(obj, ...)
-
-\method{repr_html}{factor}(obj, ...)
 
 \method{repr_html}{character}(obj, ...)
 
@@ -47,8 +42,6 @@
 
 \method{repr_markdown}{numeric}(obj, ...)
 
-\method{repr_markdown}{factor}(obj, ...)
-
 \method{repr_markdown}{character}(obj, ...)
 
 \method{repr_markdown}{Date}(obj, ...)
@@ -60,8 +53,6 @@
 \method{repr_latex}{complex}(obj, ...)
 
 \method{repr_latex}{numeric}(obj, ...)
-
-\method{repr_latex}{factor}(obj, ...)
 
 \method{repr_latex}{character}(obj, ...)
 
