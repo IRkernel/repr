@@ -40,11 +40,20 @@ test_that('named vectors display correctly', {
 
 test_that('factors display correctly', {
 	expect_identical(repr_html(factor(c('a', 'b'))),
-'<ol class=list-inline>
+"<ol class=list-inline>
 \t<li>a</li>
 \t<li>b</li>
 </ol>
-')
+
+<details>
+	<summary style=display:list-item;cursor:pointer>
+		<strong>Levels</strong>:
+	</summary>
+	<ol class=list-inline>
+		<li>'a'</li>
+		<li>'b'</li>
+	</ol>
+</details>")
 })
 
 test_that('Dates display correctly', {

@@ -9,8 +9,8 @@
 #' @include utils.r
 NULL
 
-repr_factor_generic <- function(template, repr_vec)
-	function(obj, ...) sprintf(template, repr_vec(obj, ...), repr_vec(levels(obj)))
+repr_factor_generic <- function(template, repr_vec, repr_lvls = repr_vec)
+	function(obj, ...) sprintf(template, repr_vec(obj, ...), repr_lvls(levels(obj)))
 
 # repr_text is defined via print
 
@@ -20,11 +20,11 @@ repr_html.factor <- repr_factor_generic(
 # "display: list-item" because of https://github.com/jupyter/notebook/issues/2223
 '%s
 <details>
-	<summary style="display: list-item">
+	<summary style=display:list-item;cursor:pointer>
 		<strong>Levels</strong>:
 	</summary>
-	%s
-</details>', repr_html.character)
+%s
+</details>', repr_html.character, function(lvls) strindent(repr_html.character(lvls)))
 
 #' @name repr_*.factor
 #' @export
