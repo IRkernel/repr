@@ -31,7 +31,9 @@ repr_text <- function(obj, ...) UseMethod('repr_text', obj)
 #' @importFrom utils capture.output
 #' @export
 repr_text.default <- function(obj, ...) {
-	paste(capture.output(print(obj)), collapse = '\n')
+	tryCatch({
+		paste(capture.output(print(obj)), collapse = '\n')
+	}, error = function(e) paste("ERROR:", e))
 }
 
 #' Representations for specific formats
