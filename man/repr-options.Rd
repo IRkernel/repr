@@ -50,7 +50,7 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 	\code{end} mainly exists for when you want a vertical line there (default: 'r|', 'l', and '')
 }
 \item{\code{repr.function.highlight}}{
- Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)
+ Use the \code{highr} package to insert highlighting instructions into the code? (default: TRUE)
 }
 
 }
