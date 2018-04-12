@@ -112,11 +112,11 @@ repr_text.htmlwidget <- function(obj, ...) 'HTML widgets cannot be represented i
 #' @export
 repr_html.htmlwidget <- embed_tags
 
-#' @name repr_*.shiny.tag
+#' @name repr_*.htmlwidget
 #' @export
 repr_html.shiny.tag <- embed_tags
 
-#' @name repr_*.shiny.tag.list
+#' @name repr_*.htmlwidget
 #' @export
 repr_html.shiny.tag.list <- embed_tags
 
