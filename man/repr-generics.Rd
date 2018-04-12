@@ -4,20 +4,20 @@
 \alias{repr-generics}
 \alias{repr_html}
 \alias{repr_html.default}
-\alias{repr_javascript}
-\alias{repr_javascript.default}
-\alias{repr_jpg}
-\alias{repr_jpg.default}
-\alias{repr_json}
-\alias{repr_json.default}
-\alias{repr_latex}
-\alias{repr_latex.default}
 \alias{repr_markdown}
 \alias{repr_markdown.default}
+\alias{repr_latex}
+\alias{repr_latex.default}
+\alias{repr_json}
+\alias{repr_json.default}
+\alias{repr_javascript}
+\alias{repr_javascript.default}
 \alias{repr_pdf}
 \alias{repr_pdf.default}
 \alias{repr_png}
 \alias{repr_png.default}
+\alias{repr_jpg}
+\alias{repr_jpg.default}
 \alias{repr_svg}
 \alias{repr_svg.default}
 \title{Representations for specific formats}
@@ -69,4 +69,3 @@ Representations for specific formats
 \seealso{
 \link{repr_text} for the only repr that is always defined
 }
-

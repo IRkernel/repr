@@ -17,6 +17,16 @@ test_that('plain vectors display correctly', {
 ')
 })
 
+test_that('character vectors add quotes to non-NA', {
+	expect_identical(repr_html(c('a', NA, 'c')),
+"<ol class=list-inline>
+\t<li>'a'</li>
+\t<li>NA</li>
+\t<li>'c'</li>
+</ol>
+")
+})
+
 test_that('named vectors display correctly', {
 	expect_identical(repr_html(c(a = 1, b = 2)),
 '<dl class=dl-horizontal>
@@ -30,11 +40,20 @@ test_that('named vectors display correctly', {
 
 test_that('factors display correctly', {
 	expect_identical(repr_html(factor(c('a', 'b'))),
-'<ol class=list-inline>
+"<ol class=list-inline>
 \t<li>a</li>
 \t<li>b</li>
 </ol>
-')
+
+<details>
+	<summary style=display:list-item;cursor:pointer>
+		<strong>Levels</strong>:
+	</summary>
+	<ol class=list-inline>
+		<li>'a'</li>
+		<li>'b'</li>
+	</ol>
+</details>")
 })
 
 test_that('Dates display correctly', {

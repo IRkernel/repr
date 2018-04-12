@@ -2,14 +2,14 @@
 % Please edit documentation in R/repr_matrix_df.r
 \name{repr_*.matrix/data.frame}
 \alias{repr_*.matrix/data.frame}
-\alias{repr_html.data.frame}
 \alias{repr_html.matrix}
-\alias{repr_latex.data.frame}
+\alias{repr_html.data.frame}
 \alias{repr_latex.matrix}
-\alias{repr_markdown.data.frame}
+\alias{repr_latex.data.frame}
 \alias{repr_markdown.matrix}
-\alias{repr_text.data.frame}
+\alias{repr_markdown.data.frame}
 \alias{repr_text.matrix}
+\alias{repr_text.data.frame}
 \title{Tabular data representations}
 \usage{
 \method{repr_html}{matrix}(obj, ...)
@@ -43,4 +43,3 @@ HTML and LaTeX representations of Matrix-like objects
 \seealso{
 \link{repr-options} for \code{repr.matrix.latex.colspec}
 }
-

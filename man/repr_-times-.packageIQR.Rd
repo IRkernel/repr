@@ -2,8 +2,8 @@
 % Please edit documentation in R/repr_packageIQR.r
 \name{repr_*.packageIQR}
 \alias{repr_*.packageIQR}
-\alias{repr_html.packageIQR}
 \alias{repr_text.packageIQR}
+\alias{repr_html.packageIQR}
 \title{packageIQR representations}
 \usage{
 \method{repr_text}{packageIQR}(obj, ...)
@@ -23,4 +23,3 @@ repr_html(data(package = 'base'))
 repr_text(vignette(package = 'highr'))
 
 }
-

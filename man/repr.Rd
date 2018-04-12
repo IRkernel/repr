@@ -23,4 +23,3 @@ Specify an object and a format to represent it in. Will \link{stop}\code{()} if 
 \seealso{
 \link{repr_text}, \link{repr-generics}
 }
-

@@ -20,4 +20,3 @@ The only representation defined per default for everthing (via \link{print}\code
 \seealso{
 \link{repr-generics} for other generics
 }
-
