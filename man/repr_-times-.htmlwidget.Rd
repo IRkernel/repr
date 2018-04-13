@@ -4,15 +4,12 @@
 \alias{repr_*.htmlwidget}
 \alias{repr_text.htmlwidget}
 \alias{repr_html.htmlwidget}
-\alias{repr_html.shiny.tag}
 \alias{repr_html.shiny.tag.list}
 \title{HTML widget representations}
 \usage{
 \method{repr_text}{htmlwidget}(obj, ...)
 
 \method{repr_html}{htmlwidget}(obj, ...)
-
-\method{repr_html}{shiny.tag}(obj, ...)
 
 \method{repr_html}{shiny.tag.list}(obj, ...)
 }
