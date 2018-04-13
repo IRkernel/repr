@@ -113,9 +113,29 @@ repr_text.htmlwidget <- function(obj, ...) 'HTML widgets cannot be represented i
 #' @export
 repr_html.htmlwidget <- embed_tags
 
-#' @name repr_*.htmlwidget
+#' Shiny tag representations
+#'
+#' Standalone HTML representation and dummy text representation
+#'
+#' @param obj  The shiny tags to create a representation for
+#' @param ...  ignored
+#'
+#' @name repr_*.shiny.tag
+#' @export
+repr_text.shiny.tag <- function(obj, ...) 'Shiny tags cannot be represented in plain text (need html)'
+
+#' @name repr_*.shiny.tag
 #' @export
 repr_html.shiny.tag <- embed_tags
+
+#' Standalone HTML representation and dummy text representation
+#'
+#' @param obj  The shiny tags to create a representation for
+#' @param ...  ignored
+#'
+#' @name repr_*.shiny.tag.list
+#' @export
+repr_text.shiny.tag.list <- function(obj, ...) 'Shiny tags cannot be represented in plain text (need html)'
 
 #' @name repr_*.htmlwidget
 #' @export
