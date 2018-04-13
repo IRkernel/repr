@@ -8,7 +8,8 @@ Authors@R: c(
     person('abielr', role = 'ctb'),
     person('Denilson', 'Figueiredo de Sa', role = 'ctb'),
     person('Jim', 'Hester', role = 'ctb'),
-    person('karldw', role = 'ctb')
+    person('karldw', role = 'ctb'),
+    person('Carson', 'Sievert', role = 'ctb')
     )
 Maintainer: Philipp Angerer <phil.angerer@gmail.com>
 Description: String and binary representations of objects for several formats /
@@ -17,7 +18,8 @@ Depends:
     R (>= 3.0.1)
 Imports:
     utils,
-    grDevices
+    grDevices,
+    base64enc
 Suggests:
     methods,
     highr,
