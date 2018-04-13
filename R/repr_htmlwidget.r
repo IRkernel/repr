@@ -43,7 +43,7 @@ embed_tags <- function(obj, ...) {
 		paste(html, collapse = "\n")
 	})
 	
-	sprintf(
+	html <- sprintf(
 		'<!DOCTYPE html>
 		  <html>
 		    <head>
@@ -57,6 +57,7 @@ embed_tags <- function(obj, ...) {
 		', unlist(depHTML), obj$html
 	)
 	
+	paste(html, collapse = "\n")
 }
 
 # find a new folder name under the working directory 
