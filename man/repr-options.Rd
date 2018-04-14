@@ -5,7 +5,7 @@
 \alias{repr-options}
 \alias{repr_option_defaults}
 \title{repr options}
-\format{An object of class \code{list} of length 13.}
+\format{An object of class \code{list} of length 14.}
 \usage{
 repr_option_defaults
 }
@@ -51,6 +51,9 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 }
 \item{\code{repr.function.highlight}}{
  Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)
+}
+\item{\code{repr.html.deduplicate}}{
+ Use the \link{html_dependencies} manager to only include dependencies once? This can greatly reduce notebook size, but fails if e.g. iframes are used (default: FALSE)
 }
 
 }

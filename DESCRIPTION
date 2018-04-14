@@ -19,6 +19,7 @@ Depends:
 Imports:
     utils,
     grDevices,
+    htmltools,
     base64enc
 Suggests:
     methods,

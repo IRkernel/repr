@@ -40,6 +40,9 @@
 #' \item{\code{repr.function.highlight}}{
 #'  Use the \code{highr} package to insert highlighting instructions into the code? Needs that package to be installed. (default: FALSE)
 #' }
+#' \item{\code{repr.html.deduplicate}}{
+#'  Use the \link{html_dependencies} manager to only include dependencies once? This can greatly reduce notebook size, but fails if e.g. iframes are used (default: FALSE)
+#' }
 #' 
 #' }
 #'
@@ -64,7 +67,8 @@ class_defaults <- list(
 	repr.matrix.max.rows = 60,
 	repr.matrix.max.cols = 20,
 	repr.matrix.latex.colspec = list(row_head = 'r|', col = 'l', end = ''),
-	repr.function.highlight = FALSE)
+	repr.function.highlight = FALSE,
+	repr.html.deduplicate = FALSE)
 
 #' @name repr-options
 #' @export
