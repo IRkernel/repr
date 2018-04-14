@@ -1,6 +1,6 @@
 Package: repr
 Title: Serializable Representations
-Version: 0.13
+Version: 0.13.9000
 Authors@R: c(
     person('Philipp', 'Angerer', email = 'phil.angerer@gmail.com', role = c('aut', 'cre')),
     person('Thomas', 'Kluyver', email = 'thomas@kluyver.me.uk', role = 'aut'),
