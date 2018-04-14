@@ -32,8 +32,8 @@ repr_list_generic <- function(
 	} else if (length(mapped) == 1 && !is.null(nms)) {
 		sprintf(only_named_item, nms, mapped[[1]])
 	} else {
-                # print NULL as "NULL" instead of inducing errors
-                mapped = lapply(mapped, function(itm) ifelse(is.null(itm), "NULL", itm))
+                # print NULL as 'NULL'
+		mapped <- lapply(mapped, function(itm) ifelse(is.null(itm), 'NULL', itm))
 		entries <- 
 			if (!is.null(nms)) {
 				vapply(seq_along(mapped), function(i) {
