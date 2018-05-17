@@ -25,6 +25,7 @@ Suggests:
     methods,
     highr,
     Cairo,
+    stringr,
     testthat
 Enhances: data.table, dplyr, htmlwidgets
 License: GPL-3
