@@ -7,6 +7,7 @@ test_that('A basic tag works', {
 
 test_that('A basic widget works', {
 	skip_if_not_installed('stringr')
+	skip_if_not_installed('htmlwidgets')
 	
 	r <- repr_html(stringr::str_view('xy', 'y'))
 	expect_match(r, "x<span class='match'>y<\\/span>", fixed = TRUE, all = FALSE)
@@ -14,6 +15,7 @@ test_that('A basic widget works', {
 
 test_that('Dependencies work', {
 	skip_if_not_installed('stringr')
+	skip_if_not_installed('htmlwidgets')
 	
 	r <- repr_html(stringr::str_view('xy', 'y'))
 	expect_match(r, '<script src="data:application/javascript', fixed = TRUE, all = FALSE)
@@ -21,6 +23,7 @@ test_that('Dependencies work', {
 
 test_that('The dependency manager works', {
 	skip_if_not_installed('stringr')
+	skip_if_not_installed('htmlwidgets')
 	
 	o <- options(repr.html.deduplicate = TRUE)
 	on.exit(options(o))
