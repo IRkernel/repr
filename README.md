@@ -49,7 +49,7 @@ Why not Pander?
 
 [Pander][] Is very configurable and does the same as this one, only just for Markdown. Why don’t we use it and use [Pandoc][] to convert to other formats like it?
 
-Because it just emits [Markdown][], which is the least semantic format available. A roundtrip through Markdown will undoubtedly create sub-par HTML and LaTeX.
+Because it emits just [Markdown][], which is the least semantic format available. A roundtrip through Markdown will undoubtedly create sub-par HTML and LaTeX.
 
 Also Pander supports only text. Plots and images are also important to represent.
 
