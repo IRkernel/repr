@@ -1,4 +1,4 @@
-context('Vectors')
+context('reprs of vectors')
 
 test_that('empty vectors display correctly', {
 	expect_identical(repr_html(logical(0L)), '')

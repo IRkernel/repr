@@ -19,7 +19,7 @@ repr_list_generic <- function(
 	
 	nms <- names(vec)
 	if (!is.null(nms)) {
-		nms <- as.character(sapply(nms, as.name, USE.NAMES = FALSE))  # adds `` around special chars
+		nms <- as.character(sapply(nms, as_name_or_na, USE.NAMES = FALSE))  # adds `` around special chars
 		nms <- escape_fun(nms)
 	}
 	

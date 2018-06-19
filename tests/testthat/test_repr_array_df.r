@@ -1,4 +1,4 @@
-context('Arrays and data.frames')
+context('reprs of arrays and data.frames')
 
 options(stringsAsFactors = FALSE)
 

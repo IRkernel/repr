@@ -106,6 +106,12 @@ strindent <- function(string, indent = '\t') {
 	gsub('\n', paste0('\n', indent), paste0(indent, stripped))
 }
 
+as_name_or_na <- function(x) {
+	if (is.character(x) && nchar(x) == 0) NA_character_
+	else as.name(x)
+}
+		
+
 # Create the actually-used functions from the shells above.
 latex_escape_names <- function(obj) .escape_names(obj, 'latex')
 html_escape_names  <- function(obj) .escape_names(obj, 'html')
