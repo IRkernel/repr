@@ -24,20 +24,24 @@ embed_tags <- function(obj, ...) {
 		
 		if (length(dep$script) > 0) {
 			f <- file.path(dep$src$file, dep$script)
-			# TODO: is this *always* the correct mime type?
-			html <- c(html, sprintf(
-				'<script src="%s"></script>', 
-				dataURI(mime = 'application/javascript', file = f)
-			))
+			for (f_i in f){
+				# TODO: is this *always* the correct mime type?
+				html <- c(html, sprintf(
+					'<script src="%s"></script>', 
+					dataURI(mime = 'application/javascript', file = f_i)
+				))
+			}
 		}
 		
 		if (length(dep$stylesheet) > 0) {
 			f <- file.path(dep$src$file, dep$stylesheet)
-			# TODO: is this *always* the correct mime type? Use base64enc::checkUTF8() to ensure UTF-8 is OK?
-			html <- c(html, sprintf(
-				'<link href="%s" rel="stylesheet" />', 
-				dataURI(mime = 'text/css;charset-utf-8', file = f)
-			))
+			for (f_i in f){
+				# TODO: is this *always* the correct mime type? Use base64enc::checkUTF8() to ensure UTF-8 is OK?
+				html <- c(html, sprintf(
+					'<link href="%s" rel="stylesheet" />', 
+					dataURI(mime = 'text/css;charset-utf-8', file = f)
+				))
+			}
 		}
 		
 		paste(html, collapse = '\n')
