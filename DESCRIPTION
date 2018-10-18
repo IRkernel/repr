@@ -26,7 +26,8 @@ Suggests:
     highr,
     Cairo,
     stringr,
-    testthat
+    testthat,
+		leaflet
 Enhances: data.table, dplyr, htmlwidgets
 License: GPL-3
 LazyData: true
