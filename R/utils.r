@@ -119,3 +119,12 @@ any_latex_specials <- function(char_vec) .any_specials(char_vec, latex_specials)
 any_html_specials  <- function(char_vec) .any_specials(char_vec, html_specials)
 latex_escape_vec <- function(vec) .escape_vec(vec, 'latex')
 html_escape_vec  <- function(vec) .escape_vec(vec, 'html')
+
+data_uris <- function(..., mime = "", encoding = "base64", files) {
+	stopifnot(length(list(...)) == 0L)
+	vapply(
+		files,
+		function(f) dataURI(mime = mime, encoding = encoding, file = f),
+		character(1L))
+}
+
