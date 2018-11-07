@@ -1,5 +1,4 @@
 #' @importFrom htmltools renderTags
-#' @importFrom utils data_uris
 embed_tags <- function(obj, ...) {
 	obj <- renderTags(obj)
 	
@@ -24,24 +23,20 @@ embed_tags <- function(obj, ...) {
 		
 		if (length(dep$script) > 0) {
 			f <- file.path(dep$src$file, dep$script)
-			for (f_i in f){
-				# TODO: is this *always* the correct mime type?
-				html <- c(html, sprintf(
-					'<script src="%s"></script>', 
-					data_uris(mime = 'application/javascript', files = f_i)
-				))
-			}
+			# TODO: is this *always* the correct mime type?
+			html <- c(html, sprintf(
+				'<script src="%s"></script>', 
+				data_uris(mime = 'application/javascript', files = f)
+			))
 		}
 		
 		if (length(dep$stylesheet) > 0) {
 			f <- file.path(dep$src$file, dep$stylesheet)
-			for (f_i in f){
-				# TODO: is this *always* the correct mime type? Use base64enc::checkUTF8() to ensure UTF-8 is OK?
-				html <- c(html, sprintf(
-					'<link href="%s" rel="stylesheet" />', 
-					data_uris(mime = 'text/css;charset-utf-8', files = f)
-				))
-			}
+			# TODO: is this *always* the correct mime type? Use base64enc::checkUTF8() to ensure UTF-8 is OK?
+			html <- c(html, sprintf(
+				'<link href="%s" rel="stylesheet" />', 
+				data_uris(mime = 'text/css;charset-utf-8', files = f)
+			))
 		}
 		
 		paste(html, collapse = '\n')

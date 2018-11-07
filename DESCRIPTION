@@ -9,6 +9,7 @@ Authors@R: c(
     person('Denilson', 'Figueiredo de Sa', role = 'ctb'),
     person('Jim', 'Hester', role = 'ctb'),
     person('karldw', role = 'ctb'),
+    person('Dave', 'Foster', role = 'ctb'),
     person('Carson', 'Sievert', role = 'ctb')
     )
 Maintainer: Philipp Angerer <phil.angerer@gmail.com>
@@ -27,7 +28,7 @@ Suggests:
     Cairo,
     stringr,
     testthat,
-		leaflet
+    leaflet
 Enhances: data.table, dplyr, htmlwidgets
 License: GPL-3
 LazyData: true
@@ -47,4 +48,4 @@ Collate:
     'repr_matrix_df.r'
     'repr_packageIQR.r'
     'repr_recordedplot.r'
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.0
