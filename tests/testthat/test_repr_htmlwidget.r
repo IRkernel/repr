@@ -35,3 +35,12 @@ test_that('The dependency manager works', {
 	r <- repr_html(stringr::str_view('xy', 'y'))
 	expect_match(r, '<meta charset="utf-8">\n\t\t\n', fixed = TRUE, all = FALSE)  #no deps here
 })
+
+test_that('Leaflet HTML and deps can be represented', {
+	skip_if_not_installed('leaflet')
+
+	leaf <- leaflet::leaflet() %>% leaflet::addTiles()
+
+	r <- repr_html(leaf)
+	expect_match(r, '<script src="data:')
+})
