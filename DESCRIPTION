@@ -27,6 +27,8 @@ Suggests:
     highr,
     Cairo,
     stringr,
+    geojsonio,
+    plotly,
     testthat,
     leaflet
 Enhances: data.table, dplyr, htmlwidgets
@@ -47,5 +49,7 @@ Collate:
     'repr_htmlwidget.r'
     'repr_matrix_df.r'
     'repr_packageIQR.r'
+    'repr_plotly.r'
     'repr_recordedplot.r'
-RoxygenNote: 6.1.0
+    'repr_spatial.r'
+RoxygenNote: 6.1.1
