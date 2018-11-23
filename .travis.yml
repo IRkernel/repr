@@ -21,6 +21,8 @@ addons:
       # Headers for Cairo.
       - libcairo2-dev
       - libjpeg-dev
+      # Headers for units
+      - libudunits2-dev
       # Dependencies for geojson→protolite
       - protobuf-compiler
       - libprotobuf-dev
