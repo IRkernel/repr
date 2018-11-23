@@ -12,6 +12,9 @@ r_binary_packages:
   - data.table
   - dplyr
   - htmlwidgets
+  - vegalite
+  - plotly
+  - geojsonio
   # Needed for building
   - roxygen2
 
