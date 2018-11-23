@@ -30,7 +30,7 @@ addons:
       - libv8-3.14-dev
       # Deps for jqr
       - libjq-dev
-      # Deps for gdal
+      # Deps for rgdal
       - libgdal1-dev
 
 script:
