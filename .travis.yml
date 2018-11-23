@@ -26,6 +26,8 @@ addons:
       # Dependencies for geojson→protolite
       - protobuf-compiler
       - libprotobuf-dev
+      # Dependencies for V8
+      - libv8-3.14-dev
 
 script:
   - R CMD build .
