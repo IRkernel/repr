@@ -18,10 +18,11 @@ r_packages:
 addons:
   apt:
     packages:
-      # Install the headers for the Cairo package.
+      # Headers for Cairo.
       - libcairo2-dev
       - libjpeg-dev
-      # Headers for geojson→protolite
+      # Dependencies for geojson→protolite
+      - protobuf-compiler
       - libprotobuf-dev
 
 script:
