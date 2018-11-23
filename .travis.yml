@@ -7,10 +7,6 @@ r:
   - release
   - devel
 
-repos:
-  CRAN: https://cloud.r-project.org
-  IRkernel: https://irkernel.github.io/
-
 r_packages:
   # Enhanced packages
   - data.table
