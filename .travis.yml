@@ -7,7 +7,7 @@ r:
   - release
   - devel
 
-r_packages:
+r_binary_packages:
   # Enhanced packages
   - data.table
   - dplyr
@@ -21,17 +21,17 @@ addons:
       # Headers for Cairo.
       - libcairo2-dev
       - libjpeg-dev
-      # Headers for units
-      - libudunits2-dev
-      # Dependencies for geojson→protolite
-      - protobuf-compiler
-      - libprotobuf-dev
-      # Dependencies for V8
-      - libv8-3.14-dev
-      # Deps for jqr
-      - libjq-dev
-      # Deps for rgdal
-      - libgdal1-dev
+      ## Headers for units
+      #- libudunits2-dev
+      ## Dependencies for geojson→protolite
+      #- protobuf-compiler
+      #- libprotobuf-dev
+      ## Dependencies for V8
+      #- libv8-3.14-dev
+      ## Deps for jqr
+      #- libjq-dev
+      ## Deps for rgdal
+      #- libgdal1-dev
 
 script:
   - R CMD build .
