@@ -28,6 +28,7 @@ Suggests:
     Cairo,
     stringr,
     geojsonio,
+    vegalite,
     plotly,
     testthat,
     leaflet
@@ -52,4 +53,5 @@ Collate:
     'repr_plotly.r'
     'repr_recordedplot.r'
     'repr_spatial.r'
+    'repr_vega.r'
 RoxygenNote: 6.1.1

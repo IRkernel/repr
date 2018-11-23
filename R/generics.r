@@ -139,6 +139,14 @@ repr_geojson.default <- function(obj, ...) NULL
 
 #' @name repr-generics
 #' @export
+repr_vdom1 <- function(obj, ...) UseMethod('repr_vdom1', obj)
+#' @name repr-generics
+#' @export
+repr_vdom1.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
 repr_plotly1 <- function(obj, ...) UseMethod('repr_plotly1', obj)
 #' @name repr-generics
 #' @export
@@ -180,6 +188,7 @@ mime2repr <- list(
 	'application/javascript' = repr_javascript,
 	'application/json' = repr_json,
 	'application/geo+json' = repr_geojson,
+	'application/vdom.v1+json' = repr_vdom1,
 	'application/vnd.plotly.v1+json' = repr_plotly1,
 	'application/vnd.vegalite.v2+json' = repr_vegalite2,
 	'application/vnd.vega.v4+json' = repr_vega4,
@@ -191,5 +200,5 @@ mime2repr <- list(
 #' @name *2repr
 #' @export
 format2repr <- sapply(
-	c('text', 'html', 'markdown', 'latex', 'javascript', 'json', 'geojson', 'plotly1', 'vegalite2', 'vega4', 'pdf', 'png', 'jpg', 'svg'),
+	c('text', 'html', 'markdown', 'latex', 'javascript', 'json', 'geojson', 'vdom1', 'plotly1', 'vegalite2', 'vega4', 'pdf', 'png', 'jpg', 'svg'),
 	function(n) get(paste0('repr_', n)))

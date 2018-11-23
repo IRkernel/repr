@@ -22,6 +22,8 @@
 \alias{repr_svg.default}
 \alias{repr_geojson}
 \alias{repr_geojson.default}
+\alias{repr_vdom1}
+\alias{repr_vdom1.default}
 \alias{repr_plotly1}
 \alias{repr_plotly1.default}
 \alias{repr_vegalite2}
@@ -69,6 +71,10 @@ repr_svg(obj, ...)
 repr_geojson(obj, ...)
 
 \method{repr_geojson}{default}(obj, ...)
+
+repr_vdom1(obj, ...)
+
+\method{repr_vdom1}{default}(obj, ...)
 
 repr_plotly1(obj, ...)
 
