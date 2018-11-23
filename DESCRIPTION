@@ -27,12 +27,15 @@ Suggests:
     highr,
     Cairo,
     stringr,
-    geojsonio,
-    vegalite,
-    plotly,
     testthat,
     leaflet
-Enhances: data.table, dplyr, htmlwidgets
+Enhances:
+    data.table,
+    dplyr,
+    htmlwidgets,
+    vegalite,
+    plotly,
+    geojsonio
 License: GPL-3
 LazyData: true
 Encoding: UTF-8
