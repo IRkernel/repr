@@ -28,6 +28,8 @@ addons:
       - libprotobuf-dev
       # Dependencies for V8
       - libv8-3.14-dev
+      # Deps for jqr
+      - libjq-dev
 
 script:
   - R CMD build .
