@@ -21,6 +21,8 @@ addons:
       # Install the headers for the Cairo package.
       - libcairo2-dev
       - libjpeg-dev
+      # Headers for geojson→protolite
+      - libprotobuf-dev
 
 script:
   - R CMD build .
