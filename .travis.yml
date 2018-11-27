@@ -1,4 +1,6 @@
 language: r
+distro: xenial  # needed for binary packages
+sudo: true      # dito
 cache: packages
 
 r:
