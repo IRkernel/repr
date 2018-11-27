@@ -29,7 +29,13 @@ Suggests:
     stringr,
     testthat,
     leaflet
-Enhances: data.table, dplyr, htmlwidgets
+Enhances:
+    data.table,
+    dplyr,
+    htmlwidgets,
+    vegalite,
+    plotly,
+    geojsonio
 License: GPL-3
 LazyData: true
 Encoding: UTF-8
@@ -47,5 +53,8 @@ Collate:
     'repr_htmlwidget.r'
     'repr_matrix_df.r'
     'repr_packageIQR.r'
+    'repr_plotly.r'
     'repr_recordedplot.r'
-RoxygenNote: 6.1.0
+    'repr_spatial.r'
+    'repr_vega.r'
+RoxygenNote: 6.1.1

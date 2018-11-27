@@ -20,6 +20,16 @@
 \alias{repr_jpg.default}
 \alias{repr_svg}
 \alias{repr_svg.default}
+\alias{repr_geojson}
+\alias{repr_geojson.default}
+\alias{repr_vdom1}
+\alias{repr_vdom1.default}
+\alias{repr_plotly1}
+\alias{repr_plotly1.default}
+\alias{repr_vegalite2}
+\alias{repr_vegalite2.default}
+\alias{repr_vega4}
+\alias{repr_vega4.default}
 \title{Representations for specific formats}
 \usage{
 repr_html(obj, ...)
@@ -57,6 +67,26 @@ repr_jpg(obj, ...)
 repr_svg(obj, ...)
 
 \method{repr_svg}{default}(obj, ...)
+
+repr_geojson(obj, ...)
+
+\method{repr_geojson}{default}(obj, ...)
+
+repr_vdom1(obj, ...)
+
+\method{repr_vdom1}{default}(obj, ...)
+
+repr_plotly1(obj, ...)
+
+\method{repr_plotly1}{default}(obj, ...)
+
+repr_vegalite2(obj, ...)
+
+\method{repr_vegalite2}{default}(obj, ...)
+
+repr_vega4(obj, ...)
+
+\method{repr_vega4}{default}(obj, ...)
 }
 \arguments{
 \item{obj}{The object to create a repr for}

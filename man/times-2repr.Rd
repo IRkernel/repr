@@ -6,7 +6,7 @@
 \alias{mime2repr}
 \alias{format2repr}
 \title{Lists mapping mime types (\code{mime2repr}) or format names (\code{format2repr}) to \code{repr} functions}
-\format{Lists of length 10 mapping mime/name to function}
+\format{Lists mapping mime/name to function}
 \usage{
 mime2repr
 

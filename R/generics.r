@@ -126,9 +126,52 @@ repr_svg <- function(obj, ...) UseMethod('repr_svg', obj)
 repr_svg.default <- function(obj, ...) NULL
 
 
+# jupyterlab also handles those less-common mimetypes
+
+
+#' @name repr-generics
+#' @export
+repr_geojson <- function(obj, ...) UseMethod('repr_geojson', obj)
+#' @name repr-generics
+#' @export
+repr_geojson.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
+repr_vdom1 <- function(obj, ...) UseMethod('repr_vdom1', obj)
+#' @name repr-generics
+#' @export
+repr_vdom1.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
+repr_plotly1 <- function(obj, ...) UseMethod('repr_plotly1', obj)
+#' @name repr-generics
+#' @export
+repr_plotly1.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
+repr_vegalite2 <- function(obj, ...) UseMethod('repr_vegalite2', obj)
+#' @name repr-generics
+#' @export
+repr_vegalite2.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
+repr_vega4 <- function(obj, ...) UseMethod('repr_vega4', obj)
+#' @name repr-generics
+#' @export
+repr_vega4.default <- function(obj, ...) NULL
+
+
 #' Lists mapping mime types (\code{mime2repr}) or format names (\code{format2repr}) to \code{repr} functions
 #' 
-#' @format Lists of length 10 mapping mime/name to function
+#' @format Lists mapping mime/name to function
 #' 
 #' @examples
 #' names(mime2repr)
@@ -142,8 +185,13 @@ mime2repr <- list(
 	'text/html' = repr_html,
 	'text/markdown' = repr_markdown,
 	'text/latex' = repr_latex,
-	'application/json' = repr_json,
 	'application/javascript' = repr_javascript,
+	'application/json' = repr_json,
+	'application/geo+json' = repr_geojson,
+	'application/vdom.v1+json' = repr_vdom1,
+	'application/vnd.plotly.v1+json' = repr_plotly1,
+	'application/vnd.vegalite.v2+json' = repr_vegalite2,
+	'application/vnd.vega.v4+json' = repr_vega4,
 	'application/pdf' = repr_pdf,
 	'image/png' = repr_png,
 	'image/jpeg' = repr_jpg,
@@ -152,5 +200,5 @@ mime2repr <- list(
 #' @name *2repr
 #' @export
 format2repr <- sapply(
-	c('text', 'html', 'markdown', 'latex', 'json', 'javascript', 'pdf', 'png', 'jpg', 'svg'),
+	c('text', 'html', 'markdown', 'latex', 'javascript', 'json', 'geojson', 'vdom1', 'plotly1', 'vegalite2', 'vega4', 'pdf', 'png', 'jpg', 'svg'),
 	function(n) get(paste0('repr_', n)))
