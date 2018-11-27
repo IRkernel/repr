@@ -1,9 +1,9 @@
-repr&emsp;[![b-Travis][]][Travis] [![b-CRAN][]][CRAN]
+repr&emsp;[![b-Travis]][Travis] [![b-CRAN]][CRAN]
 ====
 
 [b-Travis]: https://travis-ci.org/IRkernel/repr.svg?branch=master "Build status"
 [Travis]: https://travis-ci.org/IRkernel/repr
-[b-CRAN]: https://www.r-pkg.org/badges/version/repr "CRAN"
+[b-CRAN]: https://www.r-pkg.org/badges/version/repr "Comprehensive R Archive Network"
 [CRAN]: https://cran.r-project.org/package=repr
 
 String and byte representations for all kinds of R objects.
