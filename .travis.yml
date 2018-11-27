@@ -14,7 +14,7 @@ r_binary_packages:
   - dplyr
   - htmlwidgets
   - plotly
-  - geojsonio
+  # - geojsonio  # not available
   # Needed for building
   - roxygen2
 
