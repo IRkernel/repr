@@ -8,8 +8,8 @@ NULL
 
 #' @name repr_plotly1.*
 #' @export
-repr_plotly1.plotly <- function(obj, ...) unclass(plotly::plotly_json(obj, jsonedit = FALSE))
+repr_plotly1.plotly <- function(obj, ...) jsonlite::fromJSON(plotly::plotly_json(obj, jsonedit = FALSE))
 
 #' @name repr_plotly1.*
 #' @export
-repr_plotly1.gg <- function(obj, ...) repr_plotly1(plotly::ggplotly(obj), ...)
+repr_plotly1.gg <- repr_plotly1.plotly
