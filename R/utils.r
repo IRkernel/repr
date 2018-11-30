@@ -129,3 +129,25 @@ data_uris <- function(..., mime = '', encoding = 'base64', files) {
 		character(1L))
 }
 
+
+has_row_names <- function(x) {
+	rns <- rownames(x)
+	length(dim(x)) != 1 && length(rns) > 0 && !all(rns == seq_len(nrow(x))) && !all(rns == '')
+}
+
+
+flatten <- function(x){
+	if (!is.data.frame(x)) return(x)
+	dfcolumns <- rle(vapply(x, is.data.frame, logical(1L)))
+	if (!any(dfcolumns$values)) return(x)
+	
+	end <- cumsum(dfcolumns$lengths)
+	start <- end - dfcolumns$lengths + 1
+	
+	parts <- mapply(function(start, end, do_flatten) {
+		if (do_flatten) flatten(x[, start:end]) else x[, start:end]
+	}, start = start, end = end, do_flatten = dfcolumns$values, SIMPLIFY = FALSE)
+	
+	names(parts) <- colnames(x)
+	do.call(cbind, parts)
+}

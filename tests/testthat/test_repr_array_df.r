@@ -53,8 +53,7 @@ test_that('date display correctly', {
 
 test_that('markdown works', {
 	df <- data.frame(a = 1:2, b = letters[1:2])
-	expect_identical(repr_markdown(df),
-'
+	expect_identical(repr_markdown(df), '
 | a | b |
 |---|---|
 | 1 | a |
@@ -65,12 +64,25 @@ test_that('markdown works', {
 
 test_that('markdown works with rownames', {
 	df <- data.frame(a = 1:2, b = letters[1:2], row.names = LETTERS[1:2])
-	expect_identical(repr_markdown(df),
-'
+	expect_identical(repr_markdown(df), '
 | <!--/--> | a | b |
 |---|---|---|
 | A | 1 | a |
 | B | 2 | b |
+
+')
+})
+
+test_that('nested data.frames work', {
+	df <- data.frame(driver = c('Bowser', 'Peach'))
+	df$vehicle <- data.frame(model = c('Piranha Prowler', 'Royal Racer'))
+	df$vehicle$stats <- data.frame(speed = c(55, 34), weight = c(67, 24), drift = c(35, 32))
+	df$occupation <- c('Koopa', 'Princess')
+	expect_identical(repr_markdown(df), '
+| driver | vehicle.model | vehicle.stats.speed | vehicle.stats.weight | vehicle.stats.drift | occupation |
+|---|---|---|---|---|---|
+| Bowser          | Piranha Prowler | 55              | 67              | 35              | Koopa           |
+| Peach           | Royal Racer     | 34              | 24              | 32              | Princess        |
 
 ')
 })

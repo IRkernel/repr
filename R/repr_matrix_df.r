@@ -69,8 +69,7 @@ arr_partition <- function(a, rows, cols) {
 arr_parts_format <- function(parts) structure(lapply(parts, arr_part_format), omit = attr(parts, 'omit'))
 arr_part_format <- function(part) {
 	f_part <- if (is.data.frame(part)) {
-		# toString because of nested dataframes (yup, that’s a thing)
-		vapply(part, function(col) format(col), character(nrow(part)))
+		vapply(part, format, character(nrow(part)))
 	} else {
 		# format(part) would work, but e.g. would left-pad *both* rows of matrix(7:10, 2L) instead of one
 		apply(part, 2L, format)
@@ -140,7 +139,9 @@ repr_matrix_generic <- function(
 	if (!has_rownames && !has_colnames && 0L %in% dim(x))
 		return('')
 	
-	x <- ellip_limit_arr(x, rows, cols)
+	# TODO: ineffective to flatten the whole thing
+	# But when are we encountering huge nested arrays?
+	x <- ellip_limit_arr(flatten(x), rows, cols)
 	
 	header <- ''
 	if (has_colnames) {
@@ -226,6 +227,7 @@ repr_markdown.matrix <- function(obj, ...) {
 	cols <- list(...)$cols
 	if (is.null(cols)) cols <- getOption('repr.matrix.max.cols')
 	
+	obj <- flatten(obj)
 	out_cols <- min(ncol(obj), cols + 1L) + as.integer(has_row_names(obj))
 	underline <- paste(rep('---', out_cols), collapse = '|')
 	
