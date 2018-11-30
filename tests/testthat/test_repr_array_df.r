@@ -50,3 +50,27 @@ test_that('date display correctly', {
 </table>
 ')
 })
+
+test_that('markdown works', {
+	df <- data.frame(a = 1:2, b = letters[1:2])
+	expect_identical(repr_markdown(df),
+'
+| a | b |
+|---|---|
+| 1 | a |
+| 2 | b |
+
+')
+})
+
+test_that('markdown works with rownames', {
+	df <- data.frame(a = 1:2, b = letters[1:2], row.names = LETTERS[1:2])
+	expect_identical(repr_markdown(df),
+'
+| <!--/--> | a | b |
+|---|---|---|
+| A | 1 | a |
+| B | 2 | b |
+
+')
+})

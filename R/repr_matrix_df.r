@@ -70,7 +70,7 @@ arr_parts_format <- function(parts) structure(lapply(parts, arr_part_format), om
 arr_part_format <- function(part) {
 	f_part <- if (is.data.frame(part)) {
 		# toString because of nested dataframes (yup, that’s a thing)
-		vapply(part, function(col) toString(format(col)), character(nrow(part)))
+		vapply(part, function(col) format(col), character(nrow(part)))
 	} else {
 		# format(part) would work, but e.g. would left-pad *both* rows of matrix(7:10, 2L) instead of one
 		apply(part, 2L, format)
@@ -134,8 +134,7 @@ repr_matrix_generic <- function(
 	rows = getOption('repr.matrix.max.rows'),
 	cols = getOption('repr.matrix.max.cols')
 ) {
-	has_std_df_rownames <- is.data.frame(x) && identical(rownames(x), as.character(seq_len(nrow(x))))
-	has_rownames <- !is.null(rownames(x)) && nrow(x) > 0 && !has_std_df_rownames
+	has_rownames <- has_row_names(x)
 	has_colnames <- !is.null(colnames(x)) && ncol(x) > 0
 	
 	if (!has_rownames && !has_colnames && 0L %in% dim(x))
@@ -224,20 +223,20 @@ repr_latex.data.frame <- repr_latex.matrix
 #' @name repr_*.matrix/data.frame
 #' @export
 repr_markdown.matrix <- function(obj, ...) {
-	rows <- list(...)$rows
-	if (is.null(rows)) rows <- getOption('repr.matrix.max.rows')
+	cols <- list(...)$cols
+	if (is.null(cols)) cols <- getOption('repr.matrix.max.cols')
 	
-	out_rows <- min(nrow(obj), rows + 1L)
-	underline <- paste(rep('---', out_rows), collapse = '|')
+	out_cols <- min(ncol(obj), cols + 1L) + as.integer(has_row_names(obj))
+	underline <- paste(rep('---', out_cols), collapse = '|')
 	
 	repr_matrix_generic(
 		obj,
 		'\n%s%s\n',
-		sprintf('%%s\n|%s|\n', underline), '| <!--/--> | ', '%s | ',
-		'%s\n', '| %s\n', '%s | ',
-		'%s | ',
+		sprintf('|%%s\n|%s|\n', underline), ' <!--/--> |', ' %s |',
+		'%s', '|%s\n', ' %s |',
+		' %s |',
 		escape_fun = identity,  # TODO
-		..., rows = rows)
+		..., cols = cols)
 }
 
 #' @name repr_*.matrix/data.frame
