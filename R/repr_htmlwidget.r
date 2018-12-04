@@ -51,7 +51,7 @@ HTML_SKELETON <-
 	<head>
 		<meta charset="utf-8">
 		%s
-	<head>
+	</head>
 	<body>
 		%s
 	</body>
