@@ -25,7 +25,8 @@ embed_tags <- function(obj, ...) {
 			f <- file.path(dep$src$file, dep$script)
 			# TODO: is this *always* the correct mime type?
 			html <- c(html, sprintf(
-				'<script src="%s"></script>', 
+				'<script title="%s" src="%s"></script>',
+				sub('"', '', dep$name),
 				data_uris(mime = 'application/javascript', files = f)
 			))
 		}
@@ -34,7 +35,7 @@ embed_tags <- function(obj, ...) {
 			f <- file.path(dep$src$file, dep$stylesheet)
 			# TODO: is this *always* the correct mime type? Use base64enc::checkUTF8() to ensure UTF-8 is OK?
 			html <- c(html, sprintf(
-				'<link href="%s" rel="stylesheet" />', 
+				'<link href="%s" rel="stylesheet" />',
 				data_uris(mime = 'text/css;charset-utf-8', files = f)
 			))
 		}
