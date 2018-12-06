@@ -12,4 +12,4 @@ repr_plotly1.plotly <- function(obj, ...) jsonlite::fromJSON(plotly::plotly_json
 
 #' @name repr_plotly1.*
 #' @export
-repr_plotly1.gg <- repr_plotly1.plotly
+repr_plotly1.ggplot <- repr_plotly1.plotly
