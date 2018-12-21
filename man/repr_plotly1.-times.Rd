@@ -3,12 +3,12 @@
 \name{repr_plotly1.*}
 \alias{repr_plotly1.*}
 \alias{repr_plotly1.plotly}
-\alias{repr_plotly1.gg}
+\alias{repr_plotly1.ggplot}
 \title{Representation as \link[plotly:plotly_json]{Plotly JSON}.}
 \usage{
 \method{repr_plotly1}{plotly}(obj, ...)
 
-\method{repr_plotly1}{gg}(obj, ...)
+\method{repr_plotly1}{ggplot}(obj, ...)
 }
 \arguments{
 \item{obj}{The \link[plotly]{plot_ly} plot or \link[ggplot2]{ggplot} to create a representation for}
