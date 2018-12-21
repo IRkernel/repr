@@ -24,7 +24,8 @@ repr_html.ts <- function(obj, ...) repr_ts_generic(obj, repr_html.matrix, ...)
 
 #' @name repr_*.ts
 #' @export
-repr_latex.ts <- function(obj, ...) repr_ts_generic(obj, repr_latex.matrix, ...)
+repr_latex.ts <- function(obj, ..., colspec = getOption('repr.matrix.latex.colspec'))
+	repr_ts_generic(obj, repr_latex.matrix, ..., colspec = colspec)
 
 #' @name repr_*.ts
 #' @export
