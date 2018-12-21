@@ -3,7 +3,6 @@
 #' @param obj  The factor to create a representation for
 #' @param ...  ignored
 #' 
-#' @aliases repr_markdown.factor repr_latex.factor repr_html.factor
 #' @name repr_*.factor
 #' @include repr_vector.r
 #' @include utils.r

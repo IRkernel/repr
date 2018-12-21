@@ -38,7 +38,7 @@
 \item{colspec}{The colspec for the LaTeX table. The default is given by the option \code{repr.matrix.latex.colspec}}
 }
 \description{
-HTML and LaTeX representations of Matrix-like objects
+HTML, LaTeX, and Markdown representations of Matrix-like objects
 }
 \seealso{
 \link{repr-options} for \code{repr.matrix.latex.colspec}

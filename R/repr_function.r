@@ -5,7 +5,6 @@
 #' @param fenced  Should a fenced code block instead of an indented one be used?
 #' @param ...  ignored
 #' 
-#' @aliases repr_html.function repr_latex.function repr_markdown.function
 #' @name repr_*.function
 #' @include utils.r
 NULL

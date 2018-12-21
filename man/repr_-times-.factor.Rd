@@ -2,9 +2,9 @@
 % Please edit documentation in R/repr_factor.r
 \name{repr_*.factor}
 \alias{repr_*.factor}
+\alias{repr_html.factor}
 \alias{repr_markdown.factor}
 \alias{repr_latex.factor}
-\alias{repr_html.factor}
 \title{Representations of factors}
 \usage{
 \method{repr_html}{factor}(obj, ...)

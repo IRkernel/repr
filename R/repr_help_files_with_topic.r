@@ -5,7 +5,6 @@
 #' @param obj  Help topic to create a representation for
 #' @param ...  ignored
 #' 
-#' @aliases repr_text.help_files_with_topic repr_html.help_files_with_topic repr_latex.help_files_with_topic
 #' @name repr_*.help_files_with_topic
 NULL
 

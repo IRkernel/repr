@@ -40,16 +40,6 @@ repr_text.default <- function(obj, ...) {
 #' @param ...  parameters of the specific \code{repr_*} functions
 #' 
 #' @seealso \link{repr_text} for the only repr that is always defined
-#' @aliases
-#' repr_html repr_html.default
-#' repr_markdown repr_markdown.default
-#' repr_latex repr_latex.default
-#' repr_json repr_json.default
-#' repr_javascript repr_javascript.default
-#' repr_pdf repr_pdf.default
-#' repr_png repr_png.default
-#' repr_jpg repr_jpg.default
-#' repr_svg repr_svg.default
 #' @name repr-generics
 NULL
 
@@ -177,7 +167,6 @@ repr_vega4.default <- function(obj, ...) NULL
 #' names(mime2repr)
 #' names(format2repr)
 #' 
-#' @aliases mime2repr format2repr
 #' @name *2repr
 #' @export
 mime2repr <- list(

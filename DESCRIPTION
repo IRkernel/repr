@@ -56,5 +56,6 @@ Collate:
     'repr_plotly.r'
     'repr_recordedplot.r'
     'repr_spatial.r'
+    'repr_ts.r'
     'repr_vega.r'
 RoxygenNote: 6.1.1

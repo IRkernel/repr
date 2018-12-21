@@ -3,10 +3,6 @@
 #' @param obj  The vector to create a representation for
 #' @param ...  ignored
 #' 
-#' @aliases
-#' repr_markdown.logical repr_markdown.integer repr_markdown.complex repr_markdown.numeric  repr_markdown.character repr_markdown.Date
-#'    repr_latex.logical    repr_latex.integer    repr_latex.complex    repr_latex.numeric     repr_latex.character    repr_latex.Date
-#'     repr_html.logical     repr_html.integer     repr_html.complex     repr_html.numeric      repr_html.character     repr_html.Date
 #' @name repr_*.vector
 #' @include repr_list.r
 #' @include utils.r

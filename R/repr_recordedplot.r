@@ -47,7 +47,6 @@ plot_title <- function(p, default = NULL) {
 #' 
 #' repr_text(p)
 #' 
-#' @aliases repr_text.recordedplot repr_png.recordedplot repr_jpg.recordedplot repr_svg.recordedplot repr_pdf.recordedplot
 #' @name repr_*.recordedplot
 #' @export
 repr_text.recordedplot <- function(obj, ...) {

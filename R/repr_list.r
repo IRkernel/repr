@@ -3,7 +3,6 @@
 #' @param obj  The list to create a representation for
 #' @param ...  ignored
 #' 
-#' @aliases repr_html.list repr_markdown.list repr_latex.list
 #' @name repr_*.list
 #' @include utils.r
 NULL

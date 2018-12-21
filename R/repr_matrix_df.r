@@ -1,6 +1,6 @@
 #' Tabular data representations
 #' 
-#' HTML and LaTeX representations of Matrix-like objects
+#' HTML, LaTeX, and Markdown representations of Matrix-like objects
 #' 
 #' @param obj  The matrix or data.frame to create a representation for
 #' @param ...  ignored
@@ -8,7 +8,6 @@
 #' 
 #' @seealso \link{repr-options} for \code{repr.matrix.latex.colspec}
 #' 
-#' @aliases repr_html.matrix repr_html.data.frame repr_latex.matrix repr_latex.data.frame
 #' @name repr_*.matrix/data.frame
 #' @include utils.r
 NULL
