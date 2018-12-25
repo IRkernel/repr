@@ -18,7 +18,7 @@ test_that('Dependencies work', {
 	skip_if_not_installed('htmlwidgets')
 	
 	r <- repr_html(stringr::str_view('xy', 'y'))
-	expect_match(r, '<script src="data:application/javascript', fixed = TRUE, all = FALSE)
+	expect_match(r, '<script title="htmlwidgets" src="data:application/javascript', fixed = TRUE, all = FALSE)
 })
 
 test_that('The dependency manager works', {
