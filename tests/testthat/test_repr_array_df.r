@@ -86,3 +86,13 @@ test_that('nested data.frames work', {
 
 ')
 })
+
+test_that('reprs work on an 1d array', {
+	state <- factor(c("tas", "sa",  "qld", "nsw", "nsw", "nt",  "wa",  "wa",  "qld", "vic"))
+	incomes <- c(60, 49, 40, 61, 64, 60, 59, 54, 62, 69)
+	one_d_arr <- tapply(incomes, state, mean)
+	repr_html(one_d_arr)
+	repr_latex(one_d_arr)
+	repr_markdown(one_d_arr)
+})
+
