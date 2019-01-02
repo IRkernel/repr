@@ -39,8 +39,8 @@ test_that('The dependency manager works', {
 test_that('Leaflet HTML and deps can be represented', {
 	skip_if_not_installed('leaflet')
 
-	leaf <- leaflet::leaflet() %>% leaflet::addTiles()
+	leaf <- leaflet::addTiles(leaflet::leaflet())
 
 	r <- repr_html(leaf)
-	expect_match(r, '<script src="data:')
+	expect_match(r, '<script title="htmlwidgets" src="data:')
 })

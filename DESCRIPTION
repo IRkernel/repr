@@ -21,6 +21,7 @@ Imports:
     utils,
     grDevices,
     htmltools,
+    jsonlite,
     base64enc
 Suggests:
     methods,
