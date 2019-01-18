@@ -32,3 +32,15 @@ test_that('lists with nonexistant names work', {
 </dl>
 ')
 })
+
+test_that('NAs can occur in list names', {
+	l <- as.list(1:2)
+	names(l) <- c(NA, NA)
+	expect_identical(repr_html(l), '<dl>
+\t<dt>$&lt;NA&gt;</dt>
+\t\t<dd>1</dd>
+\t<dt>$&lt;NA&gt;</dt>
+\t\t<dd>2</dd>
+</dl>
+')
+})

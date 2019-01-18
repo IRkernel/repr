@@ -108,7 +108,8 @@ strindent <- function(string, indent = '\t') {
 }
 
 as_name_or_na <- function(x) {
-	if (is.character(x) && nchar(x) == 0) NA_character_
+	if (is.na(x)) '<NA>'
+	else if (is.character(x) && nchar(x) == 0) NA_character_
 	else as.name(x)
 }
 		
