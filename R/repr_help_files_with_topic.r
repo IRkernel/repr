@@ -17,7 +17,7 @@ get_help_file <- function(file) {
 		stop(gettextf('invalid %s argument', sQuote('file')), domain = NA)
 	pkgname <- basename(dirpath)
 	rd_db <- file.path(path, pkgname)
-	if(!file.exists(paste(rd_db, 'rdx', sep = '.')))
+	if (!file.exists(paste(rd_db, 'rdx', sep = '.')))
 		stop(gettextf('package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed', sQuote(pkgname)), domain = NA)
 	pos <- -1
 	fetch_rd_db <- getFromNamespace('fetchRdDB', 'tools', pos)
