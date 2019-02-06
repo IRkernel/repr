@@ -225,6 +225,8 @@ test_that('ellip_limit_arr preserves rownames when limiting rows', {
 	}
 	if (has_dplyr) {
 		test_tbl <- dplyr::as.tbl(test_df)
+		# tbl removes rownames, so we have to reset them
+		rownames(test_tbl) <- rownames(test_df)
 		limited_tbl <- ellip_limit_arr(test_tbl)
 		expect_identical(limited_tbl, expected_df_mat)
 	}
