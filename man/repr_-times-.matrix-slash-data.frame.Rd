@@ -22,9 +22,11 @@
 \method{repr_latex}{data.frame}(obj, ...,
   colspec = getOption("repr.matrix.latex.colspec"))
 
-\method{repr_markdown}{matrix}(obj, ...)
+\method{repr_markdown}{matrix}(obj, ...,
+  cols = getOption("repr.matrix.max.cols"))
 
-\method{repr_markdown}{data.frame}(obj, ...)
+\method{repr_markdown}{data.frame}(obj, ...,
+  cols = getOption("repr.matrix.max.cols"))
 
 \method{repr_text}{matrix}(obj, ...)
 

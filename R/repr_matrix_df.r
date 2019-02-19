@@ -233,7 +233,7 @@ repr_markdown.matrix <- function(obj, ..., cols = getOption('repr.matrix.max.col
 		sprintf('|%%s\n|%s|\n', underline), ' <!--/--> |', ' %s |',
 		'%s', '|%s\n', ' %s |',
 		' %s |',
-		escape_fun = identity,  # TODO
+		escape_fun = escape_markdown_table_cell,
 		..., cols = cols)
 }
 
@@ -241,6 +241,11 @@ repr_markdown.matrix <- function(obj, ..., cols = getOption('repr.matrix.max.col
 #' @export
 repr_markdown.data.frame <- repr_markdown.matrix
 
+
+escape_markdown_table_cell <- function(values) {
+	# TODO also replace Markdown
+	ifelse(grepl('^\\s*$', values), '<!---->', values)
+}
 
 
 # Text -------------------------------------------------------------------
