@@ -222,10 +222,7 @@ repr_latex.data.frame <- repr_latex.matrix
 
 #' @name repr_*.matrix/data.frame
 #' @export
-repr_markdown.matrix <- function(obj, ...) {
-	cols <- list(...)$cols
-	if (is.null(cols)) cols <- getOption('repr.matrix.max.cols')
-	
+repr_markdown.matrix <- function(obj, ..., cols = getOption('repr.matrix.max.cols')) {
 	obj <- flatten(obj)
 	out_cols <- min(ncol(obj), cols + 1L) + as.integer(has_row_names(obj))
 	underline <- paste(rep('---', out_cols), collapse = '|')
