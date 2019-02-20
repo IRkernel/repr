@@ -2,8 +2,10 @@
 #' 
 #' HTML, LaTeX, and Markdown representations of Matrix-like objects
 #' 
-#' @param obj  The matrix or data.frame to create a representation for
-#' @param ...  ignored
+#' @param obj      The matrix or data.frame to create a representation for
+#' @param ...      ignored
+#' @param rows     The maximum number of rows displayed. The default is given by the option \code{repr.matrix.max.rows}
+#' @param cols     The maximum number of columns displayed. The default is given by the option \code{repr.matrix.max.cols}
 #' @param colspec  The colspec for the LaTeX table. The default is given by the option \code{repr.matrix.latex.colspec}
 #' 
 #' @seealso \link{repr-options} for \code{repr.matrix.latex.colspec}
@@ -167,7 +169,12 @@ repr_matrix_generic <- function(
 
 #' @name repr_*.matrix/data.frame
 #' @export
-repr_html.matrix <- function(obj, ...) repr_matrix_generic(
+repr_html.matrix <- function(
+	obj,
+	...,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols')
+) repr_matrix_generic(
 	obj,
 	'<table>\n%s%s</table>\n',
 	'<thead><tr>%s</tr></thead>\n', '<th></th>',
@@ -175,6 +182,7 @@ repr_html.matrix <- function(obj, ...) repr_matrix_generic(
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
 	'<td>%s</td>',
 	escape_fun = html_escape_vec,
+	rows = rows, cols = cols,
 	...)
 
 #' @name repr_*.matrix/data.frame
@@ -189,7 +197,13 @@ repr_html.data.frame <- repr_html.matrix
 
 #' @name repr_*.matrix/data.frame
 #' @export
-repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.colspec')) {
+repr_latex.matrix <- function(
+	obj,
+	...,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols'),
+  colspec = getOption('repr.matrix.latex.colspec')
+) {
 	cols <- paste0(paste(rep(colspec$col, ncol(obj)), collapse = ''), colspec$end)
 	if (!is.null(rownames(obj))) {
 		row_head <- colspec$row_head
@@ -204,6 +218,7 @@ repr_latex.matrix <- function(obj, ..., colspec = getOption('repr.matrix.latex.c
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &',
 		escape_fun = latex_escape_vec,
+		rows = rows, cols = cols,
 		...)
 	
 	#TODO: remove this quick’n’dirty post processing
@@ -222,7 +237,12 @@ repr_latex.data.frame <- repr_latex.matrix
 
 #' @name repr_*.matrix/data.frame
 #' @export
-repr_markdown.matrix <- function(obj, ..., cols = getOption('repr.matrix.max.cols')) {
+repr_markdown.matrix <- function(
+	obj,
+	...,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols')
+) {
 	obj <- flatten(obj)
 	out_cols <- min(ncol(obj), cols + 1L) + as.integer(has_row_names(obj))
 	underline <- paste(rep('---', out_cols), collapse = '|')
@@ -234,7 +254,8 @@ repr_markdown.matrix <- function(obj, ..., cols = getOption('repr.matrix.max.col
 		'%s', '|%s\n', ' %s |',
 		' %s |',
 		escape_fun = escape_markdown_table_cell,
-		..., cols = cols)
+		rows = rows, cols = cols,
+		...)
 }
 
 #' @name repr_*.matrix/data.frame
@@ -255,12 +276,17 @@ escape_markdown_table_cell <- function(values) {
 #' @name repr_*.matrix/data.frame
 #' @importFrom utils capture.output
 #' @export
-repr_text.matrix <- function(obj, ...) {
+repr_text.matrix <- function(
+	obj,
+	...,
+	rows = getOption('repr.matrix.max.rows'),
+	cols = getOption('repr.matrix.max.cols')
+) {
 	if (inherits(obj, c('tbl', 'data.table'))) {
 		# Coerce to data.frame to avoid special printing in dplyr and data.table.
 		obj <- as.data.frame(obj)
 	}
-	limited_obj <- ellip_limit_arr(obj, ...)
+	limited_obj <- ellip_limit_arr(obj, rows, cols)
 	print_output <- capture.output(print(limited_obj, quote = FALSE))
 	paste(print_output, collapse = '\n')
 }
