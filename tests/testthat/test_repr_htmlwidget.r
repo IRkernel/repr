@@ -2,7 +2,7 @@ context('reprs of html widgets and tags')
 
 test_that('A basic tag works', {
 	r <- repr_html(htmltools::div())
-	expect_identical(r, sprintf(repr:::HTML_SKELETON, '', '<div></div>'))
+	expect_id_text(r, sprintf(repr:::HTML_SKELETON, '', '<div></div>'))
 })
 
 test_that('A basic widget works', {
