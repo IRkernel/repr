@@ -15,7 +15,7 @@ NULL
 repr_ts_generic <- function(obj, repr_func, ...) {
 	m <- .preformat.ts(obj)
 	# set rows and cols so the whole thing is always displayed 
-	repr_func(m, ..., rows = nrow(m), cols = ncol(m))
+	repr_func(m, ..., rows = nrow(m), cols = ncol(m), caption_override = 'ts')
 }
 
 #' @name repr_*.ts
