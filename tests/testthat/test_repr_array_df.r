@@ -2,10 +2,6 @@ context('reprs of arrays and data.frames')
 
 options(stringsAsFactors = FALSE)
 
-expect_id_text <- function(a, b) {
-	expect_identical(strsplit(a, '\n')[[1]], strsplit(b, '\n')[[1]])
-}
-
 
 test_that('empty data.frames work', {
 	expect_id_text(repr_html(data.frame()), '')
@@ -25,6 +21,7 @@ test_that('factors display correctly', {
 '<table>
 <thead>
 \t<tr><th scope=col>a</th></tr>
+\t<tr><th scope=col>&lt;fct&gt;</th></tr>
 </thead>
 <tbody>
 \t<tr><td>iamafactor</td></tr>
@@ -40,6 +37,7 @@ test_that('mixed factors and strings display correctly', {
 '<table>
 <thead>
 \t<tr><th scope=col>a</th><th scope=col>b</th></tr>
+\t<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;fct&gt;</th></tr>
 </thead>
 <tbody>
 \t<tr><td>iamastring</td><td>iamafactor</td></tr>
@@ -54,6 +52,7 @@ test_that('date display correctly', {
 '<table>
 <thead>
 \t<tr><th scope=col>a</th></tr>
+\t<tr><th scope=col>&lt;dttm&gt;</th></tr>
 </thead>
 <tbody>
 \t<tr><td>2016-05-28 10:00:00</td></tr>
@@ -65,7 +64,7 @@ test_that('date display correctly', {
 test_that('markdown works', {
 	df <- data.frame(a = 1:2, b = letters[1:2])
 	expect_id_text(repr_markdown(df), '
-| a | b |
+| a &lt;int&gt; | b &lt;chr&gt; |
 |---|---|
 | 1 | a |
 | 2 | b |
@@ -76,7 +75,7 @@ test_that('markdown works', {
 test_that('markdown works with rownames', {
 	df <- data.frame(a = 1:2, b = letters[1:2], row.names = LETTERS[1:2])
 	expect_id_text(repr_markdown(df), '
-| <!--/--> | a | b |
+| <!--/--> | a &lt;int&gt; | b &lt;chr&gt; |
 |---|---|---|
 | A | 1 | a |
 | B | 2 | b |
@@ -90,10 +89,10 @@ test_that('nested data.frames work', {
 	df$vehicle$stats <- data.frame(speed = c(55, 34), weight = c(67, 24), drift = c(35, 32))
 	df$occupation <- c('Koopa', 'Princess')
 	expect_id_text(repr_markdown(df), '
-| driver | vehicle.model | vehicle.stats.speed | vehicle.stats.weight | vehicle.stats.drift | occupation |
+| driver &lt;chr&gt; | vehicle.model &lt;chr&gt; | vehicle.stats.speed &lt;dbl&gt; | vehicle.stats.weight &lt;dbl&gt; | vehicle.stats.drift &lt;dbl&gt; | occupation &lt;chr&gt; |
 |---|---|---|---|---|---|
-| Bowser          | Piranha Prowler | 55              | 67              | 35              | Koopa           |
-| Peach           | Royal Racer     | 34              | 24              | 32              | Princess        |
+| Bowser | Piranha Prowler | 55 | 67 | 35 | Koopa    |
+| Peach  | Royal Racer     | 34 | 24 | 32 | Princess |
 
 ')
 })

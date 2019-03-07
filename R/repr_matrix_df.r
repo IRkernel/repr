@@ -10,6 +10,7 @@
 #' 
 #' @seealso \link{repr-options} for \code{repr.matrix.latex.colspec}
 #' 
+#' @importFrom pillar type_sum
 #' @name repr_*.matrix/data.frame
 #' @include utils.r
 NULL
@@ -140,25 +141,50 @@ repr_matrix_generic <- function(
 	if (!has_rownames && !has_colnames && 0L %in% dim(x))
 		return('')
 	
+	# Get types for data frames and matrices.
+	is_matrix <- !is.list(x)
+	types <- if (is_matrix) type_sum(x) else {
+		type_vec <- sprintf('<%s>', sapply(x, type_sum))
+		# A row limit of 3 is the minimal choice, but we only have 1 anyway
+		as.vector(ellip_limit_arr(matrix(type_vec, nrow = 1L), 3L, cols))
+	}
+	
 	# TODO: ineffective to flatten the whole thing
 	# But when are we encountering huge nested arrays?
 	x <- ellip_limit_arr(flatten(x), rows, cols)
 	
 	header <- ''
 	if (has_colnames) {
-		headers <- sprintf(head, escape_fun(colnames(x)))
-		if (has_rownames) headers <- c(corner, headers)
-		headline <- paste(headers, collapse = '')
-		header <- sprintf(header_wrap, if (is.null(headline_wrap)) {
-			headline
-		} else {
-			sprintf(headline_wrap, headline)
-		})
+		headers <- escape_fun(colnames(x))
+		typehds <- escape_fun(types)
+		
+		header_raw <-
+			if (is_matrix || is.null(headline_wrap)) {
+				# if we have a data frame but no wrapper for header lines,
+				# we just concatenate each column name with its type.
+				headers <- sprintf(head, if (is_matrix) headers else paste(headers, typehds))
+				if (has_rownames) headers <- c(corner, headers)
+				headline <- paste(headers, collapse = '')
+				if (is.null(headline_wrap)) headline else sprintf(headline_wrap, headline)
+			} else {
+				# else we create one line for names and one for types.
+				headers <- sprintf(head, headers)
+				typehds <- sprintf(head, typehds)
+				if (has_rownames) {
+					headers <- c(corner, headers)
+					typehds <- c(corner, typehds)
+				}
+				headline <- sprintf(headline_wrap, paste(headers, collapse = ''))
+				typeline <- sprintf(headline_wrap, paste(typehds, collapse = ''))
+				paste0(headline, typeline)
+			}
+		header <- sprintf(header_wrap, header_raw)
+		stopifnot(length(header) == 1L)
 	}
 	
 	rows <- lapply(seq_len(nrow(x)), function(r) {
 		row <- escape_fun(slice_row(x, r))
-		cells <- sprintf(cell, format(row))
+		cells <- sprintf(cell, row)
 		if (has_rownames) {
 			row_head <- sprintf(row_head, escape_fun(rownames(x)[[r]]))
 			cells <- c(row_head, cells)
@@ -258,7 +284,7 @@ repr_markdown.matrix <- function(
 		sprintf('|%%s\n|%s|\n', underline), NULL, ' <!--/--> |', ' %s |',
 		'%s', '|%s\n', ' %s |',
 		' %s |',
-		escape_fun = escape_markdown_table_cell,
+		escape_fun = markdown_escape,
 		rows = rows, cols = cols,
 		...)
 }
@@ -266,12 +292,6 @@ repr_markdown.matrix <- function(
 #' @name repr_*.matrix/data.frame
 #' @export
 repr_markdown.data.frame <- repr_markdown.matrix
-
-
-escape_markdown_table_cell <- function(values) {
-	# TODO also replace Markdown
-	ifelse(grepl('^\\s*$', values), '<!---->', values)
-}
 
 
 # Text -------------------------------------------------------------------

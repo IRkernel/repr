@@ -1,11 +1,13 @@
 html_specials <- list('&' = '&amp;', '<' = '&lt;', '>' = '&gt;')
 
-html_escape <- function(text) {
+html_escape <- function(text, do_spaces = TRUE) {
 	for (chr in names(html_specials)) {
 		text <- gsub(chr, html_specials[[chr]], text, fixed = TRUE)
 	}
-	consec_spaces <- grepl('  ', text)
-	text[consec_spaces] <- sprintf('<span style=white-space:pre-wrap>%s</span>', 	text[consec_spaces])
+	if (do_spaces) {
+		consec_spaces <- grepl('  ', text)
+		text[consec_spaces] <- sprintf('<span style=white-space:pre-wrap>%s</span>', 	text[consec_spaces])
+	}
 	text
 }
 
@@ -30,6 +32,14 @@ latex_escape <- function(text) {
 	}
 	# undo superfluous escape
 	gsub('\\textbackslash\\{\\}', '\\textbackslash{}', text, fixed = TRUE)
+}
+
+
+markdown_escape <- function(values) {
+	# TODO also replace Markdown
+	values <- html_escape(values, do_spaces = FALSE)
+	values <- ifelse(grepl('^\\s*$', values), '<!---->', values)
+	values
 }
 
 .escape_names <- function(obj, escape_type) {
