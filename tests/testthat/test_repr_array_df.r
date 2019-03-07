@@ -19,6 +19,7 @@ test_that('factors display correctly', {
 	df = data.frame(a = factor('iamafactor'))
 	expect_id_text(repr_html(df),
 '<table>
+<caption>A data.frame: 1 \u00D7 1</caption>
 <thead>
 \t<tr><th scope=col>a</th></tr>
 \t<tr><th scope=col>&lt;fct&gt;</th></tr>
@@ -35,6 +36,7 @@ test_that('mixed factors and strings display correctly', {
 	expect_true(is.factor(df$b))
 	expect_id_text(repr_html(df),
 '<table>
+<caption>A data.frame: 1 \u00D7 2</caption>
 <thead>
 \t<tr><th scope=col>a</th><th scope=col>b</th></tr>
 \t<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;fct&gt;</th></tr>
@@ -50,6 +52,7 @@ test_that('date display correctly', {
 	df = data.frame(a = as.POSIXct('2016-05-28 10:00:00', tz = 'UTC'))
 	expect_id_text(repr_html(df),
 '<table>
+<caption>A data.frame: 1 \u00D7 1</caption>
 <thead>
 \t<tr><th scope=col>a</th></tr>
 \t<tr><th scope=col>&lt;dttm&gt;</th></tr>
@@ -64,6 +67,8 @@ test_that('date display correctly', {
 test_that('markdown works', {
 	df <- data.frame(a = 1:2, b = letters[1:2])
 	expect_id_text(repr_markdown(df), '
+A data.frame: 2 \u00D7 2
+
 | a &lt;int&gt; | b &lt;chr&gt; |
 |---|---|
 | 1 | a |
@@ -75,6 +80,8 @@ test_that('markdown works', {
 test_that('markdown works with rownames', {
 	df <- data.frame(a = 1:2, b = letters[1:2], row.names = LETTERS[1:2])
 	expect_id_text(repr_markdown(df), '
+A data.frame: 2 \u00D7 2
+
 | <!--/--> | a &lt;int&gt; | b &lt;chr&gt; |
 |---|---|---|
 | A | 1 | a |
@@ -89,6 +96,8 @@ test_that('nested data.frames work', {
 	df$vehicle$stats <- data.frame(speed = c(55, 34), weight = c(67, 24), drift = c(35, 32))
 	df$occupation <- c('Koopa', 'Princess')
 	expect_id_text(repr_markdown(df), '
+A data.frame: 2 \u00D7 6
+
 | driver &lt;chr&gt; | vehicle.model &lt;chr&gt; | vehicle.stats.speed &lt;dbl&gt; | vehicle.stats.weight &lt;dbl&gt; | vehicle.stats.drift &lt;dbl&gt; | occupation &lt;chr&gt; |
 |---|---|---|---|---|---|
 | Bowser | Piranha Prowler | 55 | 67 | 35 | Koopa    |

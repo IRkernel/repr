@@ -51,13 +51,15 @@ test_that('HTML escaping in vectors works', {
 
 test_that('LaTeX escaping in matrices works', {
 	expect_id_text(repr_latex(matrix(c('[', '{', '%', '#'), 2, 2, TRUE)),
-'\\begin{tabular}{ll}
+'A matrix: 2 \u00D7 2 of type chr
+\\begin{tabular}{ll}
 \t {[} & \\{\\\\
 \t \\% & \\#\\\\
 \\end{tabular}
 ')
 	expect_id_text(repr_latex(matrix(c(']', '}', '&', '_'), 2, 2, TRUE, list(c('$', '#'), c('%', '|')))),
-'\\begin{tabular}{r|ll}
+'A matrix: 2 \u00D7 2 of type chr
+\\begin{tabular}{r|ll}
   & \\% & \\textbar{}\\\\
 \\hline
 \t\\$ & {]} & \\}\\\\
@@ -69,6 +71,7 @@ test_that('LaTeX escaping in matrices works', {
 test_that('HTML escaping in matrices works', {
 	expect_id_text(repr_html(matrix(c('[', '{', '%', '#'), 2, 2, TRUE)),
 '<table>
+<caption>A matrix: 2 \u00D7 2 of type chr</caption>
 <tbody>
 \t<tr><td>[</td><td>{</td></tr>
 \t<tr><td>%</td><td>#</td></tr>
@@ -77,6 +80,7 @@ test_that('HTML escaping in matrices works', {
 ')
 	expect_id_text(repr_html(matrix(c(']', '}', '&', '_'), 2, 2, TRUE, list(c('$', '#'), c('%', '|')))),
 '<table>
+<caption>A matrix: 2 \u00D7 2 of type chr</caption>
 <thead>
 \t<tr><th></th><th scope=col>%</th><th scope=col>|</th></tr>
 </thead>
@@ -118,6 +122,7 @@ test_that('Factors are maintained in small arrays for HTML', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A", "B", "C", "D")))
 	expected <-
 '<table>
+<caption>A data.frame: 4 \u00D7 2</caption>
 <thead>
 \t<tr><th scope=col>a</th><th scope=col>b</th></tr>
 \t<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;fct&gt;</th></tr>
@@ -134,11 +139,11 @@ test_that('Factors are maintained in small arrays for HTML', {
 
 	if (has_dt) {
 		dt <- data.table::as.data.table(df)
-		expect_id_text(repr_html(dt), expected)
+		expect_id_text(repr_html(dt), sub('data\\.frame', 'data.table', expected))
 	}
 	if (has_dplyr) {
 		dtbl <- dplyr::as.tbl(df)
-		expect_id_text(repr_html(dtbl), expected)
+		expect_id_text(repr_html(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })
 
@@ -146,6 +151,7 @@ test_that('Factors are sanitized in small data.frames for HTML', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A&", "B>", "C", "D")))
 	expected <-
 '<table>
+<caption>A data.frame: 4 \u00D7 2</caption>
 <thead>
 \t<tr><th scope=col>a</th><th scope=col>b</th></tr>
 \t<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;fct&gt;</th></tr>
@@ -162,18 +168,19 @@ test_that('Factors are sanitized in small data.frames for HTML', {
 
 	if (has_dt) {
 		dt <- data.table::as.data.table(df)
-		expect_id_text(repr_html(df), expected)
+		expect_id_text(repr_html(dt), sub('data\\.frame', 'data.table', expected))
 	}
 	if (has_dplyr) {
 		dtbl <- dplyr::as.tbl(df)
-		expect_id_text(repr_html(dtbl), expected)
+		expect_id_text(repr_html(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })
 
 test_that('Factors are maintained in small arrays for LaTeX', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A", "B", "C", "D")))
 	expected <-
-'\\begin{tabular}{r|ll}
+'A data.frame: 4 \u00D7 2
+\\begin{tabular}{r|ll}
  a & b\\\\
  <int> & <fct>\\\\
 \\hline
@@ -187,18 +194,19 @@ test_that('Factors are maintained in small arrays for LaTeX', {
 
 	if (has_dt) {
 		dt <- data.table::as.data.table(df)
-		expect_id_text(repr_latex(dt), expected)
+		expect_id_text(repr_latex(dt), sub('data\\.frame', 'data.table', expected))
 	}
 	if (has_dplyr) {
 		dtbl <- dplyr::as.tbl(df)
-		expect_id_text(repr_latex(dtbl), expected)
+		expect_id_text(repr_latex(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })
 
 test_that('Factors are sanitized in small data.frames for LaTeX', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A&", "B%", "_C_", "D")))
 	expected <-
-'\\begin{tabular}{r|ll}
+'A data.frame: 4 \u00D7 2
+\\begin{tabular}{r|ll}
  a & b\\\\
  <int> & <fct>\\\\
 \\hline
@@ -212,11 +220,11 @@ test_that('Factors are sanitized in small data.frames for LaTeX', {
 
 	if (has_dt) {
 		dt <- data.table::as.data.table(df)
-		expect_id_text(repr_latex(dt), expected)
+		expect_id_text(repr_latex(dt), sub('data\\.frame', 'data.table', expected))
 	}
 	if (has_dplyr) {
 		dtbl <- dplyr::as.tbl(df)
-		expect_id_text(repr_latex(dtbl), expected)
+		expect_id_text(repr_latex(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })
 

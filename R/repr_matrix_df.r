@@ -27,6 +27,7 @@ NULL
 ellip_h <- .char_fallback('\u22EF', '...')
 ellip_v <- .char_fallback('\u22EE', '...')
 ellip_d <- .char_fallback('\u22F1', '')
+times_s <- .char_fallback('\u00D7', 'x')
 
 # These are used for factor, so make sure they are unique
 ellipses <- unique(c(ellip_h, ellip_v, ellip_d))
@@ -136,7 +137,8 @@ repr_matrix_generic <- function(
 	escape_fun = identity,
 	...,
 	rows = getOption('repr.matrix.max.rows'),
-	cols = getOption('repr.matrix.max.cols')
+	cols = getOption('repr.matrix.max.cols'),
+	caption_override = NULL
 ) {
 	has_rownames <- has_row_names(x)
 	has_colnames <- !is.null(colnames(x)) && ncol(x) > 0
@@ -144,8 +146,13 @@ repr_matrix_generic <- function(
 	if (!has_rownames && !has_colnames && 0L %in% dim(x))
 		return('')
 	
-	# Get types for data frames and matrices.
+	# Get infos for caption and type headers
 	is_matrix <- !is.list(x)
+	cls <-
+		if (!is.null(caption_override)) caption_override
+		else if (!is.object(x)) class(x)[[1]]
+		else type_sum(x)
+	dims <- dim(x)
 	types <- if (is_matrix) type_sum(x) else {
 		type_vec <- sprintf('<%s>', sapply(x, type_sum))
 		# A row limit of 3 is the minimal choice, but we only have 1 anyway
@@ -197,7 +204,10 @@ repr_matrix_generic <- function(
 	
 	body <- sprintf(body_wrap, paste(rows, collapse = ''))
 	
-	sprintf(wrap, header, body)
+	caption <- sprintf('A %s: %s %s %s', cls, dims[[1]], times_s, dims[[2]])
+	if (is.null(caption_override) && is_matrix) caption <- sprintf('%s of type %s', caption, escape_fun(types))
+	
+	sprintf(wrap, caption, header, body)
 }
 
 
@@ -210,7 +220,7 @@ repr_html.matrix <- function(
 	cols = getOption('repr.matrix.max.cols')
 ) repr_matrix_generic(
 	obj,
-	'<table>\n%s%s</table>\n',
+	'<table>\n<caption>%s</caption>\n%s%s</table>\n',
 	'<thead>\n%s</thead>\n', '\t<tr>%s</tr>\n', '<th></th>',
 	'<th scope=col>%s</th>',
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
@@ -247,7 +257,8 @@ repr_latex.matrix <- function(
 	
 	r <- repr_matrix_generic(
 		obj,
-		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
+		# todo: captionof or so
+		sprintf('%%s\n\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
 		'%s\\hline\n', '%s\\\\\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &',
@@ -283,7 +294,7 @@ repr_markdown.matrix <- function(
 	
 	repr_matrix_generic(
 		obj,
-		'\n%s%s\n',
+		'\n%s\n\n%s%s\n',
 		sprintf('|%%s\n|%s|\n', underline), NULL, ' <!--/--> |', ' %s |',
 		'%s', '|%s\n', ' %s |',
 		' %s |',
