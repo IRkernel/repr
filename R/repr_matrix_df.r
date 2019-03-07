@@ -126,7 +126,7 @@ ellip_limit_arr <- function(
 repr_matrix_generic <- function(
 	x,
 	wrap,
-	header_wrap, corner, head,
+	header_wrap, headline_wrap, corner, head,
 	body_wrap, row_wrap, row_head,
 	cell,
 	escape_fun = identity,
@@ -148,7 +148,10 @@ repr_matrix_generic <- function(
 	if (has_colnames) {
 		headers <- sprintf(head, escape_fun(colnames(x)))
 		if (has_rownames) headers <- c(corner, headers)
-		header <- sprintf(header_wrap, paste(headers, collapse = ''))
+		headline <- paste(headers, collapse = '')
+		if (!is.null(headline_wrap)) headline <- sprintf(headline_wrap, headline)
+		
+		header <- sprintf(header_wrap, headline)
 	}
 	
 	rows <- lapply(seq_len(nrow(x)), function(r) {
@@ -177,7 +180,7 @@ repr_html.matrix <- function(
 ) repr_matrix_generic(
 	obj,
 	'<table>\n%s%s</table>\n',
-	'<thead><tr>%s</tr></thead>\n', '<th></th>',
+	'<thead>\n%s</thead>\n', '\t<tr>%s</tr>\n', '<th></th>',
 	'<th scope=col>%s</th>',
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
 	'<td>%s</td>',
@@ -214,7 +217,7 @@ repr_latex.matrix <- function(
 	r <- repr_matrix_generic(
 		obj,
 		sprintf('\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
-		'%s\\\\\n\\hline\n', '  &', ' %s &',
+		'%s\\hline\n', '%s\\\\\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &',
 		escape_fun = latex_escape_vec,
@@ -250,7 +253,7 @@ repr_markdown.matrix <- function(
 	repr_matrix_generic(
 		obj,
 		'\n%s%s\n',
-		sprintf('|%%s\n|%s|\n', underline), ' <!--/--> |', ' %s |',
+		sprintf('|%%s\n|%s|\n', underline), NULL, ' <!--/--> |', ' %s |',
 		'%s', '|%s\n', ' %s |',
 		' %s |',
 		escape_fun = escape_markdown_table_cell,

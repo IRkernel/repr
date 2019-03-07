@@ -81,7 +81,9 @@ test_that('HTML escaping in matrices works', {
 ')
 	expect_identical(repr_html(matrix(c(']', '}', '&', '_'), 2, 2, TRUE, list(c('$', '#'), c('%', '|')))),
 '<table>
-<thead><tr><th></th><th scope=col>%</th><th scope=col>|</th></tr></thead>
+<thead>
+\t<tr><th></th><th scope=col>%</th><th scope=col>|</th></tr>
+</thead>
 <tbody>
 \t<tr><th scope=row>$</th><td>]</td><td>}</td></tr>
 \t<tr><th scope=row>#</th><td>&amp;</td><td>_    </td></tr>
@@ -122,7 +124,9 @@ test_that('Factors are maintained in small arrays for HTML', {
 	# That's fine, just strip out all white space.
 	expected <- gsub('\\s', '',
 '<table>
-<thead><tr><th scope=col>a</th><th scope=col>b</th></tr></thead>
+<thead>
+\t<tr><th scope=col>a</th><th scope=col>b</th></tr>
+</thead>
 <tbody>
 \t<tr><td>1</td><td>A</td></tr>
 \t<tr><td>2</td><td>B</td></tr>
@@ -153,7 +157,9 @@ test_that('Factors are sanitized in small data.frames for HTML', {
 	# That's fine, just strip out all white space.
 	expected <- gsub('\\s', '',
 '<table>
-<thead><tr><th scope=col>a</th><th scope=col>b</th></tr></thead>
+<thead>
+\t<tr><th scope=col>a</th><th scope=col>b</th></tr>
+</thead>
 <tbody>
 \t<tr><td>1</td><td>A&amp;</td></tr>
 \t<tr><td>2</td><td>B&gt;</td></tr>
