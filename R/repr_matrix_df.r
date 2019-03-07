@@ -149,9 +149,11 @@ repr_matrix_generic <- function(
 		headers <- sprintf(head, escape_fun(colnames(x)))
 		if (has_rownames) headers <- c(corner, headers)
 		headline <- paste(headers, collapse = '')
-		if (!is.null(headline_wrap)) headline <- sprintf(headline_wrap, headline)
-		
-		header <- sprintf(header_wrap, headline)
+		header <- sprintf(header_wrap, if (is.null(headline_wrap)) {
+			headline
+		} else {
+			sprintf(headline_wrap, headline)
+		})
 	}
 	
 	rows <- lapply(seq_len(nrow(x)), function(r) {
