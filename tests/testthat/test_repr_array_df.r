@@ -98,6 +98,19 @@ test_that('nested data.frames work', {
 ')
 })
 
+test_that('matrices in data.frames work', {
+	df <- aggregate(. ~ Species, iris, range)
+	expect_equal(dim(df$Sepal.Width), c(3, 2))
+	expect_id_text(repr_markdown(df), '
+| Species | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width |
+|---|---|---|---|---|
+| setosa     | 4.3, 5.8   | 2.3, 4.4   | 1.0, 1.9   | 0.1, 0.6   |
+| versicolor | 4.9, 7.0   | 2.0, 3.4   | 3.0, 5.1   | 1.0, 1.8   |
+| virginica  | 4.9, 7.9   | 2.2, 3.8   | 4.5, 6.9   | 1.4, 2.5   |
+
+')
+})
+
 test_that('reprs work on an 1d array', {
 	state <- factor(c("tas", "sa",  "qld", "nsw", "nsw", "nt",  "wa",  "wa",  "qld", "vic"))
 	incomes <- c(60, 49, 40, 61, 64, 60, 59, 54, 62, 69)

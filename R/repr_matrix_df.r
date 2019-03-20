@@ -70,7 +70,10 @@ arr_partition <- function(a, rows, cols) {
 arr_parts_format <- function(parts) structure(lapply(parts, arr_part_format), omit = attr(parts, 'omit'))
 arr_part_format <- function(part) {
 	f_part <- if (is.data.frame(part)) {
-		vapply(part, format, character(nrow(part)))
+		vapply(part, function(col) {
+			if (is.matrix(col)) apply(apply(col, 2L, format), 1L, paste, collapse = ', ')
+			else format(col)
+		}, character(nrow(part)))
 	} else {
 		# format(part) would work, but e.g. would left-pad *both* rows of matrix(7:10, 2L) instead of one
 		apply(part, 2L, format)
