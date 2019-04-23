@@ -12,25 +12,29 @@
 #' @name repr_*.ts
 NULL
 
-repr_ts_generic <- function(obj, repr_func, ...) {
-	m <- .preformat.ts(obj)
-	# set rows and cols so the whole thing is always displayed 
-	repr_func(m, ..., rows = nrow(m), cols = ncol(m), caption_override = 'ts')
+repr_ts_generic <- function(obj, repr_func, wrap, ...) {
+	vec <- .preformat.ts(obj)
+	if (is.matrix(vec)) {
+		# set rows and cols so the whole thing is always displayed 
+		repr_func(vec, ..., rows = nrow(vec), cols = ncol(vec), caption_override = 'Time Series')
+	} else {  # Just a vector
+		sprintf(wrap, 'A Time Series', repr_func(vec, ...))
+	}
 }
 
 #' @name repr_*.ts
 #' @export
-repr_html.ts <- function(obj, ...) repr_ts_generic(obj, repr_html.matrix, ...)
+repr_html.ts <- function(obj, ...) repr_ts_generic(obj, repr_html, '%s:<br>%s', ...)
 
 #' @name repr_*.ts
 #' @export
 repr_latex.ts <- function(obj, ..., colspec = getOption('repr.matrix.latex.colspec'))
-	repr_ts_generic(obj, repr_latex.matrix, ..., colspec = colspec)
+	repr_ts_generic(obj, repr_latex, '%s:\\\\%s', ..., colspec = colspec)
 
 #' @name repr_*.ts
 #' @export
-repr_markdown.ts <- function(obj, ...) repr_ts_generic(obj, repr_markdown.matrix, ...)
+repr_markdown.ts <- function(obj, ...) repr_ts_generic(obj, repr_markdown, '%s:  \n%s', ...)
 
 #' @name repr_*.ts
 #' @export
-repr_text.ts <- function(obj, ...) repr_ts_generic(obj, repr_text.matrix, ...)
+repr_text.ts <- function(obj, ...) repr_ts_generic(obj, repr_text, '%s:\n%s', ...)
