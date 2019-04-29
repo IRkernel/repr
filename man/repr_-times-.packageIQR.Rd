@@ -19,7 +19,7 @@
 Text representations of packageIQR objects like the list of available example data or vignettes
 }
 \examples{
-repr_html(data(package = 'base'))
+repr_html(data(package = 'datasets'))
 repr_text(vignette(package = 'highr'))
 
 }

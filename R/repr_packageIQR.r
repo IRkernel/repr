@@ -6,7 +6,7 @@
 #' @param ...  ignored
 #' 
 #' @examples
-#' repr_html(data(package = 'base'))
+#' repr_html(data(package = 'datasets'))
 #' repr_text(vignette(package = 'highr'))
 #' 
 #' @name repr_*.packageIQR
