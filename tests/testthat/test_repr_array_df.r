@@ -112,7 +112,7 @@ test_that('matrices in data.frames work', {
 	expect_id_text(repr_markdown(df), '
 A data.frame: 3 \u00D7 5
 
-| Species &lt;fct&gt; | Sepal.Length &lt;dbl&gt; | Sepal.Width &lt;dbl&gt; | Petal.Length &lt;dbl&gt; | Petal.Width &lt;dbl&gt; |
+| Species &lt;fct&gt; | Sepal.Length &lt;dbl[,2]&gt; | Sepal.Width &lt;dbl[,2]&gt; | Petal.Length &lt;dbl[,2]&gt; | Petal.Width &lt;dbl[,2]&gt; |
 |---|---|---|---|---|
 | setosa     | 4.3, 5.8 | 2.3, 4.4 | 1.0, 1.9 | 0.1, 0.6 |
 | versicolor | 4.9, 7.0 | 2.0, 3.4 | 3.0, 5.1 | 1.0, 1.8 |

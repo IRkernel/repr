@@ -150,10 +150,10 @@ repr_matrix_generic <- function(
 	is_matrix <- !is.list(x)
 	cls <-
 		if (!is.null(caption_override)) caption_override
-		else if (!is.object(x)) class(x)[[1]]
-		else type_sum(x)
+		else if (class(x)[[1]] == 'tbl_df') 'tibble'
+		else class(x)[[1]]
 	dims <- dim(x)
-	types <- if (is_matrix) type_sum(x) else {
+	types <- if (is_matrix) type_sum(as.vector(x)) else {
 		type_vec <- sprintf('<%s>', sapply(x, type_sum))
 		# A row limit of 3 is the minimal choice, but we only have 1 anyway
 		as.vector(ellip_limit_arr(matrix(type_vec, nrow = 1L), 3L, cols))

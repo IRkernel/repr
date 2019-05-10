@@ -8,12 +8,10 @@ expect_id_text <- function(object, expected) {
 		object   <- strsplit(object,   '\n')[[1]]
 		expected <- strsplit(expected, '\n')[[1]]
 	}
-	if (!identical(object, expected)) {
-		dif <- diffobj::diffChr(object, expected, format = 'ansi256', ignore.white.space = FALSE, interactive = FALSE)
-		fail_msg <- as.character(dif)
-		if (!one_element) fail_msg <- paste(format(seq_along(fail_msg)), fail_msg)
-		expect(!any(dif), fail_msg)
-	}
+	dif <- diffobj::diffChr(object, expected, format = 'ansi256', ignore.white.space = FALSE, interactive = FALSE)
+	fail_msg <- as.character(dif)
+	if (!one_element) fail_msg <- paste(format(seq_along(fail_msg)), fail_msg)
+	expect(!any(dif), fail_msg)
 }
 
 expect_equivalent_string <- function(result, expectation){

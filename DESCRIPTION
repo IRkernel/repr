@@ -22,7 +22,7 @@ Imports:
     grDevices,
     htmltools,
     jsonlite,
-    pillar,
+    pillar (>= 1.4.0),
     base64enc
 Suggests:
     methods,
@@ -30,7 +30,7 @@ Suggests:
     Cairo,
     stringr,
     testthat,
-    diffobj,
+    diffobj (>= 0.2.3),
     leaflet
 Enhances:
     data.table,
