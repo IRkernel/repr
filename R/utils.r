@@ -143,8 +143,10 @@ data_uris <- function(..., mime = '', encoding = 'base64', files) {
 
 
 has_row_names <- function(x) {
-	rns <- rownames(x)
-	length(dim(x)) != 1 && length(rns) > 0 && !all(rns == seq_len(nrow(x))) && !all(rns == '')
+	if (is.data.frame(x))
+		.row_names_info(x) > 0
+	else
+		!is.null(rownames(x))
 }
 
 
