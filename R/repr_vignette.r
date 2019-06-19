@@ -10,4 +10,4 @@ repr_vignette_generic <- function(v, ext, isbinary) {
 }
 
 repr_html.vignette <- function(obj, ...) repr_vignette_generic(obj, 'html', FALSE)
-repr_pdf.vignette <- function(obj, ...) repr_vignette_generic(obj, 'pdf', FALSE)
+repr_pdf.vignette <- function(obj, ...) repr_vignette_generic(obj, 'pdf', TRUE)
