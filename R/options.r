@@ -1,27 +1,29 @@
 #' repr options
 #' 
-#' These options are used to control the behavior of repr when not calling it directly. Use \code{\link[base]{options}(repr.* = ...)} and \code{\link[base]{getOption}('repr.*')} to set and get them, respectively.
+#' These options are used to control the behavior of repr when not calling it directly.
+#' Use \code{\link[base]{options}(repr.* = ...)} and \code{\link[base]{getOption}('repr.*')}
+#' to set and get them, respectively.
+#' \code{plot_options} is a convenience function to reset the plot to defaults (overriding some)
 #' 
 #' Once this package is loaded, all options are set to defaults which weren’t set beforehand.
 #' 
 #' Setting all options set to \code{NULL} are reset to defaults when reloading the package (or calling \code{repr:::.onload()}).
+#' 
+#' @param width      Plotting area width in inches (default: 7)
+#' @param height     Plotting area height in inches (default: 7)
+#' @param pointsize  Text height in pt (default: 12)
+#' @param bg         Background color (default: white)
+#' @param antialias  Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)
+#' @param res        PPI for rasterization (default: 120)
+#' @param quality    Quality of JPEG format in \% (default: 90)
+#' @param family     Vector font family. 'sans', 'serif', 'mono' or a specific one (default: sans)
 #' 
 #' @section Options:
 #' 
 #' \describe{
 #' 
 #' \item{\code{repr.plot.*}}{
-#' 	Those are for representations of \code{recordedplot} instances:
-#' 	\describe{
-#' 		\item{\code{repr.plot.width}}{Plotting area width in inches (default: 7)}
-#' 		\item{\code{repr.plot.height}}{Plotting area height in inches (default: 7)}
-#' 		\item{\code{repr.plot.pointsize}}{Text height in pt (default: 12)}
-#' 		\item{\code{repr.plot.bg}}{Background color (default: white)}
-#' 		\item{\code{repr.plot.antialias}}{Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)}
-#' 		\item{\code{repr.plot.res}}{PPI for rasterization (default: 120)}
-#' 		\item{\code{repr.plot.quality}}{Quality of JPEG format in \% (default: 90)}
-#' 		\item{\code{repr.plot.family}}{Vector font family. 'sans', 'serif', 'mono' or a specific one (default: sans)}
-#' 	}
+#' 	Those are for representations of \code{recordedplot} instances. See \emph{Arguments}
 #' }
 #' \item{\code{repr.vector.quote}}{
 #' 	Output quotation marks for character vectors? (default: TRUE)
@@ -73,6 +75,22 @@ class_defaults <- list(
 #' @name repr-options
 #' @export
 repr_option_defaults <- c(plot_defaults, class_defaults)
+
+
+#' @name repr-options
+#' @export
+plot_options <- function(...) {
+	env <- environment()
+	arg_names <- formalArgs(plot_options)
+	arg_spec <- sapply(arg_names, get, env)
+	names(arg_spec) <- paste0('repr.plot.', arg_names)
+	do.call(options, arg_spec)
+}
+formals(plot_options) <- local({
+	args <- plot_defaults
+	names(args) <- sub('^repr[.]plot[.]', '', names(args))
+	as.pairlist(args)
+})
 
 .onLoad <- function(libname = NULL, pkgname = NULL) {
 	for (opt_name in names(repr_option_defaults)) {
