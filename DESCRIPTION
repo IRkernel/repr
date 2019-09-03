@@ -15,6 +15,8 @@ Authors@R: c(
 Maintainer: Philipp Angerer <phil.angerer@gmail.com>
 Description: String and binary representations of objects for several formats /
     mime types.
+URL: https://github.com/IRkernel/repr/
+BugReports: https://github.com/IRkernel/IRkernel/issues/
 Depends:
     R (>= 3.0.1)
 Imports:
