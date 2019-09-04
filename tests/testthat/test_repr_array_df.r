@@ -90,6 +90,36 @@ A data.frame: 2 \u00D7 2
 ')
 })
 
+test_that('latex works', {
+	df <- data.frame(a = 1:2, b = letters[1:2])
+	expected <-
+'A data.frame: 2 \u00D7 2
+\\begin{tabular}{ll}
+ a & b\\\\
+ <int> & <chr>\\\\
+\\hline
+\t 1 & a\\\\
+\t 2 & b\\\\
+\\end{tabular}
+'
+	expect_id_text(repr_latex(df), expected)
+})
+
+test_that('latex works with rownames', {
+	df <- data.frame(a = 1:2, b = letters[1:2], row.names = LETTERS[1:2])
+	expected <-
+'A data.frame: 2 \u00D7 2
+\\begin{tabular}{r|ll}
+  & a & b\\\\
+  & <int> & <chr>\\\\
+\\hline
+\tA & 1 & a\\\\
+\tB & 2 & b\\\\
+\\end{tabular}
+'
+	expect_id_text(repr_latex(df), expected)
+})
+
 test_that('nested data.frames work', {
 	df <- data.frame(driver = c('Bowser', 'Peach'))
 	df$vehicle <- data.frame(model = c('Piranha Prowler', 'Royal Racer'))

@@ -248,17 +248,17 @@ repr_latex.matrix <- function(
 	cols = getOption('repr.matrix.max.cols'),
   colspec = getOption('repr.matrix.latex.colspec')
 ) {
-	cols <- paste0(paste(rep(colspec$col, ncol(obj)), collapse = ''), colspec$end)
-	if (!is.null(rownames(obj))) {
+	cols_spec <- paste0(paste(rep(colspec$col, min(cols + 1L, ncol(obj))), collapse = ''), colspec$end)
+	if (has_row_names(obj)) {
 		row_head <- colspec$row_head
 		if (is.null(row_head)) row_head <- colspec$row.head  # backwards compat
-		cols <- paste0(colspec$row_head, cols)
+		cols_spec <- paste0(colspec$row_head, cols_spec)
 	}
 	
 	r <- repr_matrix_generic(
 		obj,
 		# todo: captionof or so
-		sprintf('%%s\n\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols),
+		sprintf('%%s\n\\begin{tabular}{%s}\n%%s%%s\\end{tabular}\n', cols_spec),
 		'%s\\hline\n', '%s\\\\\n', '  &', ' %s &',
 		'%s', '\t%s\\\\\n', '%s &',
 		' %s &',

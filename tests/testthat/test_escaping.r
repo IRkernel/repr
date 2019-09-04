@@ -180,7 +180,7 @@ test_that('Factors are maintained in small arrays for LaTeX', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A", "B", "C", "D")))
 	expected <-
 'A data.frame: 4 \u00D7 2
-\\begin{tabular}{r|ll}
+\\begin{tabular}{ll}
  a & b\\\\
  <int> & <fct>\\\\
 \\hline
@@ -206,7 +206,7 @@ test_that('Factors are sanitized in small data.frames for LaTeX', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A&", "B%", "_C_", "D")))
 	expected <-
 'A data.frame: 4 \u00D7 2
-\\begin{tabular}{r|ll}
+\\begin{tabular}{ll}
  a & b\\\\
  <int> & <fct>\\\\
 \\hline
