@@ -204,7 +204,7 @@ repr_matrix_generic <- function(
 	
 	body <- sprintf(body_wrap, paste(rows, collapse = ''))
 	
-	caption <- sprintf('A %s: %s %s %s', cls, dims[[1]], times_s, dims[[2]])
+	caption <- sprintf('A %s: %s %s %s', escape_fun(cls), dims[[1]], times_s, dims[[2]])
 	if (is.null(caption_override) && is_matrix) caption <- sprintf('%s of type %s', caption, escape_fun(types))
 	
 	sprintf(wrap, caption, header, body)
