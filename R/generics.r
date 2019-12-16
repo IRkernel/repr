@@ -153,10 +153,34 @@ repr_vegalite2.default <- function(obj, ...) NULL
 
 #' @name repr-generics
 #' @export
+repr_vegalite3 <- function(obj, ...) UseMethod('repr_vegalite3', obj)
+#' @name repr-generics
+#' @export
+repr_vegalite3.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
+repr_vegalite4 <- function(obj, ...) UseMethod('repr_vegalite4', obj)
+#' @name repr-generics
+#' @export
+repr_vegalite4.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
 repr_vega4 <- function(obj, ...) UseMethod('repr_vega4', obj)
 #' @name repr-generics
 #' @export
 repr_vega4.default <- function(obj, ...) NULL
+
+
+#' @name repr-generics
+#' @export
+repr_vega5 <- function(obj, ...) UseMethod('repr_vega5', obj)
+#' @name repr-generics
+#' @export
+repr_vega5.default <- function(obj, ...) NULL
 
 
 #' Lists mapping mime types (\code{mime2repr}) or format names (\code{format2repr}) to \code{repr} functions
@@ -180,7 +204,10 @@ mime2repr <- list(
 	'application/vdom.v1+json' = repr_vdom1,
 	'application/vnd.plotly.v1+json' = repr_plotly1,
 	'application/vnd.vegalite.v2+json' = repr_vegalite2,
+	'application/vnd.vegalite.v3+json' = repr_vegalite3,
+	'application/vnd.vegalite.v4+json' = repr_vegalite4,
 	'application/vnd.vega.v4+json' = repr_vega4,
+	'application/vnd.vega.v5+json' = repr_vega5,
 	'application/pdf' = repr_pdf,
 	'image/png' = repr_png,
 	'image/jpeg' = repr_jpg,
@@ -189,5 +216,5 @@ mime2repr <- list(
 #' @name *2repr
 #' @export
 format2repr <- sapply(
-	c('text', 'html', 'markdown', 'latex', 'javascript', 'json', 'geojson', 'vdom1', 'plotly1', 'vegalite2', 'vega4', 'pdf', 'png', 'jpg', 'svg'),
+	c('text', 'html', 'markdown', 'latex', 'javascript', 'json', 'geojson', 'vdom1', 'plotly1', paste0('vegalite', 2:4), paste0('vega', 4:5), 'pdf', 'png', 'jpg', 'svg'),
 	function(n) get(paste0('repr_', n)))

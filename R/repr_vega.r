@@ -3,9 +3,9 @@
 #' @param obj  The \link[vegalite]{vegalite} plot to create a representation for
 #' @param ...  ignored
 #' 
-#' @name repr_vega(4/lite2).*
+#' @name repr_vega*
 NULL
 
-#' @name repr_vega(4/lite2).*
+#' @name repr_vega*
 #' @export
 repr_vegalite2.vegalite <- function(obj, ...) obj$x

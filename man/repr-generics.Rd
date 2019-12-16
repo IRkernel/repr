@@ -28,8 +28,14 @@
 \alias{repr_plotly1.default}
 \alias{repr_vegalite2}
 \alias{repr_vegalite2.default}
+\alias{repr_vegalite3}
+\alias{repr_vegalite3.default}
+\alias{repr_vegalite4}
+\alias{repr_vegalite4.default}
 \alias{repr_vega4}
 \alias{repr_vega4.default}
+\alias{repr_vega5}
+\alias{repr_vega5.default}
 \title{Representations for specific formats}
 \usage{
 repr_html(obj, ...)
@@ -84,9 +90,21 @@ repr_vegalite2(obj, ...)
 
 \method{repr_vegalite2}{default}(obj, ...)
 
+repr_vegalite3(obj, ...)
+
+\method{repr_vegalite3}{default}(obj, ...)
+
+repr_vegalite4(obj, ...)
+
+\method{repr_vegalite4}{default}(obj, ...)
+
 repr_vega4(obj, ...)
 
 \method{repr_vega4}{default}(obj, ...)
+
+repr_vega5(obj, ...)
+
+\method{repr_vega5}{default}(obj, ...)
 }
 \arguments{
 \item{obj}{The object to create a repr for}
