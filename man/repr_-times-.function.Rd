@@ -7,13 +7,11 @@
 \alias{repr_markdown.function}
 \title{Representations of functions}
 \usage{
-\method{repr_html}{function}(obj,
-  highlight = getOption("repr.function.highlight"), ...)
+\method{repr_html}{`function`}(obj, highlight = getOption("repr.function.highlight"), ...)
 
-\method{repr_latex}{function}(obj,
-  highlight = getOption("repr.function.highlight"), ...)
+\method{repr_latex}{`function`}(obj, highlight = getOption("repr.function.highlight"), ...)
 
-\method{repr_markdown}{function}(obj, fenced = TRUE, ...)
+\method{repr_markdown}{`function`}(obj, fenced = TRUE, ...)
 }
 \arguments{
 \item{obj}{Function to create a representation for}

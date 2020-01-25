@@ -10,8 +10,7 @@
 \usage{
 \method{repr_html}{ts}(obj, ...)
 
-\method{repr_latex}{ts}(obj, ...,
-  colspec = getOption("repr.matrix.latex.colspec"))
+\method{repr_latex}{ts}(obj, ..., colspec = getOption("repr.matrix.latex.colspec"))
 
 \method{repr_markdown}{ts}(obj, ...)
 

@@ -12,39 +12,63 @@
 \alias{repr_text.data.frame}
 \title{Tabular data representations}
 \usage{
-\method{repr_html}{matrix}(obj, ...,
+\method{repr_html}{matrix}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
-  cols = getOption("repr.matrix.max.cols"))
+  cols = getOption("repr.matrix.max.cols")
+)
 
-\method{repr_html}{data.frame}(obj, ...,
+\method{repr_html}{data.frame}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
-  cols = getOption("repr.matrix.max.cols"))
+  cols = getOption("repr.matrix.max.cols")
+)
 
-\method{repr_latex}{matrix}(obj, ...,
+\method{repr_latex}{matrix}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
   cols = getOption("repr.matrix.max.cols"),
-  colspec = getOption("repr.matrix.latex.colspec"))
+  colspec = getOption("repr.matrix.latex.colspec")
+)
 
-\method{repr_latex}{data.frame}(obj, ...,
+\method{repr_latex}{data.frame}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
   cols = getOption("repr.matrix.max.cols"),
-  colspec = getOption("repr.matrix.latex.colspec"))
+  colspec = getOption("repr.matrix.latex.colspec")
+)
 
-\method{repr_markdown}{matrix}(obj, ...,
+\method{repr_markdown}{matrix}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
-  cols = getOption("repr.matrix.max.cols"))
+  cols = getOption("repr.matrix.max.cols")
+)
 
-\method{repr_markdown}{data.frame}(obj, ...,
+\method{repr_markdown}{data.frame}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
-  cols = getOption("repr.matrix.max.cols"))
+  cols = getOption("repr.matrix.max.cols")
+)
 
-\method{repr_text}{matrix}(obj, ...,
+\method{repr_text}{matrix}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
-  cols = getOption("repr.matrix.max.cols"))
+  cols = getOption("repr.matrix.max.cols")
+)
 
-\method{repr_text}{data.frame}(obj, ...,
+\method{repr_text}{data.frame}(
+  obj,
+  ...,
   rows = getOption("repr.matrix.max.rows"),
-  cols = getOption("repr.matrix.max.cols"))
+  cols = getOption("repr.matrix.max.cols")
+)
 }
 \arguments{
 \item{obj}{The matrix or data.frame to create a representation for}

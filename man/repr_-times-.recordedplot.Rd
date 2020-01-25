@@ -11,38 +11,50 @@
 \usage{
 \method{repr_text}{recordedplot}(obj, ...)
 
-\method{repr_png}{recordedplot}(obj,
-  width = getOption("repr.plot.width"),
-  height = getOption("repr.plot.height"),
-  bg = getOption("repr.plot.bg"),
-  pointsize = getOption("repr.plot.pointsize"),
-  antialias = getOption("repr.plot.antialias"),
-  res = getOption("repr.plot.res"), ...)
-
-\method{repr_jpg}{recordedplot}(obj,
+\method{repr_png}{recordedplot}(
+  obj,
   width = getOption("repr.plot.width"),
   height = getOption("repr.plot.height"),
   bg = getOption("repr.plot.bg"),
   pointsize = getOption("repr.plot.pointsize"),
   antialias = getOption("repr.plot.antialias"),
   res = getOption("repr.plot.res"),
-  quality = getOption("repr.plot.quality"), ...)
+  ...
+)
 
-\method{repr_svg}{recordedplot}(obj,
+\method{repr_jpg}{recordedplot}(
+  obj,
   width = getOption("repr.plot.width"),
   height = getOption("repr.plot.height"),
   bg = getOption("repr.plot.bg"),
   pointsize = getOption("repr.plot.pointsize"),
   antialias = getOption("repr.plot.antialias"),
-  family = getOption("repr.plot.family"), ...)
+  res = getOption("repr.plot.res"),
+  quality = getOption("repr.plot.quality"),
+  ...
+)
 
-\method{repr_pdf}{recordedplot}(obj,
+\method{repr_svg}{recordedplot}(
+  obj,
   width = getOption("repr.plot.width"),
   height = getOption("repr.plot.height"),
   bg = getOption("repr.plot.bg"),
   pointsize = getOption("repr.plot.pointsize"),
   antialias = getOption("repr.plot.antialias"),
-  family = getOption("repr.plot.family"), ...)
+  family = getOption("repr.plot.family"),
+  ...
+)
+
+\method{repr_pdf}{recordedplot}(
+  obj,
+  width = getOption("repr.plot.width"),
+  height = getOption("repr.plot.height"),
+  bg = getOption("repr.plot.bg"),
+  pointsize = getOption("repr.plot.pointsize"),
+  antialias = getOption("repr.plot.antialias"),
+  family = getOption("repr.plot.family"),
+  ...
+)
 }
 \arguments{
 \item{obj}{The plot to create a representation for}
