@@ -63,14 +63,27 @@ repr_vector_generic <- function(
 
 # HTML --------------------------------------------------------------------
 
+list_style <- '<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\\00b7"; padding: 0 .5ex}
+</style>
+'
+def_style <- '<style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style>'
+
 
 repr_html_wrapper <- function(obj, individual_wrap, ...) repr_vector_generic(
 	obj,
-	'\t<li>%s</li>\n',
-	'\t<dt>%s</dt>\n\t\t<dd>%s</dd>\n',
+	'<li>%s</li>',
+	'<dt>%s</dt><dd>%s</dd>',
 	'<strong>%s:</strong> %s',
-	'<ol class=list-inline>\n%s</ol>\n',
-	'<dl class=dl-horizontal>\n%s</dl>\n',
+	paste0(list_style, '<ol class=list-inline>%s</ol>\n'),
+	paste0(def_style, '<dl class=dl-inline>%s</dl>\n'),
 	escape_fun = html_escape,
 	individual_wrap = individual_wrap)
 
