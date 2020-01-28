@@ -62,6 +62,8 @@
 \item{obj}{The vector to create a representation for}
 
 \item{...}{ignored}
+
+\item{items}{The maximum number of items displayed. The default is given by the option \code{repr.vector.max.items}}
 }
 \description{
 Representations of vectors

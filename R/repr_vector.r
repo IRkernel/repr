@@ -1,7 +1,8 @@
 #' Representations of vectors
 #' 
-#' @param obj  The vector to create a representation for
-#' @param ...  ignored
+#' @param obj    The vector to create a representation for
+#' @param ...    ignored
+#' @param items  The maximum number of items displayed. The default is given by the option \code{repr.vector.max.items}
 #' 
 #' @name repr_*.vector
 #' @include repr_list.r
