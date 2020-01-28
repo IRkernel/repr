@@ -4,3 +4,4 @@ Makefile
 [.]pdf$
 ^\.travis\.yml$
 cran-comments.md
+\.ipynb_checkpoints
