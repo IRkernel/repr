@@ -6,7 +6,7 @@ html_escape <- function(text, do_spaces = TRUE) {
 	}
 	if (do_spaces) {
 		consec_spaces <- grepl('  ', text)
-		text[consec_spaces] <- sprintf('<span style=white-space:pre-wrap>%s</span>', 	text[consec_spaces])
+		text[consec_spaces] <- sprintf('<span style=white-space:pre-wrap>%s</span>', text[consec_spaces])
 	}
 	text
 }
@@ -122,7 +122,7 @@ as_name_or_na <- function(x) {
 	else if (is.character(x) && nchar(x) == 0) NA_character_
 	else as.name(x)
 }
-		
+
 
 # Create the actually-used functions from the shells above.
 latex_escape_names <- function(obj) .escape_names(obj, 'latex')
@@ -164,4 +164,15 @@ flatten <- function(x){
 	
 	names(parts) <- colnames(x)
 	do.call(cbind, parts)
+}
+
+
+partition <- function(n_items, max_items) {
+	many_items <- max_items < n_items
+	
+	# create sequences of indices to bisect rows and columns
+	if (many_items) list(
+		start = seq_len(ceiling(max_items / 2)),
+		end = seq.int(n_items - floor(max_items / 2) + 1L, n_items)
+	) else NULL
 }

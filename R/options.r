@@ -26,6 +26,9 @@
 #' \item{\code{repr.vector.quote}}{
 #' 	Output quotation marks for character vectors? (default: TRUE)
 #' }
+#' \item{\code{repr.vector.max.items}}{
+#' 	How many items to display at max. Will insert an item with a horizontal ellipsis to show elision. (default: 400)
+#' }
 #' \item{\code{repr.matrix.max.rows}}{
 #' 	How many rows to display at max. Will insert a row with vertical ellipses to show elision. (default: 60)
 #' }
@@ -64,8 +67,9 @@ plot_defaults <- list(
 
 class_defaults <- list(
 	repr.vector.quote = TRUE,
-	repr.matrix.max.rows = 60,
-	repr.matrix.max.cols = 20,
+	repr.vector.max.items = 400L,
+	repr.matrix.max.rows = 60L,
+	repr.matrix.max.cols = 20L,
 	repr.matrix.latex.colspec = list(row_head = 'r|', col = 'l', end = ''),
 	repr.function.highlight = FALSE,
 	repr.html.deduplicate = FALSE)

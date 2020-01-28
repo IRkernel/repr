@@ -22,46 +22,48 @@
 \alias{repr_latex.Date}
 \title{Representations of vectors}
 \usage{
-\method{repr_html}{logical}(obj, ...)
+\method{repr_html}{logical}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_html}{integer}(obj, ...)
+\method{repr_html}{integer}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_html}{complex}(obj, ...)
+\method{repr_html}{complex}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_html}{numeric}(obj, ...)
+\method{repr_html}{numeric}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_html}{character}(obj, ...)
+\method{repr_html}{character}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_html}{Date}(obj, ...)
+\method{repr_html}{Date}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_markdown}{logical}(obj, ...)
+\method{repr_markdown}{logical}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_markdown}{integer}(obj, ...)
+\method{repr_markdown}{integer}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_markdown}{complex}(obj, ...)
+\method{repr_markdown}{complex}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_markdown}{numeric}(obj, ...)
+\method{repr_markdown}{numeric}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_markdown}{character}(obj, ...)
+\method{repr_markdown}{character}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_markdown}{Date}(obj, ...)
+\method{repr_markdown}{Date}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_latex}{logical}(obj, ...)
+\method{repr_latex}{logical}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_latex}{integer}(obj, ...)
+\method{repr_latex}{integer}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_latex}{complex}(obj, ...)
+\method{repr_latex}{complex}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_latex}{numeric}(obj, ...)
+\method{repr_latex}{numeric}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_latex}{character}(obj, ...)
+\method{repr_latex}{character}(obj, ..., items = getOption("repr.vector.max.items"))
 
-\method{repr_latex}{Date}(obj, ...)
+\method{repr_latex}{Date}(obj, ..., items = getOption("repr.vector.max.items"))
 }
 \arguments{
 \item{obj}{The vector to create a representation for}
 
 \item{...}{ignored}
+
+\item{items}{The maximum number of items displayed. The default is given by the option \code{repr.vector.max.items}}
 }
 \description{
 Representations of vectors

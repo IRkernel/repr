@@ -13,8 +13,3 @@ expect_id_text <- function(object, expected) {
 	if (!one_element) fail_msg <- paste(format(seq_along(fail_msg)), fail_msg)
 	expect(!any(dif), fail_msg)
 }
-
-expect_equivalent_string <- function(result, expectation){
-	"Only use ' as a string delimiter in strings."
-	expect_id_text(gsub('"', "'", x = result), expectation)
-}

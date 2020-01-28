@@ -5,7 +5,7 @@
 \alias{repr-options}
 \alias{repr_option_defaults}
 \title{repr options}
-\format{An object of class \code{list} of length 14.}
+\format{An object of class \code{list} of length 15.}
 \usage{
 repr_option_defaults
 }
@@ -37,6 +37,9 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 }
 \item{\code{repr.vector.quote}}{
 	Output quotation marks for character vectors? (default: TRUE)
+}
+\item{\code{repr.vector.max.items}}{
+	How many items to display at max. Will insert an item with a horizontal ellipsis to show elision. (default: 400)
 }
 \item{\code{repr.matrix.max.rows}}{
 	How many rows to display at max. Will insert a row with vertical ellipses to show elision. (default: 60)
