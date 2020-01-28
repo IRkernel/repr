@@ -6,7 +6,7 @@ html_escape <- function(text, do_spaces = TRUE) {
 	}
 	if (do_spaces) {
 		consec_spaces <- grepl('  ', text)
-		text[consec_spaces] <- sprintf('<span style=white-space:pre-wrap>%s</span>', 	text[consec_spaces])
+		text[consec_spaces] <- sprintf('<span style=white-space:pre-wrap>%s</span>', text[consec_spaces])
 	}
 	text
 }

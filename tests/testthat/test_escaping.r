@@ -30,8 +30,8 @@ test_that('simple HTML escaping works', {
 })
 
 test_that('LaTeX escaping in vectors works', {
-	expect_equivalent_string(repr_latex('['), "'{[}'")
-	expect_equivalent_string(repr_latex(c('[', '|')),
+	expect_id_text(repr_latex('['), "'{[}'")
+	expect_id_text(repr_latex(c('[', '|')),
 "\\begin{enumerate*}
 \\item '{[}'
 \\item '\\textbar{}'
@@ -40,13 +40,11 @@ test_that('LaTeX escaping in vectors works', {
 })
 
 test_that('HTML escaping in vectors works', {
-	expect_equivalent_string(repr_html('<'), "'&lt;'")
-	expect_equivalent_string(repr_html(c('<', '&')),
-"<ol class=list-inline>
-\t<li>'&lt;'</li>
-\t<li>'&amp;'</li>
-</ol>
-")
+	expect_id_text(repr_html('<'), "'&lt;'")
+	expect_id_text(
+		repr_html(c('<', '&')),
+		paste0(list_style, "<ol class=list-inline><li>'&lt;'</li><li>'&amp;'</li></ol>\n")
+	)
 })
 
 test_that('LaTeX escaping in matrices works', {
@@ -93,13 +91,13 @@ test_that('HTML escaping in matrices works', {
 })
 
 test_that('LaTeX escaping in lists works', {
-	expect_equivalent_string(repr_latex(list(lbr = '[')), "\\textbf{\\$lbr} = '{[}'")
-	expect_equivalent_string(repr_latex(list(`&` = '%')), "\\textbf{\\$`\\&`} = '\\%'")
+	expect_id_text(repr_latex(list(lbr = '[')), "\\textbf{\\$lbr} = '{[}'")
+	expect_id_text(repr_latex(list(`&` = '%')), "\\textbf{\\$`\\&`} = '\\%'")
 })
 
 test_that('HTML escaping in lists works', {
-	expect_equivalent_string(repr_html(list(lt = '<')), "<strong>$lt</strong> = '&lt;'")
-	expect_equivalent_string(repr_html(list(`&` = '<')), "<strong>$`&amp;`</strong> = '&lt;'")
+	expect_id_text(repr_html(list(lt = '<')), "<strong>$lt</strong> = '&lt;'")
+	expect_id_text(repr_html(list(`&` = '<')), "<strong>$`&amp;`</strong> = '&lt;'")
 })
 
 test_that('Factors are maintained in small arrays for text', {
@@ -230,9 +228,14 @@ test_that('Factors are sanitized in small data.frames for LaTeX', {
 
 test_that('vector entries with consecutive spaces get wrapped', {
 	v <- c('one space', 'two  spaces')
-	expect_id_text(repr_html(v), "<ol class=list-inline>
-\t<li>'one space'</li>
-\t<li><span style=white-space:pre-wrap>'two  spaces'</span></li>
-</ol>
-")
+	expect_id_text(
+		repr_html(v),
+		paste0(
+			list_style,
+			'<ol class=list-inline>',
+			"<li>'one space'</li>",
+			"<li><span style=white-space:pre-wrap>'two  spaces'</span></li>",
+			'</ol>\n'
+		)
+	)
 })
