@@ -17,8 +17,9 @@ repr_vector_generic <- function(
 	...,
 	numeric_item = named_item,
 	individual_wrap = NULL, # will be passed the vector items twice so needs 2 times %s
-	item_uses_numbers = FALSE, escape_fun = identity) {
-	
+	item_uses_numbers = FALSE, escape_fun = identity,
+	items = getOption('repr.vector.max.items')
+) {
 	if (length(vec) == 0) return('')
 	
 	nms <- names(vec)
@@ -27,7 +28,11 @@ repr_vector_generic <- function(
 	
 	qt <- is.character(vec) && getOption('repr.vector.quote')
 	# excape_fun is output format specific, encodeString ensures that non-printables come out as \-escapes
-	char_vec <- escape_fun(encodeString(as.character(vec), quote = if (qt) "'" else ''))
+	parts <- partition(length(vec), items)
+	charify <- function(part) escape_fun(encodeString(as.character(part), quote = if (qt) "'" else ''))
+	char_vec <-
+		if (is.null(parts)) charify(vec)
+		else c(charify(vec[parts$start]), ellip_h, charify(vec[parts$end]))
 	
 	if (!is.null(individual_wrap)) {
 		char_vec <- sprintf(individual_wrap, char_vec, char_vec)
@@ -77,7 +82,7 @@ def_style <- '<style>
 </style>'
 
 
-repr_html_wrapper <- function(obj, individual_wrap, ...) repr_vector_generic(
+repr_html_wrapper <- function(obj, individual_wrap, items, ...) repr_vector_generic(
 	obj,
 	'<li>%s</li>',
 	'<dt>%s</dt><dd>%s</dd>',
@@ -85,12 +90,15 @@ repr_html_wrapper <- function(obj, individual_wrap, ...) repr_vector_generic(
 	paste0(list_style, '<ol class=list-inline>%s</ol>\n'),
 	paste0(def_style, '<dl class=dl-inline>%s</dl>\n'),
 	escape_fun = html_escape,
-	individual_wrap = individual_wrap)
+	individual_wrap = individual_wrap,
+	items = items
+)
 
 
 #' @name repr_*.vector
 #' @export
-repr_html.logical <- function(obj, ...) repr_html_wrapper(obj, NULL, ...)
+repr_html.logical <- function(obj, ..., items = getOption('repr.vector.max.items'))
+	repr_html_wrapper(obj, NULL, items, ...)
 
 #' @name repr_*.vector
 #' @export
@@ -110,7 +118,8 @@ repr_html.character <- repr_html.logical
 
 #' @name repr_*.vector
 #' @export
-repr_html.Date <- function(obj, ...) repr_html_wrapper(obj, '<time datetime="%s">%s</time>', ...)
+repr_html.Date <- function(obj, ..., items = getOption('repr.vector.max.items'))
+	repr_html_wrapper(obj, '<time datetime="%s">%s</time>', items, ...)
 
 
 
@@ -122,14 +131,16 @@ repr_html.Date <- function(obj, ...) repr_html_wrapper(obj, '<time datetime="%s"
 
 #' @name repr_*.vector
 #' @export
-repr_markdown.logical <- function(obj, ...) repr_vector_generic(
+repr_markdown.logical <- function(obj, ..., items = getOption('repr.vector.max.items')) repr_vector_generic(
 	html_escape_names(obj),
 	'%s. %s\n',
 	'%s\n:   %s',
 	'**%s:** %s',
 	'%s\n\n',
 	item_uses_numbers = TRUE,
-	escape_fun = html_escape)
+	escape_fun = html_escape,
+	items = items
+)
 
 #' @name repr_*.vector
 #' @export
@@ -160,7 +171,7 @@ repr_markdown.Date <- repr_markdown.logical
 
 #' @name repr_*.vector
 #' @export
-repr_latex.logical <- function(obj, ...) repr_vector_generic(
+repr_latex.logical <- function(obj, ..., items = getOption('repr.vector.max.items')) repr_vector_generic(
 	latex_escape_names(obj),  # escape vector names, regardless of class
 	'\\item %s\n',
 	'\\item[%s] %s\n',
@@ -168,7 +179,9 @@ repr_latex.logical <- function(obj, ...) repr_vector_generic(
 	enum_wrap  = '\\begin{enumerate*}\n%s\\end{enumerate*}\n',
 	named_wrap = '\\begin{description*}\n%s\\end{description*}\n',
 	only_named_item = '\\textbf{%s:} %s',
-	escape_fun = latex_escape)
+	escape_fun = latex_escape,
+	items = items
+)
 
 #' @name repr_*.vector
 #' @export

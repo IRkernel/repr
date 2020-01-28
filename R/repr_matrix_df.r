@@ -35,34 +35,25 @@ ellipses <- unique(c(ellip_h, ellip_v, ellip_d))
 arr_partition <- function(a, rows, cols) {
 	stopifnot(rows >= 2L, cols >= 2L)
 	
-	many_rows <- rows < nrow(a)
-	many_cols <- cols < ncol(a)
-	
 	# create sequences of indices to bisect rows and columns
-	if (many_rows) {
-		upper <- seq_len(ceiling(rows / 2))
-		lower <- seq.int(nrow(a) - floor(rows / 2) + 1L, nrow(a))
-	}
-	if (many_cols) {
-		left  <- seq_len(ceiling(cols / 2))
-		right <- seq.int(ncol(a) - floor(cols / 2) + 1L, ncol(a))
-	}
+	part_r <- partition(nrow(a), rows)
+	part_c <- partition(ncol(a), cols)
 	
 	# assign a list of parts that can be coerced to strings
-	if (many_rows && many_cols) {
+	if (!is.null(part_r) && !is.null(part_c)) {
 		structure(list(
-			ul = a[upper, left],  ll = a[lower, left],
-			ur = a[upper, right], lr = a[lower, right]),
+			ul = a[part_r$start, part_c$start], ll = a[part_r$end, part_c$start],
+			ur = a[part_r$start, part_c$end  ], lr = a[part_r$end, part_c$end  ]),
 		omit = 'both')
-	} else if (many_rows) {
+	} else if (!is.null(part_r)) {
 		structure(list(
-			upper = a[upper, , drop = FALSE],
-			lower = a[lower, , drop = FALSE]),
+			upper = a[part_r$start, , drop = FALSE],
+			lower = a[part_r$end,   , drop = FALSE]),
 		omit = 'rows')
-	} else if (many_cols) {
+	} else if (!is.null(part_c)) {
 		structure(list(
-			left  = a[, left,  drop = FALSE],
-			right = a[, right, drop = FALSE]),
+			left  = a[, part_c$start,  drop = FALSE],
+			right = a[, part_c$end,    drop = FALSE]),
 		omit = 'cols')
 	} else {
 		structure(list(full = a), omit = 'none')
