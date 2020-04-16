@@ -211,7 +211,7 @@ repr_html.matrix <- function(
 	cols = getOption('repr.matrix.max.cols')
 ) repr_matrix_generic(
 	obj,
-	'<table>\n<caption>%s</caption>\n%s%s</table>\n',
+	'<table class="dataframe">\n<caption>%s</caption>\n%s%s</table>\n',
 	'<thead>\n%s</thead>\n', '\t<tr>%s</tr>\n', '<th></th>',
 	'<th scope=col>%s</th>',
 	'<tbody>\n%s</tbody>\n', '\t<tr>%s</tr>\n', '<th scope=row>%s</th>',
