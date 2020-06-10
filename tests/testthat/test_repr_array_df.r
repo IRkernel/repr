@@ -161,3 +161,4 @@ test_that('reprs work on an 1d array', {
 	succeed()
 })
 
+
