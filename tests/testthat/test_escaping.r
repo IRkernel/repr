@@ -68,7 +68,7 @@ test_that('LaTeX escaping in matrices works', {
 
 test_that('HTML escaping in matrices works', {
 	expect_id_text(repr_html(matrix(c('[', '{', '%', '#'), 2, 2, TRUE)),
-'<table>
+'<table class="dataframe">
 <caption>A matrix: 2 \u00D7 2 of type chr</caption>
 <tbody>
 \t<tr><td>[</td><td>{</td></tr>
@@ -77,7 +77,7 @@ test_that('HTML escaping in matrices works', {
 </table>
 ')
 	expect_id_text(repr_html(matrix(c(']', '}', '&', '_'), 2, 2, TRUE, list(c('$', '#'), c('%', '|')))),
-'<table>
+'<table class="dataframe">
 <caption>A matrix: 2 \u00D7 2 of type chr</caption>
 <thead>
 \t<tr><th></th><th scope=col>%</th><th scope=col>|</th></tr>
@@ -119,7 +119,7 @@ test_that('Factors are maintained in small arrays for text', {
 test_that('Factors are maintained in small arrays for HTML', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A", "B", "C", "D")))
 	expected <-
-'<table>
+'<table class="dataframe">
 <caption>A data.frame: 4 \u00D7 2</caption>
 <thead>
 \t<tr><th scope=col>a</th><th scope=col>b</th></tr>
@@ -148,7 +148,7 @@ test_that('Factors are maintained in small arrays for HTML', {
 test_that('Factors are sanitized in small data.frames for HTML', {
 	df <- data.frame(a = 1:4, b = factor(1:4, levels = 1:4, labels = c("A&", "B>", "C", "D")))
 	expected <-
-'<table>
+'<table class="dataframe">
 <caption>A data.frame: 4 \u00D7 2</caption>
 <thead>
 \t<tr><th scope=col>a</th><th scope=col>b</th></tr>
