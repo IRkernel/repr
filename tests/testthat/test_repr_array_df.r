@@ -18,7 +18,7 @@ test_that('empty matrices work', {
 test_that('factors display correctly', {
 	df = data.frame(a = factor('iamafactor'))
 	expect_id_text(repr_html(df),
-'<table>
+'<table class="dataframe">
 <caption>A data.frame: 1 \u00D7 1</caption>
 <thead>
 \t<tr><th scope=col>a</th></tr>
@@ -35,7 +35,7 @@ test_that('mixed factors and strings display correctly', {
 	df = data.frame(a = 'iamastring', b = factor('iamafactor'))
 	expect_true(is.factor(df$b))
 	expect_id_text(repr_html(df),
-'<table>
+'<table class="dataframe">
 <caption>A data.frame: 1 \u00D7 2</caption>
 <thead>
 \t<tr><th scope=col>a</th><th scope=col>b</th></tr>
@@ -51,7 +51,7 @@ test_that('mixed factors and strings display correctly', {
 test_that('date display correctly', {
 	df = data.frame(a = as.POSIXct('2016-05-28 10:00:00', tz = 'UTC'))
 	expect_id_text(repr_html(df),
-'<table>
+'<table class="dataframe">
 <caption>A data.frame: 1 \u00D7 1</caption>
 <thead>
 \t<tr><th scope=col>a</th></tr>
@@ -160,4 +160,5 @@ test_that('reprs work on an 1d array', {
 	repr_markdown(one_d_arr)
 	succeed()
 })
+
 
