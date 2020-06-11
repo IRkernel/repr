@@ -1,6 +1,5 @@
 language: r
-distro: xenial  # needed for binary packages
-sudo: true      # dito
+distro: xenial
 cache: packages
 
 r:
@@ -8,7 +7,7 @@ r:
   - release
   - devel
 
-r_binary_packages:
+r_packages:
   # Enhanced packages
   - data.table
   - dplyr
