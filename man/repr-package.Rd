@@ -4,9 +4,6 @@
 \name{repr-package}
 \alias{repr-package}
 \title{The repr package}
-\description{
-The repr package
-}
 \details{
 The LaTeX repr of vectors needs \code{\\usepackage[inline]{enumitem}}
 

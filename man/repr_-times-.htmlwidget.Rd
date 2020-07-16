@@ -13,7 +13,9 @@
 \alias{repr_*.shiny.tag.list}
 \alias{repr_html.shiny.tag.list}
 \title{HTML widget representations}
-\format{An object of class \code{environment} of length 4.}
+\format{
+An object of class \code{environment} of length 4.
+}
 \usage{
 html_dependencies
 

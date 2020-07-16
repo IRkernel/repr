@@ -64,4 +64,4 @@ Collate:
     'repr_spatial.r'
     'repr_ts.r'
     'repr_vega.r'
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1

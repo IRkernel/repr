@@ -5,7 +5,9 @@
 \alias{repr-options}
 \alias{repr_option_defaults}
 \title{repr options}
-\format{An object of class \code{list} of length 15.}
+\format{
+An object of class \code{list} of length 15.
+}
 \usage{
 repr_option_defaults
 }
