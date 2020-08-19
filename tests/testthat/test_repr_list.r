@@ -44,3 +44,11 @@ test_that('NAs can occur in list names', {
 </dl>
 ')
 })
+
+test_that('Lists with empty strings as names work', {
+	l <- structure(list(1), names = '')
+	expect_identical(repr_html(l), '<ol>
+\t<li>1</li>
+</ol>
+')
+})
