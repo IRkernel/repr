@@ -8,20 +8,23 @@
 #' @name repr_*.help_files_with_topic
 NULL
 
-fetch_rd_db <- getFromNamespace('fetchRdDB', 'tools')
 
 # copy of utils:::.getHelpFile, necessary because CRAN doesn’t like us using :::
 get_help_file <- function(file) {
 	path <- dirname(file)
 	dirpath <- dirname(path)
 	if (!file.exists(dirpath))
-		stop(sprintf('invalid %s argument', sQuote('file')))
+		stop(gettextf('invalid %s argument', sQuote('file')), domain = NA)
 	pkgname <- basename(dirpath)
 	rd_db <- file.path(path, pkgname)
 	if (!file.exists(paste(rd_db, 'rdx', sep = '.')))
-		stop(sprintf('package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed', sQuote(pkgname)))
+		stop(gettextf('package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed', sQuote(pkgname)), domain = NA)
+	pos <- -1
+	fetch_rd_db <- getFromNamespace('fetchRdDB', 'tools', pos)
 	fetch_rd_db(rd_db, basename(file))
 }
+
+
 
 #' @importFrom utils capture.output
 #' @importFrom tools Rd2HTML
