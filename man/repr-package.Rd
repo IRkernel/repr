@@ -4,6 +4,9 @@
 \name{repr-package}
 \alias{repr-package}
 \title{The repr package}
+\description{
+String and binary representations of objects for several formats / mime types.
+}
 \details{
 The LaTeX repr of vectors needs \code{\\usepackage[inline]{enumitem}}
 
