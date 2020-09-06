@@ -313,7 +313,7 @@ repr_text.matrix <- function(
 	cols = getOption('repr.matrix.max.cols')
 ) {
 	if (inherits(obj, c('tbl', 'data.table'))) {
-		# Coerce to data.frame to avoid special printing in dplyr and data.table.
+		# Coerce to data.frame to avoid special printing in tibble and data.table.
 		obj <- as.data.frame(obj)
 	}
 	limited_obj <- ellip_limit_arr(obj, rows, cols)

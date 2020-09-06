@@ -1,7 +1,7 @@
 context('LaTeX and HTML escaping')
 
 has_dt <- requireNamespace('data.table', quietly = TRUE)
-has_dplyr <- requireNamespace('dplyr', quietly = TRUE)
+has_tibble <- requireNamespace('tibble', quietly = TRUE)
 
 
 
@@ -109,8 +109,8 @@ test_that('Factors are maintained in small arrays for text', {
 		answer <- repr_text(dt)
 		expect_id_text(answer, expected)
 	}
-	if (has_dplyr) {
-		dtbl <- dplyr::as.tbl(df)
+	if (has_tibble) {
+		dtbl <- tibble::as_tibble(df)
 		answer <- repr_text(dtbl)
 		expect_id_text(answer, expected)
 	}
@@ -139,8 +139,8 @@ test_that('Factors are maintained in small arrays for HTML', {
 		dt <- data.table::as.data.table(df)
 		expect_id_text(repr_html(dt), sub('data\\.frame', 'data.table', expected))
 	}
-	if (has_dplyr) {
-		dtbl <- dplyr::as.tbl(df)
+	if (has_tibble) {
+		dtbl <- tibble::as_tibble(df)
 		expect_id_text(repr_html(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })
@@ -168,8 +168,8 @@ test_that('Factors are sanitized in small data.frames for HTML', {
 		dt <- data.table::as.data.table(df)
 		expect_id_text(repr_html(dt), sub('data\\.frame', 'data.table', expected))
 	}
-	if (has_dplyr) {
-		dtbl <- dplyr::as.tbl(df)
+	if (has_tibble) {
+		dtbl <- tibble::as_tibble(df)
 		expect_id_text(repr_html(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })
@@ -194,8 +194,8 @@ test_that('Factors are maintained in small arrays for LaTeX', {
 		dt <- data.table::as.data.table(df)
 		expect_id_text(repr_latex(dt), sub('data\\.frame', 'data.table', expected))
 	}
-	if (has_dplyr) {
-		dtbl <- dplyr::as.tbl(df)
+	if (has_tibble) {
+		dtbl <- tibble::as_tibble(df)
 		expect_id_text(repr_latex(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })
@@ -220,8 +220,8 @@ test_that('Factors are sanitized in small data.frames for LaTeX', {
 		dt <- data.table::as.data.table(df)
 		expect_id_text(repr_latex(dt), sub('data\\.frame', 'data.table', expected))
 	}
-	if (has_dplyr) {
-		dtbl <- dplyr::as.tbl(df)
+	if (has_tibble) {
+		dtbl <- tibble::as_tibble(df)
 		expect_id_text(repr_latex(dtbl), sub('data\\.frame', 'tibble', expected))
 	}
 })

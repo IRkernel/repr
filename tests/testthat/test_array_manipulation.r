@@ -3,7 +3,7 @@ context('Array and vector truncation')
 options(stringsAsFactors = FALSE)
 
 has_dt <- requireNamespace('data.table', quietly = TRUE)
-has_dplyr <- requireNamespace('dplyr', quietly = TRUE)
+has_tibble <- requireNamespace('tibble', quietly = TRUE)
 
 #has_dt <- FALSE
 
@@ -51,8 +51,8 @@ test_that('ellip_limit_arr doesn\'t change arrays that are small', {
     limited_dt_mat <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt_mat, expected_df_mat)
   }
-  if (has_dplyr) {
-    test_tbl <- dplyr::as.tbl(test_df)
+  if (has_tibble) {
+    test_tbl <- tibble::as_tibble(test_df)
     limited_tbl_mat <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl_mat, expected_df_mat)
   }
@@ -92,8 +92,8 @@ test_that('ellip_limit_arr limits arrays that are wide (but not long)', {
     limited_dt <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt, expected_df_mat)
   }
-  if (has_dplyr) {
-    test_tbl <- dplyr::as.tbl(test_df)
+  if (has_tibble) {
+    test_tbl <- tibble::as_tibble(test_df)
     limited_tbl <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl, expected_df_mat)
   }
@@ -114,7 +114,7 @@ test_that('ellip_limit_arr limits arrays that are wide (but not long)', {
     limited_dt <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt, expected_df_mat)
   }
-  if (has_dplyr) {
+  if (has_tibble) {
     limited_tbl <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl, expected_df_mat)
   }
@@ -156,8 +156,8 @@ test_that('ellip_limit_arr limits arrays that are long (but not wide)', {
     limited_dt <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt, expected_df_mat)
   }
-  if (has_dplyr) {
-    test_tbl <- dplyr::as.tbl(test_df)
+  if (has_tibble) {
+    test_tbl <- tibble::as_tibble(test_df)
     limited_tbl <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl, expected_df_mat)
   }
@@ -179,7 +179,7 @@ test_that('ellip_limit_arr limits arrays that are long (but not wide)', {
     limited_dt <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt,  expected_df_mat)
   }
-  if (has_dplyr) {
+  if (has_tibble) {
     limited_tbl <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl, expected_df_mat)
   }
@@ -222,9 +222,9 @@ test_that('ellip_limit_arr preserves rownames when limiting rows', {
 		limited_dt <- ellip_limit_arr(test_dt)
 		expect_identical(limited_dt, expected_df_mat)
 	}
-	if (has_dplyr) {
-		test_tbl <- dplyr::as.tbl(test_df)
-		# tbl removes rownames, so we have to reset them
+	if (has_tibble) {
+		test_tbl <- tibble::as_tibble(test_df)
+		# tibble removes rownames, so we have to reset them
 		suppressWarnings(rownames(test_tbl) <- rownames(test_df))
 		limited_tbl <- ellip_limit_arr(test_tbl)
 		expect_identical(limited_tbl, expected_df_mat)
@@ -247,7 +247,7 @@ test_that('ellip_limit_arr preserves rownames when limiting rows', {
 		limited_dt <- ellip_limit_arr(test_dt)
 		expect_identical(limited_dt,  expected_df_mat)
 	}
-	if (has_dplyr) {
+	if (has_tibble) {
 		limited_tbl <- ellip_limit_arr(test_tbl)
 		expect_identical(limited_tbl, expected_df_mat)
 	}
@@ -298,8 +298,8 @@ test_that('ellip_limit_arr limits arrays that are long and wide', {
     limited_dt <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt,  expected_df_mat)
   }
-  if (has_dplyr) {
-    test_tbl <- dplyr::as.tbl(test_df)
+  if (has_tibble) {
+    test_tbl <- tibble::as_tibble(test_df)
     limited_tbl <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl, expected_df_mat)
   }
@@ -324,7 +324,7 @@ test_that('ellip_limit_arr limits arrays that are long and wide', {
     limited_dt <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt,  expected_df_mat)
   }
-  if (has_dplyr) {
+  if (has_tibble) {
     limited_tbl <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl, expected_df_mat)
   }
@@ -351,7 +351,7 @@ test_that('ellip_limit_arr limits arrays that are long and wide', {
     limited_dt <- ellip_limit_arr(test_dt)
     expect_identical(limited_dt,  expected_df_mat)
   }
-  if (has_dplyr) {
+  if (has_tibble) {
     limited_tbl <- ellip_limit_arr(test_tbl)
     expect_identical(limited_tbl, expected_df_mat)
   }

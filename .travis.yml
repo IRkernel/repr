@@ -10,7 +10,7 @@ r:
 r_packages:
   # Enhanced packages
   - data.table
-  - dplyr
+  - tibble
   - htmlwidgets
   - plotly
   # - geojsonio  # not available
