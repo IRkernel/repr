@@ -15,8 +15,10 @@ NULL
 repr_ts_generic <- function(obj, repr_func, wrap, ...) {
 	vec <- .preformat.ts(obj)
 	if (is.matrix(vec)) {
-		# set rows and cols so the whole thing is always displayed 
-		repr_func(vec, ..., rows = nrow(vec), cols = ncol(vec), caption_override = 'Time Series')
+		# set rows and cols so the whole thing is always displayed
+		rows <- max(nrow(vec), 2L)
+		cols <- max(ncol(vec), 2L)
+		repr_func(vec, ..., rows = rows, cols = cols, caption_override = 'Time Series')
 	} else {  # Just a vector
 		sprintf(wrap, 'A Time Series', repr_func(vec, ...))
 	}

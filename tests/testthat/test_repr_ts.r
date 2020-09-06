@@ -20,3 +20,15 @@ A Time Series: 3 \u00D7 4
 
 ')
 })
+
+test_that('Displaying a single-row time series works', {
+	series <- ts(1:4, start=c(2000,1), frequency=12)
+	expect_id_text(repr_markdown(series), '
+A Time Series: 1 \u00D7 4
+
+| <!--/--> | Jan | Feb | Mar | Apr |
+|---|---|---|---|---|
+| 2000 | 1 | 2 | 3 | 4 |
+
+')
+})
