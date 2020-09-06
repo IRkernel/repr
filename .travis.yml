@@ -30,9 +30,9 @@ apt_packages:
 install:
 - |
   Rscript -e '
-  all_deps = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
-  deps <- remotes::dev_package_deps(dependencies = all_deps)
-  stats::update(deps[deps$package != "geojsonio", ])
+  all_cats = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+  deps <- setdiff(remotes::local_package_deps(pkgdir = ".", dependencies = all_cats), "geojsonio")
+  stats::update(remotes::package_deps(deps))
   '
 
 script:
