@@ -28,7 +28,7 @@ apt_packages:
 #- libgdal1-dev
 
 install:
-- >
+- |
   Rscript -e '
   all_deps = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
   deps <- remotes::dev_package_deps(dependencies = all_deps)
