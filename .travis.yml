@@ -27,6 +27,14 @@ apt_packages:
 ## Deps for rgdal
 #- libgdal1-dev
 
+install:
+- >
+  Rscript -e '
+  all_deps = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+  deps <- remotes::dev_package_deps(dependencies = all_deps)
+  remotes::update(deps[deps$package != 'geojsonio', ])
+  '
+
 script:
 - R CMD build .
 - R CMD check repr*.tar.gz --as-cran
