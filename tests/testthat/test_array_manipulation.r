@@ -1,5 +1,3 @@
-context('Array and vector truncation')
-
 options(stringsAsFactors = FALSE)
 
 has_dt <- requireNamespace('data.table', quietly = TRUE)

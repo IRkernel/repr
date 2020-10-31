@@ -1,5 +1,3 @@
-context('Utility methods')
-
 test_that('Extra arguments to data_uris error', {
 	expect_error(
 		data_uris('one', mime = 'text/html'),

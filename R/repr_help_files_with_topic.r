@@ -8,7 +8,7 @@
 #' @name repr_*.help_files_with_topic
 NULL
 
-fetch_rd_db <- getFromNamespace('fetchRdDB', 'tools')
+fetch_rd_db <- utils::getFromNamespace('fetchRdDB', 'tools')
 
 # copy of utils:::.getHelpFile, necessary because CRAN doesn’t like us using :::
 get_help_file <- function(file) {

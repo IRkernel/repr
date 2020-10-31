@@ -31,8 +31,7 @@ Suggests:
     highr,
     Cairo,
     stringr,
-    testthat,
-    diffobj (>= 0.2.3),
+    testthat (>= 3.0.0),
     leaflet
 Enhances:
     data.table,
@@ -41,6 +40,7 @@ Enhances:
     vegalite,
     plotly,
     geojsonio
+Config/testthat/edition: 3
 License: GPL-3
 LazyData: true
 Encoding: UTF-8

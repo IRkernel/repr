@@ -1,23 +1,21 @@
-context('reprs of arrays and data.frames')
-
 options(stringsAsFactors = FALSE)
 
 
 test_that('empty data.frames work', {
-	expect_id_text(repr_html(data.frame()), '')
-	expect_id_text(repr_html(as.data.frame(matrix(integer(0L), 1L, 0L))), '')
+	expect_identical(repr_html(data.frame()), '')
+	expect_identical(repr_html(as.data.frame(matrix(integer(0L), 1L, 0L))), '')
 	# no data.frame without colnames possible
 })
 
 test_that('empty matrices work', {
-	expect_id_text(repr_html(matrix(integer(0L), 0L, 0L)), '')
-	expect_id_text(repr_html(matrix(integer(0L), 1L, 0L)), '')
-	expect_id_text(repr_html(matrix(integer(0L), 0L, 1L)), '')
+	expect_identical(repr_html(matrix(integer(0L), 0L, 0L)), '')
+	expect_identical(repr_html(matrix(integer(0L), 1L, 0L)), '')
+	expect_identical(repr_html(matrix(integer(0L), 0L, 1L)), '')
 })
 
 test_that('factors display correctly', {
 	df = data.frame(a = factor('iamafactor'))
-	expect_id_text(repr_html(df),
+	expect_identical(repr_html(df),
 '<table class="dataframe">
 <caption>A data.frame: 1 \u00D7 1</caption>
 <thead>
@@ -34,7 +32,7 @@ test_that('factors display correctly', {
 test_that('mixed factors and strings display correctly', {
 	df = data.frame(a = 'iamastring', b = factor('iamafactor'))
 	expect_true(is.factor(df$b))
-	expect_id_text(repr_html(df),
+	expect_identical(repr_html(df),
 '<table class="dataframe">
 <caption>A data.frame: 1 \u00D7 2</caption>
 <thead>
@@ -50,7 +48,7 @@ test_that('mixed factors and strings display correctly', {
 
 test_that('date display correctly', {
 	df = data.frame(a = as.POSIXct('2016-05-28 10:00:00', tz = 'UTC'))
-	expect_id_text(repr_html(df),
+	expect_identical(repr_html(df),
 '<table class="dataframe">
 <caption>A data.frame: 1 \u00D7 1</caption>
 <thead>
@@ -66,7 +64,7 @@ test_that('date display correctly', {
 
 test_that('markdown works', {
 	df <- data.frame(a = 1:2, b = letters[1:2])
-	expect_id_text(repr_markdown(df), '
+	expect_identical(repr_markdown(df), '
 A data.frame: 2 \u00D7 2
 
 | a &lt;int&gt; | b &lt;chr&gt; |
@@ -79,7 +77,7 @@ A data.frame: 2 \u00D7 2
 
 test_that('markdown works with rownames', {
 	df <- data.frame(a = 1:2, b = letters[1:2], row.names = LETTERS[1:2])
-	expect_id_text(repr_markdown(df), '
+	expect_identical(repr_markdown(df), '
 A data.frame: 2 \u00D7 2
 
 | <!--/--> | a &lt;int&gt; | b &lt;chr&gt; |
@@ -102,7 +100,7 @@ test_that('latex works', {
 \t 2 & b\\\\
 \\end{tabular}
 '
-	expect_id_text(repr_latex(df), expected)
+	expect_identical(repr_latex(df), expected)
 })
 
 test_that('latex works with rownames', {
@@ -117,7 +115,7 @@ test_that('latex works with rownames', {
 \tB & 2 & b\\\\
 \\end{tabular}
 '
-	expect_id_text(repr_latex(df), expected)
+	expect_identical(repr_latex(df), expected)
 })
 
 test_that('nested data.frames work', {
@@ -125,7 +123,7 @@ test_that('nested data.frames work', {
 	df$vehicle <- data.frame(model = c('Piranha Prowler', 'Royal Racer'))
 	df$vehicle$stats <- data.frame(speed = c(55, 34), weight = c(67, 24), drift = c(35, 32))
 	df$occupation <- c('Koopa', 'Princess')
-	expect_id_text(repr_markdown(df), '
+	expect_identical(repr_markdown(df), '
 A data.frame: 2 \u00D7 6
 
 | driver &lt;chr&gt; | vehicle.model &lt;chr&gt; | vehicle.stats.speed &lt;dbl&gt; | vehicle.stats.weight &lt;dbl&gt; | vehicle.stats.drift &lt;dbl&gt; | occupation &lt;chr&gt; |
@@ -139,7 +137,7 @@ A data.frame: 2 \u00D7 6
 test_that('matrices in data.frames work', {
 	df <- aggregate(. ~ Species, iris, range)
 	expect_equal(dim(df$Sepal.Width), c(3, 2))
-	expect_id_text(repr_markdown(df), '
+	expect_identical(repr_markdown(df), '
 A data.frame: 3 \u00D7 5
 
 | Species &lt;fct&gt; | Sepal.Length &lt;dbl[,2]&gt; | Sepal.Width &lt;dbl[,2]&gt; | Petal.Length &lt;dbl[,2]&gt; | Petal.Width &lt;dbl[,2]&gt; |
