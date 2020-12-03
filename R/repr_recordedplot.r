@@ -1,4 +1,5 @@
 is_cairo_installed <- function() requireNamespace('Cairo', quietly = TRUE)
+is_ragg_installed <- function() requireNamespace('ragg', quietly = TRUE)
 
 # checking capability of X11 is slow, the short circult logic avoids
 # this if any other devices are found.
@@ -89,7 +90,9 @@ repr_png.recordedplot <- function(obj,
 	if (!is_cairo_installed() && !check_capability('png')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_ragg_installed())
+			ragg::agg_png(tf, width, height, 'in', pointsize, bg, res)  # scaling, bitsize
+		else if (is_cairo_installed())
 			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
 		else
 			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
@@ -113,7 +116,9 @@ repr_jpg.recordedplot <- function(obj,
 	if (!is_cairo_installed() && !check_capability('jpeg')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_ragg_installed())
+			ragg::agg_jpeg(tf, width, height, 'in', pointsize, bg, res, quality = quality)
+		else if (is_cairo_installed())
 			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality)
 		else
 			jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
