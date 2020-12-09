@@ -4,12 +4,33 @@
 \name{repr-options}
 \alias{repr-options}
 \alias{repr_option_defaults}
+\alias{plot_options}
 \title{repr options}
 \format{
 An object of class \code{list} of length 15.
 }
 \usage{
 repr_option_defaults
+
+plot_options(width = 7, height = 7, pointsize = 12, bg = "white",
+  antialias = "gray", res = 120, quality = 90, family = "sans")
+}
+\arguments{
+\item{width}{Plotting area width in inches (default: 7)}
+
+\item{height}{Plotting area height in inches (default: 7)}
+
+\item{pointsize}{Text height in pt (default: 12)}
+
+\item{bg}{Background color (default: white)}
+
+\item{antialias}{Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)}
+
+\item{res}{PPI for rasterization (default: 120)}
+
+\item{quality}{Quality of JPEG format in \% (default: 90)}
+
+\item{family}{Vector font family. 'sans', 'serif', 'mono' or a specific one (default: sans)}
 }
 \description{
 These options are used to control the behavior of repr when not calling it directly. Use \code{\link[base]{options}(repr.* = ...)} and \code{\link[base]{getOption}('repr.*')} to set and get them, respectively.
@@ -25,17 +46,7 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 \describe{
 
 \item{\code{repr.plot.*}}{
-	Those are for representations of \code{recordedplot} instances:
-	\describe{
-		\item{\code{repr.plot.width}}{Plotting area width in inches (default: 7)}
-		\item{\code{repr.plot.height}}{Plotting area height in inches (default: 7)}
-		\item{\code{repr.plot.pointsize}}{Text height in pt (default: 12)}
-		\item{\code{repr.plot.bg}}{Background color (default: white)}
-		\item{\code{repr.plot.antialias}}{Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)}
-		\item{\code{repr.plot.res}}{PPI for rasterization (default: 120)}
-		\item{\code{repr.plot.quality}}{Quality of JPEG format in \% (default: 90)}
-		\item{\code{repr.plot.family}}{Vector font family. 'sans', 'serif', 'mono' or a specific one (default: sans)}
-	}
+	Those are for representations of \code{recordedplot} instances. See \emph{Arguments}
 }
 \item{\code{repr.vector.quote}}{
 	Output quotation marks for character vectors? (default: TRUE)
