@@ -30,6 +30,9 @@ apt_packages:
 install:
 - |
   Rscript -e '
+  if (!("devtools" %in% installed.packages()[, "Package"])) {
+    install.packages("devtools")
+  }
   all_cats <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
   all_deps <- remotes::local_package_deps(pkgdir = ".", dependencies = all_cats)
   deps <- setdiff(all_deps, "geojsonio")
