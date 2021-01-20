@@ -62,4 +62,4 @@ Pander is however awesome for high-quality Markdown so this project might want t
 
 [Pander]: http://rapporter.github.io/pander/
 [Pandoc]: https://pandoc.org/
-[Markdown]: https://whatismarkdown.com/
+[Markdown]: https://commonmark.org/
