@@ -19,6 +19,7 @@
   pointsize = getOption("repr.plot.pointsize"),
   antialias = getOption("repr.plot.antialias"),
   res = getOption("repr.plot.res"),
+  family = getOption("repr.plot.family"),
   ...
 )
 
