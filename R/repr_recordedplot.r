@@ -1,4 +1,14 @@
 is_cairo_installed <- function() requireNamespace('Cairo', quietly = TRUE)
+is_systemfonts_installed <- function() requireNamespace('systemfonts', quietly = TRUE)
+
+set_cairo_fonts <- function(family) {
+	Cairo::CairoFonts(
+                regular = paste0(family, ":style=", systemfonts::font_info(family)$style),
+                bold = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE)$style),
+                italic = paste0(family, ":style=", systemfonts::font_info(family, italic = TRUE)$style),
+                bolditalic = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE, italic = TRUE)$style),
+        )
+}
 
 # checking capability of X11 is slow, the short circult logic avoids
 # this if any other devices are found.
@@ -35,7 +45,7 @@ plot_title <- function(p, default = NULL) {
 #' @param antialias  Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)
 #' @param res  For PNG and JPEG, specifies the PPI for rasterization (default: 120)
 #' @param quality  For JPEG, determines the compression quality in \% (default: 90)
-#' @param family  Font family for SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)
+#' @param family  Font family for PNG, SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)
 #' @param ...  ignored
 #' 
 #' @examples
@@ -85,12 +95,16 @@ repr_png.recordedplot <- function(obj,
 	antialias = getOption('repr.plot.antialias'),
 	#special
 	res       = getOption('repr.plot.res'),
+        family = getOption('repr.plot.family'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('png')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_cairo_installed()) {
+                        if (is_systemfonts_installed())
+                                set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
+                }
 		else
 			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
 	
