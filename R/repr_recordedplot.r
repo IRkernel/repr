@@ -95,7 +95,7 @@ repr_png.recordedplot <- function(obj,
 	antialias = getOption('repr.plot.antialias'),
 	#special
 	res       = getOption('repr.plot.res'),
-        family = getOption('repr.plot.family'),
+        family    = getOption('repr.plot.family'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('png')) return(NULL)
 	
