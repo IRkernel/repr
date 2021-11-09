@@ -46,7 +46,7 @@ plot_title <- function(p, default = NULL) {
 #' @param antialias  Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)
 #' @param res  For PNG and JPEG, specifies the PPI for rasterization (default: 120)
 #' @param quality  For JPEG, determines the compression quality in \% (default: 90)
-#' @param family  Font family for PNG, SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)
+#' @param family  Font family. 'sans', 'serif', 'mono' or a named system font (default: sans)
 #' @param ...  ignored
 #' 
 #' @examples
