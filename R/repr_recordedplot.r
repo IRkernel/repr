@@ -95,16 +95,16 @@ repr_png.recordedplot <- function(obj,
 	antialias = getOption('repr.plot.antialias'),
 	#special
 	res       = getOption('repr.plot.res'),
-        family    = getOption('repr.plot.family'),
+	family    = getOption('repr.plot.family'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('png')) return(NULL)
 	
 	dev.cb <- function(tf)
 		if (is_cairo_installed()) {
-                        if (is_systemfonts_installed())
-                                set_cairo_fonts(family)
+			if (is_systemfonts_installed())
+				set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
-                }
+		}
 		else
 			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
 	
