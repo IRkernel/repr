@@ -107,7 +107,7 @@ repr_png.recordedplot <- function(obj,
 		} else {
 			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
 		}
-	
+
 	repr_recordedplot_generic(obj, '.png', TRUE, dev.cb)
 }
 
@@ -123,15 +123,19 @@ repr_jpg.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
+	family    = getOption('repr.plot.family'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('jpeg')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_cairo_installed())) {
+			if (is_systemfonts_installed())
+				set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality)
-		else
+		} else {
 			jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
-	
+		}
+
 	repr_recordedplot_generic(obj, '.jpg', TRUE, dev.cb)
 }
 
