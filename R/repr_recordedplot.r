@@ -104,9 +104,9 @@ repr_png.recordedplot <- function(obj,
 			if (is_systemfonts_installed())
 				set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
-		}
-		else
+		} else {
 			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
+		}
 	
 	repr_recordedplot_generic(obj, '.png', TRUE, dev.cb)
 }
