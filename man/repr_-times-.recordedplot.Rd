@@ -77,7 +77,7 @@
 
 \item{quality}{For JPEG, determines the compression quality in \% (default: 90)}
 
-\item{family}{Font family for SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)}
+\item{family}{Font family. 'sans', 'serif', 'mono' or a named system font (default: sans)}
 }
 \description{
 \code{repr_text.recordedplot} only returns a small info string containing the title (if any)
