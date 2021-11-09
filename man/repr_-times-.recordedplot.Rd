@@ -32,6 +32,7 @@
   antialias = getOption("repr.plot.antialias"),
   res = getOption("repr.plot.res"),
   quality = getOption("repr.plot.quality"),
+  family = getOption("repr.plot.family"),
   ...
 )
 
