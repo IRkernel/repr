@@ -3,11 +3,11 @@ is_systemfonts_installed <- function() requireNamespace('systemfonts', quietly =
 
 set_cairo_fonts <- function(family) {
 	Cairo::CairoFonts(
-                regular = paste0(family, ":style=", systemfonts::font_info(family)$style),
-                bold = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE)$style),
-                italic = paste0(family, ":style=", systemfonts::font_info(family, italic = TRUE)$style),
-                bolditalic = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE, italic = TRUE)$style),
-        )
+		regular = paste0(family, ":style=", systemfonts::font_info(family)$style),
+		bold = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE)$style),
+		italic = paste0(family, ":style=", systemfonts::font_info(family, italic = TRUE)$style),
+		bolditalic = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE, italic = TRUE)$style),
+	)
 }
 
 # checking capability of X11 is slow, the short circult logic avoids
