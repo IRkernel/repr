@@ -2,6 +2,7 @@ is_cairo_installed <- function() requireNamespace('Cairo', quietly = TRUE)
 is_systemfonts_installed <- function() requireNamespace('systemfonts', quietly = TRUE)
 
 set_cairo_fonts <- function(family) {
+	if (is.null(family)) family <- 'sans'
 	Cairo::CairoFonts(
 		regular = paste0(family, ":style=", systemfonts::font_info(family)$style),
 		bold = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE)$style),
@@ -158,10 +159,13 @@ repr_svg.recordedplot <- function(obj,
 	if (!is_cairo_installed() && !capabilities('cairo')) return(NULL) #only cairo can do SVG
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_cairo_installed()) {
+			if (is_systemfonts_installed())
+				set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'svg', pointsize, bg, 'transparent', 'in')
-		else
+		} else {
 			svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
+		}
 	
 	repr_recordedplot_generic(obj, '.svg', FALSE, dev.cb)
 }
@@ -180,12 +184,15 @@ repr_pdf.recordedplot <- function(obj,
 ...) repr_recordedplot_generic(obj, '.pdf', TRUE, function(tf) {
 	title <- plot_title(obj, 'Untitled plot')
 	
-	if (capabilities('aqua'))  # no import since R CMD check would complain
+	if (capabilities('aqua')) {  # no import since R CMD check would complain
 		grDevices::quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
-	else if (is_cairo_installed())
+	} else if (is_cairo_installed()) {
+		if (is_systemfonts_installed())
+			set_cairo_fonts(family)
 		Cairo::Cairo(width, height, tf, 'pdf', pointsize, bg, 'transparent', 'in')
-	else if (capabilities('cairo'))
+	} else if (capabilities('cairo')) {
 		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
-	else
+	} else {
 		pdf(tf, width, height, FALSE, family, title, bg = bg, pointsize = pointsize)
+	}
 })
