@@ -1,8 +1,8 @@
-repr&emsp;[![b-Travis]][Travis] [![b-CRAN]][CRAN]
+repr&emsp;[![b-CI]][CI] [![b-CRAN]][CRAN]
 ====
 
-[b-Travis]: https://travis-ci.com/IRkernel/repr.svg?branch=master "Build status"
-[Travis]: https://travis-ci.com/IRkernel/repr
+[b-CI]: https://github.com/IRkernel/repr/actions/workflows/r.yml/badge.svg "Build status"
+[CI]: https://github.com/IRkernel/repr/actions/workflows/r.yml
 [b-CRAN]: https://www.r-pkg.org/badges/version/repr "Comprehensive R Archive Network"
 [CRAN]: https://cran.r-project.org/package=repr
 
