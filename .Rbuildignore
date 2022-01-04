@@ -5,3 +5,4 @@ Makefile
 ^\.github$
 cran-comments.md
 \.ipynb_checkpoints
+^LICENSE\.md$
