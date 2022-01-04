@@ -42,7 +42,6 @@ Enhances:
     geojsonio
 Config/testthat/edition: 3
 License: GPL-3
-LazyData: true
 Encoding: UTF-8
 Collate: 
     'generics.r'
@@ -64,4 +63,4 @@ Collate:
     'repr_spatial.r'
     'repr_ts.r'
     'repr_vega.r'
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
