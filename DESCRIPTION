@@ -1,6 +1,6 @@
 Package: repr
 Title: Serializable Representations
-Version: 1.1.3.9000
+Version: 1.1.4.9000
 Authors@R: c(
     person('Philipp', 'Angerer', email = 'phil.angerer@gmail.com', role = c('aut', 'cre'), comment = c(ORCID = "0000-0002-0369-2888")),
     person('Thomas', 'Kluyver', email = 'thomas@kluyver.me.uk', role = 'aut'),
@@ -42,8 +42,7 @@ Enhances:
     plotly,
     geojsonio
 Config/testthat/edition: 3
-License: GPL-3
-LazyData: true
+License: GPL (>= 3)
 Encoding: UTF-8
 Collate: 
     'generics.r'
@@ -65,4 +64,4 @@ Collate:
     'repr_spatial.r'
     'repr_ts.r'
     'repr_vega.r'
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

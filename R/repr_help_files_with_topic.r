@@ -48,8 +48,8 @@ repr_help_files_with_topic_generic <- function(obj, Rd2_) {
 	output <- capture.output(Rd2_(rd, package = pkgname, outputEncoding = 'UTF-8'))
 	
 	if (identical(Rd2_, Rd2HTML)) {
-		head.end.idx <- which(output == '</head><body>')
-		body.end.idx <- which(output == '</body></html>')
+		head.end.idx <- which(startsWith(output, '</head><body>'))
+		body.end.idx <- which(endsWith(output, '</body></html>'))
 		rm.idx <- c(seq_len(head.end.idx), body.end.idx)
 		
 		output <- output[-rm.idx]
