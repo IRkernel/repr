@@ -160,18 +160,19 @@ test_that('reprs work on an 1d array', {
 	succeed()
 })
 
-test_that('jsonLite data.frames can be displayed', {
-	# jsonLite creates weird structures: jsonlite::fromJSON('[{"something":{"weird":1}}]')
+test_that('nested data.frames can be displayed', {
+	# jsonLite creates weird structures: jsonlite::fromJSON('[{"something":{"weird":[1,2]}}]')
 	outer <- structure(
 		list(
+			normal_col = c('c1', 'c2'),
 			something = structure(
-				list(weird = 1L),
+				list(weird = 1:2, second = c('n1', 'n2')),
 				class = "data.frame",
-				row.names = 1L
+				row.names = 1:2
 			)
 		),
 		class = "data.frame",
-		row.names = 1L
+		row.names = 1:2
 	)
 	repr_html(outer)
 	repr_latex(outer)

@@ -68,8 +68,10 @@ arr_part_format <- function(part) {
 				apply(apply(col, 2L, format), 1L, paste, collapse = ', ')
 			} else if (is.data.frame(col)) {
 				if (nrow(col) != nrow(part)) stop('Unrepresentable column: ', capture.output(str(col)))
-				lst = apply(col, 2L, format, simplify = FALSE)  # TODO: this is still not guaranteed
-				paste(paste(names(lst), '=', lst), collapse = ', ')
+				sub <- arr_part_format(col)
+				flat <- paste(colnames(sub), '=', apply(sub, 2L, format))
+				dim(flat) <- dim(sub)
+				apply(flat, 1L, paste, collapse = ', ')
 			} else format(col)
 			if(!is.character(r)) stop('Did not implement conversion for this, please report issue: ', capture.output(str(r)))
 			r
