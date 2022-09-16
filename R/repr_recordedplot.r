@@ -165,7 +165,7 @@ repr_pdf.recordedplot <- function(obj,
 	if (capabilities('aqua'))  # no import since R CMD check would complain
 		grDevices::quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
 	else if (is_cairo_installed())
-		Cairo::Cairo(width, height, tf, 'pdf', pointsize, bg, 'transparent', 'in')
+		Cairo::Cairo(width, height, tf, 'pdf', pointsize, bg, 'transparent', 'in', title=title)
 	else if (capabilities('cairo'))
 		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
 	else
