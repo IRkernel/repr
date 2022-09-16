@@ -29,7 +29,7 @@ Imports:
 Suggests:
     methods,
     highr,
-    Cairo (>=1.6.1),
+    Cairo (>= 1.6.1),
     stringr,
     testthat (>= 3.0.0),
     leaflet
