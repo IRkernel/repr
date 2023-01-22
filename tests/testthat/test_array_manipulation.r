@@ -79,9 +79,20 @@ test_that('ellip_limit_arr limits arrays that are wide (but not long)', {
   options(repr.matrix.max.cols = 4L)
   limited_mat <- ellip_limit_arr(test_mat)
   limited_df  <- ellip_limit_arr(test_df)
-  expected_mat <- matrix(c('16', '15', '14', '13', ellip_h, ellip_h, '4', '3', '2', '1'), nrow = 2L)
-  expected_df_mat  <- as.matrix(data.frame(V1 = c(16, 15), V2 = c(14, 13), ellips = rep(ellip_h, 2L), V7 = c(4, 3), V8 = c(2, 1)))
-  colnames(expected_df_mat)[[3]] <- ellip_h
+  expected_mat <- matrix(
+  	c('16', '15',
+  		'14', '13',
+  		chars$ellip_h, chars$ellip_h,
+  		'4', '3',
+  		'2', '1'),
+  	nrow = 2L)
+  expected_df_mat  <- as.matrix(data.frame(
+  	V1 = c(16, 15),
+  	V2 = c(14, 13),
+  	ellips = rep(chars$ellip_h, 2L),
+  	V7 = c(4, 3),
+  	V8 = c(2, 1)))
+  colnames(expected_df_mat)[[3]] <- chars$ellip_h
   rownames(expected_df_mat) <- 1:2  # TODO: is this correct or should it rather not have those
   expect_identical(limited_mat, expected_mat)
   expect_identical(limited_df,  expected_df_mat)
@@ -101,9 +112,22 @@ test_that('ellip_limit_arr limits arrays that are wide (but not long)', {
   limited_mat <- ellip_limit_arr(test_mat)
   limited_df <- ellip_limit_arr(test_df)
   
-  expected_mat <- matrix(c('16', '15', '14', '13', '12', '11', ellip_h, ellip_h, '4', '3', '2', '1'), nrow = 2L)
-  expected_df_mat <- as.matrix(data.frame(V1 = c(16, 15), V2 = c(14, 13), V3 = c(12, 11), ellips = rep(ellip_h, 2L), V7 = c(4, 3), V8 = c(2, 1)))
-  colnames(expected_df_mat)[[4]] <- ellip_h
+  expected_mat <- matrix(
+  	c('16', '15',
+  		'14', '13',
+  		'12', '11',
+  		chars$ellip_h, chars$ellip_h,
+  		'4', '3',
+  		'2', '1'),
+  	nrow = 2L)
+  expected_df_mat <- as.matrix(data.frame(
+  	V1 = c(16, 15),
+  	V2 = c(14, 13),
+  	V3 = c(12, 11),
+  	ellips = rep(chars$ellip_h, 2L),
+  	V7 = c(4, 3),
+  	V8 = c(2, 1)))
+  colnames(expected_df_mat)[[4]] <- chars$ellip_h
   rownames(expected_df_mat) <- 1:2  # TODO: see above
 
   expect_identical(limited_mat, expected_mat)
@@ -141,12 +165,12 @@ test_that('ellip_limit_arr limits arrays that are long (but not wide)', {
   limited_mat <- ellip_limit_arr(test_mat)
   limited_df <- ellip_limit_arr(test_df)
   expected_mat <- matrix(c(
-  	'16', '15', ellip_v, '10', ' 9',
-  	'8', '7', ellip_v, '2', '1'), ncol = 2L)
+  	'16', '15', chars$ellip_v, '10', ' 9',
+  	'8', '7', chars$ellip_v, '2', '1'), ncol = 2L)
   expected_df_mat <- as.matrix(data.frame(
-  	V1 = c('16', '15', ellip_v, '10', ' 9'),
-  	V2 = c('8', '7', ellip_v, '2', '1')))
-  rownames(expected_df_mat) <- c('1', '2', ellip_v, '7', '8')
+  	V1 = c('16', '15', chars$ellip_v, '10', ' 9'),
+  	V2 = c('8', '7', chars$ellip_v, '2', '1')))
+  rownames(expected_df_mat) <- c('1', '2', chars$ellip_v, '7', '8')
   expect_identical(limited_mat, expected_mat)
   expect_identical(limited_df,  expected_df_mat)
   if (has_dt) {
@@ -165,17 +189,17 @@ test_that('ellip_limit_arr limits arrays that are long (but not wide)', {
   limited_mat <- ellip_limit_arr(test_mat)
   limited_df <- ellip_limit_arr(test_df)
   expected_mat <- matrix(c(
-  	'16', '15', '14', ellip_v, '10', ' 9',
-  	'8', '7', '6', ellip_v, '2', '1'), ncol = 2L)
+  	'16', '15', '14', chars$ellip_v, '10', ' 9',
+  	'8', '7', '6', chars$ellip_v, '2', '1'), ncol = 2L)
   expected_df_mat <- as.matrix(data.frame(
-  	V1 = c('16', '15', '14', ellip_v, '10', ' 9'),
-  	V2 = c('8', '7', '6', ellip_v, '2', '1')))
-  rownames(expected_df_mat) <- c('1', '2', '3', ellip_v, '7', '8')
+  	V1 = c('16', '15', '14', chars$ellip_v, '10', ' 9'),
+  	V2 = c('8', '7', '6', chars$ellip_v, '2', '1')))
+  rownames(expected_df_mat) <- c('1', '2', '3', chars$ellip_v, '7', '8')
   expect_identical(limited_mat, expected_mat)
   expect_identical(limited_df,  expected_df_mat)
   if (has_dt) {
     limited_dt <- ellip_limit_arr(test_dt)
-    expect_identical(limited_dt,  expected_df_mat)
+    expect_identical(limited_dt, expected_df_mat)
   }
   if (has_tibble) {
     limited_tbl <- ellip_limit_arr(test_tbl)
@@ -232,7 +256,7 @@ test_that('ellip_limit_arr preserves rownames when limiting rows', {
 	options(repr.matrix.max.rows = 5L)
 	limited_mat <- ellip_limit_arr(test_mat)
 	limited_df <- ellip_limit_arr(test_df)
-	expected_rownames <- c(letters[1:3], ellip_v, letters[7:8])
+	expected_rownames <- c(letters[1:3], chars$ellip_v, letters[7:8])
 	expected_mat <- matrix(c(
 		'16', '15', '14', chars$ellip_v, '10', ' 9',
 		'8', '7', '6', chars$ellip_v, '2', '1'), ncol = 2L, dimnames = list(expected_rownames, NULL))
