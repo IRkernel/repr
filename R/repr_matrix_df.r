@@ -20,9 +20,9 @@ NULL
 # See https://github.com/IRkernel/repr/issues/28#issuecomment-208574856
 #' @importFrom utils capture.output
 .char_fallback <- function(char, default) {
-  real_len <- nchar(char)
-  r_len <- nchar(capture.output(cat(char)))
-  if (real_len == r_len) char else default
+	real_len <- nchar(char)
+	r_len <- nchar(capture.output(cat(char)))
+	if (real_len == r_len) char else default
 }
 
 chars <- new.env()
@@ -238,7 +238,7 @@ repr_latex.matrix <- function(
 	...,
 	rows = getOption('repr.matrix.max.rows'),
 	cols = getOption('repr.matrix.max.cols'),
-  colspec = getOption('repr.matrix.latex.colspec')
+	colspec = getOption('repr.matrix.latex.colspec')
 ) {
 	cols_spec <- paste0(paste(rep(colspec$col, min(cols + 1L, ncol(obj))), collapse = ''), colspec$end)
 	if (has_row_names(obj)) {
