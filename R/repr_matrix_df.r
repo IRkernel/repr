@@ -25,7 +25,7 @@ NULL
   if (real_len == r_len) char else default
 }
 
-chars <- new_environment()
+chars <- new.env()
 onload_chars <- function() {
 	chars$ellip_h <- .char_fallback('\u22EF', '...')
 	chars$ellip_v <- .char_fallback('\u22EE', '...')
