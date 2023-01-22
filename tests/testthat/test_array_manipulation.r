@@ -257,12 +257,16 @@ test_that('ellip_limit_arr preserves rownames when limiting rows', {
 	limited_mat <- ellip_limit_arr(test_mat)
 	limited_df <- ellip_limit_arr(test_df)
 	expected_rownames <- c(letters[1:3], chars$ellip_v, letters[7:8])
-	expected_mat <- matrix(c(
-		'16', '15', '14', chars$ellip_v, '10', ' 9',
-		'8', '7', '6', chars$ellip_v, '2', '1'), ncol = 2L, dimnames = list(expected_rownames, NULL))
+	expected_mat <- matrix(
+		c(
+			'16', '15', '14', chars$ellip_v, '10', ' 9',
+			'8', '7', '6', chars$ellip_v, '2', '1'),
+		ncol = 2L,
+		dimnames = list(expected_rownames, NULL))
 	expected_df_mat <- as.matrix(data.frame(
 		V1 = c('16', '15', '14', chars$ellip_v, '10', ' 9'),
-		V2 = c('8', '7', '6', chars$ellip_v, '2', '1'), row.names = expected_rownames))
+		V2 = c('8', '7', '6', chars$ellip_v, '2', '1'),
+		row.names = expected_rownames))
 	expect_identical(limited_mat, expected_mat)
 	expect_identical(limited_df,  expected_df_mat)
 	if (has_dt) {
@@ -333,7 +337,7 @@ test_that('ellip_limit_arr limits arrays that are long and wide', {
   	'1', '2', '3', chars$ellip_v, '6', '7',
   	' 8', ' 9', '10', chars$ellip_v, '13', '14',
   	'15', '16', '17', chars$ellip_v, '20', '21',
-  	chars$ellip_h, chars$ellip_h, chars$ellip_h, chars$ellip_d, chars$ellip_h, chars$ellip_h,
+  	rep_len(chars$ellip_h, 3L), chars$ellip_d, rep_len(chars$ellip_h, 2L),
   	'36', '37', '38', chars$ellip_v,'41', '42',
   	'43', '44', '45', chars$ellip_v, '48', '49'), nrow = 6L)
   expected_df_mat <- as.matrix(as.data.frame(expected_mat))
@@ -359,7 +363,7 @@ test_that('ellip_limit_arr limits arrays that are long and wide', {
   	'1', '2', '3', chars$ellip_v, '5', '6', '7',
   	' 8', ' 9', '10', chars$ellip_v, '12', '13', '14',
   	'15', '16', '17', chars$ellip_v, '19', '20', '21',
-  	chars$ellip_h, chars$ellip_h, chars$ellip_h, chars$ellip_d, chars$ellip_h, chars$ellip_h, chars$ellip_h,
+  	rep_len(chars$ellip_h, 3L), chars$ellip_d, rep_len(chars$ellip_h, 3L),
   	'29', '30', '31', chars$ellip_v, '33', '34', '35',
   	'36', '37', '38', chars$ellip_v, '40', '41', '42',
   	'43', '44', '45', chars$ellip_v, '47', '48', '49'), nrow = 7L)
