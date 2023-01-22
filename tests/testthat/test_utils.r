@@ -16,7 +16,7 @@ test_that('data_uris works with one or multiple files', {
 
 	fh <- file(f2, 'wb')
 	writeBin(charToRaw('two'), fh)
-  close(fh)
+	close(fh)
 
 	files <- c(f1, f2)
 

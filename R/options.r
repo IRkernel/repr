@@ -78,7 +78,7 @@ class_defaults <- list(
 #' @export
 repr_option_defaults <- c(plot_defaults, class_defaults)
 
-.onLoad <- function(libname = NULL, pkgname = NULL) {
+onload_options <- function() {
 	for (opt_name in names(repr_option_defaults)) {
 		if (is.null(getOption(opt_name)))
 			do.call(options, repr_option_defaults[opt_name])  # single []: name stays

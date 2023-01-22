@@ -20,17 +20,18 @@ NULL
 # See https://github.com/IRkernel/repr/issues/28#issuecomment-208574856
 #' @importFrom utils capture.output
 .char_fallback <- function(char, default) {
-  real_len <- nchar(char)
-  r_len <- nchar(capture.output(cat(char)))
-  if (real_len == r_len) char else default
+	real_len <- nchar(char)
+	r_len <- nchar(capture.output(cat(char)))
+	if (real_len == r_len) char else default
 }
-ellip_h <- .char_fallback('\u22EF', '...')
-ellip_v <- .char_fallback('\u22EE', '...')
-ellip_d <- .char_fallback('\u22F1', '')
-times_s <- .char_fallback('\u00D7', 'x')
 
-# These are used for factor, so make sure they are unique
-ellipses <- unique(c(ellip_h, ellip_v, ellip_d))
+chars <- new.env()
+onload_chars <- function() {
+	chars$ellip_h <- .char_fallback('\u22EF', '...')
+	chars$ellip_v <- .char_fallback('\u22EE', '...')
+	chars$ellip_d <- .char_fallback('\u22F1', '')
+	chars$times_s <- .char_fallback('\u00D7', 'x')
+}
 
 arr_partition <- function(a, rows, cols) {
 	stopifnot(rows >= 2L, cols >= 2L)
@@ -81,21 +82,21 @@ arr_part_format <- function(part) {
 arr_parts_combine <- function(parts, rownms, colnms) {
 	omit <- attr(parts, 'omit')
 	mat <- switch(omit,
-		rows = rbind(parts$upper, ellip_v, parts$lower, deparse.level = 0L),
-		cols = cbind(parts$left,  ellip_h, parts$right, deparse.level = 0L),
+		rows = rbind(parts$upper, chars$ellip_v, parts$lower, deparse.level = 0L),
+		cols = cbind(parts$left,  chars$ellip_h, parts$right, deparse.level = 0L),
 		none = parts$full,
 		both = rbind(
-			cbind(parts$ul, ellip_h, parts$ur, deparse.level = 0L),
-			c(rep(ellip_v, ncol(parts$ul)), ellip_d, rep(ellip_v, ncol(parts$ur))),
-			cbind(parts$ll, ellip_h, parts$lr, deparse.level = 0L)))
+			cbind(parts$ul, chars$ellip_h, parts$ur, deparse.level = 0L),
+			c(rep(chars$ellip_v, ncol(parts$ul)), chars$ellip_d, rep(chars$ellip_v, ncol(parts$ur))),
+			cbind(parts$ll, chars$ellip_h, parts$lr, deparse.level = 0L)))
 	
 	# If there were no dimnames before, as is often true for matrices, don't assign them.
 	if (omit %in% c('rows', 'both') && !is.null(rownms)) {
 		# everything except ellip_v is to fix rownames for tbls, which explicitly set them to 1:n when subsetting
-		rownames(mat) <- c(head(rownms, nrow(parts[[1]])), ellip_v, tail(rownms, nrow(parts[[2]])))
+		rownames(mat) <- c(head(rownms, nrow(parts[[1]])), chars$ellip_v, tail(rownms, nrow(parts[[2]])))
 	}
 	if (omit %in% c('cols', 'both') && !is.null(colnms)) {
-		colnames(mat)[[ncol(parts[[1]])  + 1L]] <- ellip_h
+		colnames(mat)[[ncol(parts[[1]])  + 1L]] <- chars$ellip_h
 	}
 	
 	mat
@@ -195,7 +196,7 @@ repr_matrix_generic <- function(
 	
 	body <- sprintf(body_wrap, paste(rows, collapse = ''))
 	
-	caption <- sprintf('A %s: %s %s %s', escape_fun(cls), dims[[1]], times_s, dims[[2]])
+	caption <- sprintf('A %s: %s %s %s', escape_fun(cls), dims[[1]], chars$times_s, dims[[2]])
 	if (is.null(caption_override) && is_matrix) caption <- sprintf('%s of type %s', caption, escape_fun(types))
 	
 	sprintf(wrap, caption, header, body)
@@ -237,7 +238,7 @@ repr_latex.matrix <- function(
 	...,
 	rows = getOption('repr.matrix.max.rows'),
 	cols = getOption('repr.matrix.max.cols'),
-  colspec = getOption('repr.matrix.latex.colspec')
+	colspec = getOption('repr.matrix.latex.colspec')
 ) {
 	cols_spec <- paste0(paste(rep(colspec$col, min(cols + 1L, ncol(obj))), collapse = ''), colspec$end)
 	if (has_row_names(obj)) {
