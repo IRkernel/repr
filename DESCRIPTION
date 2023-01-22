@@ -63,4 +63,5 @@ Collate:
     'repr_spatial.r'
     'repr_ts.r'
     'repr_vega.r'
+    'zzz_onload.r'
 RoxygenNote: 7.2.3
