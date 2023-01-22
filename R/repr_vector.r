@@ -31,9 +31,10 @@ repr_vector_generic <- function(
 	# excape_fun is output format specific, encodeString ensures that non-printables come out as \-escapes
 	parts <- partition(length(vec), items)
 	charify <- function(part) escape_fun(encodeString(as.character(part), quote = if (qt) "'" else ''))
+	# see repr_matrix_df.r for chars$ellip_h
 	char_vec <-
 		if (is.null(parts)) charify(vec)
-		else c(charify(vec[parts$start]), ellip_h, charify(vec[parts$end]))
+		else c(charify(vec[parts$start]), chars$ellip_h, charify(vec[parts$end]))
 	
 	if (!is.null(individual_wrap)) {
 		char_vec <- sprintf(individual_wrap, char_vec, char_vec)
