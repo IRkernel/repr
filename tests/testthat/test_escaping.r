@@ -4,7 +4,7 @@ has_tibble <- requireNamespace('tibble', quietly = TRUE)
 
 
 test_that('unprintables get escaped', {
-	expect_identical(repr_html('\1'), "'\\001'")
+	expect_identical(repr_html('\001'), "'\\001'")
 })
 
 test_that('simple LaTeX escaping works', {
