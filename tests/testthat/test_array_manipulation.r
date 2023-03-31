@@ -14,8 +14,8 @@ test_that('max rows and cols are reasonable', {
 	
 	expect_false(is.null(rows))
 	expect_false(is.na(rows))
-	expect_false(is.null(rows))
-	expect_false(is.na(rows))
+	expect_false(is.null(cols))
+	expect_false(is.na(cols))
 	
 	expect_true(rows >= 2L)
 	expect_true(cols >= 2L)
