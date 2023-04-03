@@ -159,4 +159,6 @@ test_that('reprs work on an 1d array', {
 	succeed()
 })
 
-
+test_that('0×n matrices are supported', {
+	expect_no_warning(repr_text(matrix(nrow = 0, ncol = 100)))
+})
