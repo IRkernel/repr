@@ -61,8 +61,29 @@ arr_partition <- function(a, rows, cols) {
 	}
 }
 
+# unpack tibble and coerce to data.frame
+arr_part_unpack_tbl <- function(tbl) {
+  tbl_col_format <- function(col, prefix = '') {
+    if (is.data.frame(col)) {
+      res <- mapply(tbl_col_format, col, names(col), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+      res <- do.call(cbind.data.frame, res)
+      names(res) <- paste0(prefix, '$', names(res))
+      return(res)
+    } else {
+      res <- data.frame(col)
+      names(res) <- prefix
+      return(res)
+    }
+  }
+  res <- mapply(tbl_col_format, tbl, names(tbl), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+  do.call(cbind.data.frame, res)
+}
+
 arr_parts_format <- function(parts) structure(lapply(parts, arr_part_format), omit = attr(parts, 'omit'))
 arr_part_format <- function(part) {
+	if (inherits(part, 'tbl')) {
+		part <- arr_part_unpack_tbl(part)
+	}
 	f_part <- if (is.data.frame(part)) {
 		vapply(part, function(col) {
 			if (is.matrix(col)) apply(apply(col, 2L, format), 1L, paste, collapse = ', ')
@@ -313,8 +334,8 @@ repr_text.matrix <- function(
 	rows = getOption('repr.matrix.max.rows'),
 	cols = getOption('repr.matrix.max.cols')
 ) {
-	if (inherits(obj, c('tbl', 'data.table'))) {
-		# Coerce to data.frame to avoid special printing in tibble and data.table.
+	if (inherits(obj, c('data.table'))) {
+		# Coerce to data.frame to avoid special printing in data.table.
 		obj <- as.data.frame(obj)
 	}
 	limited_obj <- ellip_limit_arr(obj, rows, cols)
