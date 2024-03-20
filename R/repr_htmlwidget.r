@@ -1,5 +1,14 @@
 #' @importFrom htmltools renderTags
 embed_tags <- function(obj, ...) {
+	obj <- render_tags(obj, ...)
+	
+	# render dependencies as data URIs (for standalone HTML)
+	html_deps <- lapply(obj$dependencies, render_dependency)
+	
+	sprintf(HTML_SKELETON, paste(html_deps, collapse = '\n'), obj$html)
+}
+
+render_tags <- function(obj, ...) {
 	obj <- renderTags(obj)
 	
 	if (nchar(obj$head) > 0) {
@@ -17,33 +26,35 @@ embed_tags <- function(obj, ...) {
 		html_dependencies$add(obj$dependencies)
 	}
 	
-	# render dependencies as data URIs (for standalone HTML)
-	html_deps <- lapply(obj$dependencies, function(dep) {
-		html <- c()
-		
-		if (length(dep$script) > 0) {
-			f <- file.path(dep$src$file, dep$script)
-			# TODO: is this *always* the correct mime type?
-			html <- c(html, sprintf(
-				'<script title="%s" src="%s"></script>',
-				sub('"', '', dep$name),
-				data_uris(mime = 'application/javascript', files = f)
-			))
-		}
-		
-		if (length(dep$stylesheet) > 0) {
-			f <- file.path(dep$src$file, dep$stylesheet)
-			# TODO: is this *always* the correct mime type? Use base64enc::checkUTF8() to ensure UTF-8 is OK?
-			html <- c(html, sprintf(
-				'<link href="%s" rel="stylesheet" />',
-				data_uris(mime = 'text/css;charset-utf-8', files = f)
-			))
-		}
-		
-		paste(html, collapse = '\n')
-	})
+	list(
+		dependencies = obj$dependencies,
+		html = obj$html
+	)
+}
+
+render_dependency <- function(dep) {
+	html <- c()
 	
-	sprintf(HTML_SKELETON, paste(html_deps, collapse = '\n'), obj$html)
+	if (length(dep$script) > 0) {
+		f <- file.path(dep$src$file, dep$script)
+		# TODO: is this *always* the correct mime type?
+		html <- c(html, sprintf(
+			'<script title="%s" src="%s"></script>',
+			sub('"', '', dep$name),
+			data_uris(mime = 'application/javascript', files = f)
+		))
+	}
+	
+	if (length(dep$stylesheet) > 0) {
+		f <- file.path(dep$src$file, dep$stylesheet)
+		# TODO: is this *always* the correct mime type? Use base64enc::checkUTF8() to ensure UTF-8 is OK?
+		html <- c(html, sprintf(
+			'<link href="%s" rel="stylesheet" />',
+			data_uris(mime = 'text/css;charset-utf-8', files = f)
+		))
+	}
+	
+	paste(html, collapse = '\n')
 }
 
 HTML_SKELETON <-
