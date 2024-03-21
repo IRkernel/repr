@@ -18,11 +18,11 @@ test_that('The dependency manager works', {
 	on.exit(options(o))
 	html_dependencies$clear()
 	
-	r <- repr_html(str_view('xy', 'y'))
-	expect_match(r, '<meta charset="utf-8">\n\t\t<script', fixed = TRUE, all = FALSE)
+	r <- render_tags(str_view('xy', 'y'))
+	expect_true(length(r$dependencies) > 0)
 	
-	r <- repr_html(str_view('xy', 'y'))
-	expect_match(r, '<meta charset="utf-8">\n\t\t\n', fixed = TRUE, all = FALSE)  #no deps here
+	r <- render_tags(str_view('xy', 'y'))
+	expect_true(length(r$dependencies) == 0)  #no deps here
 })
 
 test_that('Leaflet HTML and deps can be represented', {
