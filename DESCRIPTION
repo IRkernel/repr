@@ -1,6 +1,6 @@
 Package: repr
 Title: Serializable Representations
-Version: 1.1.6.9000
+Version: 1.1.7
 Authors@R: c(
     person('Philipp', 'Angerer', email = 'phil.angerer@gmail.com', role = c('aut', 'cre'), comment = c(ORCID = "0000-0002-0369-2888")),
     person('Thomas', 'Kluyver', email = 'thomas@kluyver.me.uk', role = 'aut'),
@@ -64,4 +64,4 @@ Collate:
     'repr_ts.r'
     'repr_vega.r'
     'zzz_onload.r'
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1

@@ -8,6 +8,5 @@
 #' 
 #' @seealso \link{repr}, \link{repr-options}, \link{repr-generics}, \link{repr_text}
 #' 
-#' @docType package
 #' @name repr-package
-NULL
+"_PACKAGE"

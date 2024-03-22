@@ -15,3 +15,23 @@ The LaTeX repr of functions with the \code{repr.function.highlight} option set t
 \seealso{
 \link{repr}, \link{repr-options}, \link{repr-generics}, \link{repr_text}
 }
+\author{
+\strong{Maintainer}: Philipp Angerer \email{phil.angerer@gmail.com} (\href{https://orcid.org/0000-0002-0369-2888}{ORCID})
+
+Authors:
+\itemize{
+  \item Thomas Kluyver \email{thomas@kluyver.me.uk}
+  \item Jan Schulz \email{jasc@gmx.net}
+}
+
+Other contributors:
+\itemize{
+  \item abielr [contributor]
+  \item Denilson Figueiredo de Sa [contributor]
+  \item Jim Hester [contributor]
+  \item karldw [contributor]
+  \item Dave Foster [contributor]
+  \item Carson Sievert [contributor]
+}
+
+}
