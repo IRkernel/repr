@@ -1,4 +1,15 @@
 is_cairo_installed <- function() requireNamespace('Cairo', quietly = TRUE)
+is_systemfonts_installed <- function() requireNamespace('systemfonts', quietly = TRUE)
+
+set_cairo_fonts <- function(family) {
+	if (is.null(family)) family <- 'sans'
+	Cairo::CairoFonts(
+		regular = paste0(family, ":style=", systemfonts::font_info(family)$style),
+		bold = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE)$style),
+		italic = paste0(family, ":style=", systemfonts::font_info(family, italic = TRUE)$style),
+		bolditalic = paste0(family, ":style=", systemfonts::font_info(family, bold = TRUE, italic = TRUE)$style),
+	)
+}
 
 # checking capability of X11 is slow, the short circult logic avoids
 # this if any other devices are found.
@@ -35,7 +46,7 @@ plot_title <- function(p, default = NULL) {
 #' @param antialias  Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)
 #' @param res  For PNG and JPEG, specifies the PPI for rasterization (default: 120)
 #' @param quality  For JPEG, determines the compression quality in \% (default: 90)
-#' @param family  Font family for SVG and PDF. 'sans', 'serif', 'mono' or a specific one (default: sans)
+#' @param family  Font family (if \code{Cairo} is installed). 'sans', 'serif', 'mono' or a named system font (default: sans)
 #' @param ...  ignored
 #' 
 #' @examples
@@ -85,15 +96,19 @@ repr_png.recordedplot <- function(obj,
 	antialias = getOption('repr.plot.antialias'),
 	#special
 	res       = getOption('repr.plot.res'),
+	family    = getOption('repr.plot.family'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('png')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_cairo_installed()) {
+			if (is_systemfonts_installed())
+				set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
-		else
+		} else {
 			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
-	
+		}
+
 	repr_recordedplot_generic(obj, '.png', TRUE, dev.cb)
 }
 
@@ -109,15 +124,19 @@ repr_jpg.recordedplot <- function(obj,
 	#special
 	res       = getOption('repr.plot.res'),
 	quality   = getOption('repr.plot.quality'),
+	family    = getOption('repr.plot.family'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('jpeg')) return(NULL)
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_cairo_installed())) {
+			if (is_systemfonts_installed())
+				set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality)
-		else
+		} else {
 			jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
-	
+		}
+
 	repr_recordedplot_generic(obj, '.jpg', TRUE, dev.cb)
 }
 
@@ -140,10 +159,13 @@ repr_svg.recordedplot <- function(obj,
 	if (!is_cairo_installed() && !capabilities('cairo')) return(NULL) #only cairo can do SVG
 	
 	dev.cb <- function(tf)
-		if (is_cairo_installed())
+		if (is_cairo_installed()) {
+			if (is_systemfonts_installed())
+				set_cairo_fonts(family)
 			Cairo::Cairo(width, height, tf, 'svg', pointsize, bg, 'transparent', 'in')
-		else
+		} else {
 			svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
+		}
 	
 	repr_recordedplot_generic(obj, '.svg', FALSE, dev.cb)
 }
@@ -162,12 +184,15 @@ repr_pdf.recordedplot <- function(obj,
 ...) repr_recordedplot_generic(obj, '.pdf', TRUE, function(tf) {
 	title <- plot_title(obj, 'Untitled plot')
 	
-	if (capabilities('aqua'))  # no import since R CMD check would complain
+	if (capabilities('aqua')) {  # no import since R CMD check would complain
 		grDevices::quartz(title, width, height, pointsize, family, antialias, 'pdf', tf, bg)
-	else if (is_cairo_installed())
+	} else if (is_cairo_installed()) {
+		if (is_systemfonts_installed())
+			set_cairo_fonts(family)
 		Cairo::Cairo(width, height, tf, 'pdf', pointsize, bg, 'transparent', 'in')
-	else if (capabilities('cairo'))
+	} else if (capabilities('cairo')) {
 		cairo_pdf(tf, width, height, pointsize, FALSE, family, bg, antialias)
-	else
+	} else {
 		pdf(tf, width, height, FALSE, family, title, bg = bg, pointsize = pointsize)
+	}
 })
