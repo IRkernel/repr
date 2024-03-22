@@ -3,3 +3,4 @@
 .RData
 repr.pdf
 .ipynb_checkpoints/
+testthat-problems.rds
