@@ -1,4 +1,21 @@
 is_cairo_installed <- function() requireNamespace('Cairo', quietly = TRUE)
+is_ragg_installed <- function() requireNamespace('ragg', quietly = TRUE)
+
+get_device <- function(ragg, Cairo, grDevices) {
+	backends <- getOption('repr.plot.backends')
+	for (o in backends) switch(
+		o,
+		ragg = if (is_ragg_installed()) return(ragg),
+		Cairo = if (is_cairo_installed()) return(Cairo),
+		grDevices = return(grDevices),
+		stop("Unknown entry in getOption('repr.plot.backends'): ", o)
+	)
+	stop(
+		"No plotting devide found in getOption('repr.plot.backends'): ",
+		toString(backends),
+		"\nDid you forget to add 'grDevices' to the vector?"
+	)
+}
 
 # checking capability of X11 is slow, the short circult logic avoids
 # this if any other devices are found.
@@ -87,13 +104,11 @@ repr_png.recordedplot <- function(obj,
 	res       = getOption('repr.plot.res'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('png')) return(NULL)
-	
-	dev.cb <- function(tf)
-		if (is_cairo_installed())
-			Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res)
-		else
-			png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
-	
+	dev.cb <- function(tf) get_device(
+		ragg = ragg::agg_png(tf, width, height, 'in', pointsize, bg, res),  # scaling, bitsize
+		Cairo = Cairo::Cairo(width, height, tf, 'png', pointsize, bg, 'transparent', 'in', res),
+		grDevices = png(tf, width, height, 'in', pointsize, bg, res, antialias = antialias)
+	)
 	repr_recordedplot_generic(obj, '.png', TRUE, dev.cb)
 }
 
@@ -111,13 +126,11 @@ repr_jpg.recordedplot <- function(obj,
 	quality   = getOption('repr.plot.quality'),
 ...) {
 	if (!is_cairo_installed() && !check_capability('jpeg')) return(NULL)
-	
-	dev.cb <- function(tf)
-		if (is_cairo_installed())
-			Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality)
-		else
-			jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
-	
+	dev.cb <- function(tf) get_device(
+		ragg = ragg::agg_jpeg(tf, width, height, 'in', pointsize, bg, res, quality = quality),
+		Cairo = Cairo::Cairo(width, height, tf, 'jpeg', pointsize, bg, 'transparent', 'in', res, quality = quality),
+		grDevices = jpeg(tf, width, height, 'in', pointsize, quality, bg, res, antialias = antialias)
+	)
 	repr_recordedplot_generic(obj, '.jpg', TRUE, dev.cb)
 }
 
@@ -138,13 +151,10 @@ repr_svg.recordedplot <- function(obj,
 	family    = getOption('repr.plot.family'),
 ...) {
 	if (!is_cairo_installed() && !capabilities('cairo')) return(NULL) #only cairo can do SVG
-	
-	dev.cb <- function(tf)
-		if (is_cairo_installed())
-			Cairo::Cairo(width, height, tf, 'svg', pointsize, bg, 'transparent', 'in')
-		else
-			svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
-	
+	dev.cb <- get_device(
+		Cairo = Cairo::Cairo(width, height, tf, 'svg', pointsize, bg, 'transparent', 'in'),
+		grDevices = svg(tf, width, height, pointsize, FALSE, family, bg, antialias)
+	)
 	repr_recordedplot_generic(obj, '.svg', FALSE, dev.cb)
 }
 
