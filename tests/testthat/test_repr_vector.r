@@ -78,7 +78,7 @@ test_that('Vectors get limited', {
 		repr_html(5:1),
 		sprintf(
 			'%s<ol class=list-inline><li>5</li><li>4</li><li>%s</li><li>1</li></ol>\n',
-			list_style, ellip_h
+			list_style, chars$ellip_h
 		)
 	)
 })
