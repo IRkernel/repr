@@ -32,7 +32,8 @@ Suggests:
     Cairo,
     stringr,
     testthat (>= 3.0.0),
-    leaflet
+    leaflet,
+    systemfonts
 Enhances:
     data.table,
     tibble,
