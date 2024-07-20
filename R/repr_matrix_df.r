@@ -70,7 +70,11 @@ arr_part_unpack_tbl <- function(tbl) {
       names(res) <- paste0(prefix, '$', names(res))
       return(res)
     } else {
-      res <- data.frame(col)
+      if(is.list(col)) {
+        res <- list2DF(list(col))
+      } else {
+        res <- data.frame(col)
+      }
       names(res) <- prefix
       return(res)
     }
