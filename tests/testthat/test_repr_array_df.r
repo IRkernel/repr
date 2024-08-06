@@ -1,5 +1,7 @@
 options(stringsAsFactors = FALSE)
 
+has_dt <- requireNamespace('data.table', quietly = TRUE)
+has_tibble <- requireNamespace('tibble', quietly = TRUE)
 
 test_that('empty data.frames work', {
 	expect_identical(repr_html(data.frame()), '')
@@ -179,4 +181,26 @@ test_that('nested data.frames can be displayed', {
 	repr_markdown(outer)
 	repr_text(outer)
 	succeed()
+})
+
+test_that('data.frame with list columns can be displayed', {
+	df <- list2DF(list(a=1, b=list(1:2)))
+	expected <- '<table class="dataframe">
+<caption>A data.frame: 1 × 2</caption>
+<thead>
+\t<tr><th scope=col>a</th><th scope=col>b</th></tr>
+\t<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;list&gt;</th></tr>
+</thead>
+<tbody>
+\t<tr><td>1</td><td>1, 2</td></tr>
+</tbody>
+</table>
+'
+	expect_identical(repr_html(df), expected)
+	if(has_tibble) {
+		expect_identical(repr_html(tibble::as_tibble(df)), sub('data\\.frame','tibble',expected))
+	}
+	if(has_dt) {
+		expect_identical(repr_html(data.table::as.data.table(df)), sub('data\\.frame','data.table',expected))
+	}
 })
