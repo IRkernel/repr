@@ -27,14 +27,27 @@ Setting all options set to \code{NULL} are reset to defaults when reloading the 
 \item{\code{repr.plot.*}}{
 	Those are for representations of \code{recordedplot} instances:
 	\describe{
-		\item{\code{repr.plot.width}}{Plotting area width in inches (default: 7)}
-		\item{\code{repr.plot.height}}{Plotting area height in inches (default: 7)}
-		\item{\code{repr.plot.pointsize}}{Text height in pt (default: 12)}
-		\item{\code{repr.plot.bg}}{Background color (default: white)}
-		\item{\code{repr.plot.antialias}}{Which kind of antialiasing to use for for lines and text? 'gray', 'subpixel' or 'none'? (default: gray)}
-		\item{\code{repr.plot.res}}{PPI for rasterization (default: 120)}
-		\item{\code{repr.plot.quality}}{Quality of JPEG format in \% (default: 90)}
-		\item{\code{repr.plot.family}}{Vector font family. 'sans', 'serif', 'mono' or a specific one (default: sans)}
+		\item{\code{repr.plot.width}}{Plotting area width in inches (default: \code{7})}
+		\item{\code{repr.plot.height}}{Plotting area height in inches (default: \code{7})}
+		\item{\code{repr.plot.pointsize}}{Text height in pt (default: \code{12})}
+		\item{\code{repr.plot.bg}}{Background color (default: \code{'white'})}
+		\item{\code{repr.plot.antialias}}{
+		  Which kind of antialiasing to use for for lines and text?
+		  'gray', 'subpixel' or 'none'?
+		  (default: \code{'gray'})
+		}
+		\item{\code{repr.plot.res}}{PPI for rasterization (default: \code{120})}
+		\item{\code{repr.plot.quality}}{Quality of JPEG format in \% (default: \code{90})}
+		\item{\code{repr.plot.family}}{Font family. 'sans', 'serif', 'mono' or a specific one (default: \code{'sans'})}
+		\item{\code{repr.plot.backends}}{
+		  The order in which backends are tried.
+		  \describe{
+		    \item{\link[ragg:ragg]{ragg}}{Can emit only raster formats (png, jpeg), good quality}
+		    \item{\link[Cairo:Cairo]{Cairo}}{Cannot handle per-element fonts, excellent quality}
+		    \item{\link[grDevices:Devices]{grDevices}}{OK quality}
+		  }
+		  (default: \code{c('ragg', 'Cairo', 'grDevices')})
+		}
 	}
 }
 \item{\code{repr.vector.quote}}{
