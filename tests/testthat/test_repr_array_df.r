@@ -249,3 +249,21 @@ test_that('data.table elision works in 1-column and 1-row edge cases', {
 	DF <- data.frame(a = 1:3, b = 4:6, c = 7:9)
 	expect_identical(repr_text(DF), repr_text(data.table::as.data.table(DF)))
 })
+
+test_that("partially-empty matrices requiring elision can be displayed", {
+  withr::local_options(list(
+    repr.matrix.max.rows = 8L,
+    repr.matrix.max.cols = 8L
+  ))
+  m <- matrix(nrow = 0L, ncol = 10L)
+  # all on one line
+  expect_no_warning(expect_no_match(repr(m), "\n", fixed = TRUE))
+  # always [n,] with nothing after it
+  expect_no_warning(expect_no_match(repr(t(m)), "\\][^\n]"))
+
+  colnames(m) <- sprintf("A%02d", 1:10)
+  # gap from A04 to A07 with \cdots, then only A0n, no newline
+  expect_no_warning(expect_no_match(expect_match(repr(m), "A04[^A]*A07"), "\n", fixed = TRUE))
+  # gap from A04 to A07 with \vdots, all A0n followed by newline
+  expect_no_warning(expect_no_match(expect_match(repr(t(m)), "A04[^A]*A07"), "A0[1-9][^\n]"))
+})
